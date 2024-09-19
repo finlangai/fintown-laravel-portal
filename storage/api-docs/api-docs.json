@@ -1,0 +1,72 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "FinTown Laravel Portal API",
+        "description": "FinTown API document",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api",
+            "description": "server"
+        }
+    ],
+    "paths": {
+        "/api/symbols/{company}/financial-statements": {
+            "get": {
+                "tags": [
+                    "Symbols"
+                ],
+                "summary": "Financial Statement",
+                "description": "Retrieve a specific type of financial statements for a company",
+                "operationId": "TestId",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "path",
+                        "description": "Statement type",
+                        "required": true,
+                        "schema": {
+                            "type": "int"
+                        },
+                        "examples": {
+                            "Balance Sheet": {
+                                "summary": "Balance Sheet",
+                                "value": "1"
+                            },
+                            "Income Statement": {
+                                "summary": "Income Statement",
+                                "value": "2"
+                            },
+                            "Cashflow Statement": {
+                                "summary": "Cashflow Statement",
+                                "value": "3"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "Authorization",
+                "in": "header",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Symbols",
+            "description": "Symbols"
+        }
+    ]
+}

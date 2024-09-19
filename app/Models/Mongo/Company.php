@@ -12,5 +12,14 @@ class Company extends Model
     protected $connection = 'mongodb';
     protected $collection = 'company';
 
-    protected $hidden = [ 'id' ];
+    protected $hidden  = [ 'id' ];
+    public $timestamps = false;
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'symbol';
+    }
 }

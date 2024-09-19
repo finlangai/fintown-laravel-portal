@@ -5,7 +5,8 @@
         "dev": "concurrently \"php artisan serve\" \"yarn vite\" ",
         "inw": "yarn dev",
         "vite": "vite",
-        "build": "tsc && vite build"
+        "build": "tsc && vite build",
+        "apidoc": "php artisan l5-swagger:generate"
     },
     "devDependencies": {
         "@headlessui/react": "^2.0.0",
