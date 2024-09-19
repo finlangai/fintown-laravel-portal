@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Models\Mongo;
+namespace App\Models\Mongo\FinancialStatement;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use MongoDB\Laravel\Eloquent\Model;
 
-class Company extends Model
+class Statement extends Model
 {
     use HasFactory;
-
     protected $connection = 'mongodb';
-    protected $collection = 'company';
+    protected $collection = 'financial_statements';
 
-    protected $hidden = [ 'id' ];
+    public $timestamps = false;
 }

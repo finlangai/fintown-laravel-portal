@@ -20,3 +20,12 @@
 -   **Tailwind**
 -   **Shadcn**
 -   **Typescript**
+
+
+# PHP Extension requirements
+- PHP MongoDB Driver
+
+### On Windows
+> Download required extension from PECL's website and copy its `dll` file into your PHP extension directory
+### On Linux ( Ubuntu or Debian )
+> Install with `apt` or `pecl`
