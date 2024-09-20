@@ -2,15 +2,23 @@
 
 namespace App\Models\Mongo\FinancialStatement;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use MongoDB\Laravel\Eloquent\Model;
 
 class Format extends Model
 {
-    use HasFactory;
     protected $connection = 'mongodb';
-    protected $collection = 'statement_formats';
+    protected $table      = 'statement_formats';
 
-    protected $hidden = [ 'id' ];
+    protected $hidden  = [ 'id' ];
     public $timestamps = false;
+
+    public static function getByICB(string $icb_code)
+    {
+        return self::where(function ($query) use ($icb_code) {
+            $query->where('icb_ranges', 'elemMatch', [
+                'start' => [ '$lte' => $icb_code ],
+                'end'   => [ '$gte' => $icb_code ],
+             ]);
+        })->first();
+    }
 }

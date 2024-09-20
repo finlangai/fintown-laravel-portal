@@ -43,6 +43,17 @@ class ApiResponse
      * @param string $message
      * @return JsonResponse
      */
+    public static function badRequest(string $message = 'Bad requesst'): JsonResponse
+    {
+        return self::error($message);
+    }
+
+    /**
+     * Return a not found response.
+     *
+     * @param string $message
+     * @return JsonResponse
+     */
     public static function notFound(string $message = 'Resource not found'): JsonResponse
     {
         return self::error($message, 404);
