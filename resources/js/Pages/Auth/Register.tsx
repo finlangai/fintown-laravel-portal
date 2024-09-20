@@ -1,9 +1,9 @@
 import { FormEventHandler } from "react";
 import GuestLayout from "@/layouts/guest-layout";
-import InputError from "@/components/input-error";
-import InputLabel from "@/components/input-label";
-import PrimaryButton from "@/components/primary-button";
-import TextInput from "@/components/text-input";
+import InputError from "@/Components/input-error";
+import InputLabel from "@/Components/input-label";
+import PrimaryButton from "@/Components/primary-button";
+import TextInput from "@/Components/text-input";
 import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Register() {
@@ -13,7 +13,6 @@ export default function Register() {
         password: "",
         password_confirmation: "",
     });
-
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
@@ -21,15 +20,12 @@ export default function Register() {
             onFinish: () => reset("password", "password_confirmation"),
         });
     };
-
     return (
         <GuestLayout>
             <Head title="Register" />
-
             <form onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
-
                     <TextInput
                         id="name"
                         name="name"

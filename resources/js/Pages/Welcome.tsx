@@ -50,7 +50,7 @@ export default function Welcome({
                                     >
                                         Dashboard
                                     </Link>
-                                ) : (
+                                    ) : (
                                     <>
                                         <Link
                                             href={route("login")}

@@ -1,10 +1,10 @@
 import { FormEventHandler } from "react";
-import Checkbox from "@/components/Checkbox";
+import Checkbox from '@/Components/Checkbox';
 import GuestLayout from "@/layouts/guest-layout";
-import InputError from "@/components/input-error";
-import InputLabel from "@/components/input-label";
-import PrimaryButton from "@/components/primary-button";
-import TextInput from "@/components/text-input";
+import InputError from "@/Components/input-error";
+import InputLabel from "@/Components/input-label";
+import PrimaryButton from "@/Components/primary-button";
+import TextInput from "@/Components/text-input";
 import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Login({
@@ -19,29 +19,23 @@ export default function Login({
         password: "",
         remember: false,
     });
-
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
         post(route("login"), {
             onFinish: () => reset("password"),
         });
     };
-
     return (
         <GuestLayout>
             <Head title="Log in" />
-
             {status && (
                 <div className="mb-4 font-medium text-green-600 text-sm">
                     {status}
                 </div>
             )}
-
             <form onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="email" value="Email" />
-
                     <TextInput
                         id="email"
                         type="email"
@@ -52,13 +46,10 @@ export default function Login({
                         isFocused={true}
                         onChange={(e) => setData("email", e.target.value)}
                     />
-
                     <InputError message={errors.email} className="mt-2" />
                 </div>
-
                 <div className="mt-4">
                     <InputLabel htmlFor="password" value="Password" />
-
                     <TextInput
                         id="password"
                         type="password"
@@ -68,10 +59,8 @@ export default function Login({
                         autoComplete="current-password"
                         onChange={(e) => setData("password", e.target.value)}
                     />
-
                     <InputError message={errors.password} className="mt-2" />
                 </div>
-
                 <div className="block mt-4">
                     <label className="flex items-center">
                         <Checkbox
@@ -86,7 +75,6 @@ export default function Login({
                         </span>
                     </label>
                 </div>
-
                 <div className="flex justify-end items-center mt-4">
                     {canResetPassword && (
                         <Link
@@ -96,7 +84,6 @@ export default function Login({
                             Forgot your password?
                         </Link>
                     )}
-
                     <PrimaryButton className="ms-4" disabled={processing}>
                         Log in
                     </PrimaryButton>

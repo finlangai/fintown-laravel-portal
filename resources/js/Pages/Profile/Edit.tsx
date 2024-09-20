@@ -16,7 +16,7 @@ export default function Edit({
                     Profile
                 </h2>
             }
-        >
+            >
             <Head title="Profile" />
 
             <div className="py-12">

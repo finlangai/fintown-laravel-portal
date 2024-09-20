@@ -1,21 +1,17 @@
 import GuestLayout from "@/layouts/guest-layout";
-import PrimaryButton from "@/components/primary-button";
+import PrimaryButton from "@/Components/primary-button";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { FormEventHandler } from "react";
 
 export default function VerifyEmail({ status }: { status?: string }) {
     const { post, processing } = useForm({});
-
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
         post(route("verification.send"));
     };
-
     return (
         <GuestLayout>
             <Head title="Email Verification" />
-
             <div className="mb-4 text-gray-600 text-sm">
                 Thanks for signing up! Before getting started, could you verify
                 your email address by clicking on the link we just emailed to
@@ -40,8 +36,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
                         href={route("logout")}
                         method="post"
                         as="button"
-                        className="rounded-md focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 text-gray-600 text-sm hover:text-gray-900 underline focus:outline-none"
-                    >
+                        className="rounded-md focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 text-gray-600 text-sm hover:text-gray-900 underline focus:outline-none">
                         Log Out
                     </Link>
                 </div>
