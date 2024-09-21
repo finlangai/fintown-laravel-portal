@@ -1,0 +1,136 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "FinTown Laravel Portal API",
+        "description": "API document",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api",
+            "description": "server"
+        }
+    ],
+    "paths": {
+        "/api/symbols/{company}/financial-statements": {
+            "get": {
+                "tags": [
+                    "Symbols"
+                ],
+                "summary": "Financial Statement",
+                "description": "Retrieve a specific type of financial statements for a company",
+                "operationId": "TestId",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "path",
+                        "description": "Statement type",
+                        "required": true,
+                        "schema": {
+                            "type": "int"
+                        },
+                        "examples": {
+                            "Balance Sheet": {
+                                "summary": "Balance Sheet",
+                                "value": "1"
+                            },
+                            "Income Statement": {
+                                "summary": "Income Statement",
+                                "value": "2"
+                            },
+                            "Cashflow Statement": {
+                                "summary": "Cashflow Statement",
+                                "value": "3"
+                            }
+                        }
+                    },
+                    {
+                        "name": "year",
+                        "in": "path",
+                        "description": "Year",
+                        "required": true,
+                        "schema": {
+                            "type": "int"
+                        },
+                        "examples": {
+                            "Year": {
+                                "summary": "A year",
+                                "value": "2024"
+                            }
+                        }
+                    },
+                    {
+                        "name": "quarter",
+                        "in": "path",
+                        "description": "Quarter value to query retrieve from a specific quarter or retrieve yearly statements",
+                        "required": true,
+                        "schema": {
+                            "type": "int"
+                        },
+                        "examples": {
+                            "First Quarter": {
+                                "summary": "First Quarter",
+                                "value": "1"
+                            },
+                            "Second Quarter": {
+                                "summary": "Second Quarter",
+                                "value": "2"
+                            },
+                            "Third Quarter": {
+                                "summary": "Third Quarter",
+                                "value": "3"
+                            },
+                            "Fourth Quarter": {
+                                "summary": "Fourth Quarter",
+                                "value": "4"
+                            },
+                            "Yearly": {
+                                "summary": "Yearly",
+                                "value": "0"
+                            }
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "path",
+                        "description": "The amount of statement to get. Max is 8",
+                        "required": true,
+                        "schema": {
+                            "type": "int"
+                        },
+                        "examples": {
+                            "Limit": {
+                                "summary": "Limit value",
+                                "value": "8"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    },
+                    "400": {
+                        "description": "Bad request, maybe missing required parameters"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "Authorization",
+                "in": "header",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Symbols",
+            "description": "Symbols"
+        }
+    ]
+}
