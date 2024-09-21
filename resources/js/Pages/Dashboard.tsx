@@ -18,7 +18,7 @@ export default function Dashboard() {
         <AuthenticatedLayout
             header={(setIsExpanded , isExpanded) => ( 
             <div> 
-                <ul className="flex flex-col space-y-4">
+                <ul className="flex flex-col space-y-4 mt-5">
                         <li className="p-2 ml-2 text-white cursor-pointer" onClick={() => setIsExpanded(true)} style={activeNavLink}>
                             <div className="flex items-center">
                                 {isExpanded ? ( 

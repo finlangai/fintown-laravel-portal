@@ -10,11 +10,9 @@ type AuthenticatedProps = PropsWithChildren<{
 export default function Authenticated({ header, children }: AuthenticatedProps) {
     const user = usePage().props.auth?.user || { name: "Nguyễn Kim Hùng", email: "Email@example.com" };
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
-
     const handleSetIsExpanded = (value: boolean) => {
         setIsExpanded(value);
     };
-
     return (
         <div className="bg-gray-100 min-h-screen flex transition-all duration-300">
             <header className={`bg-background-active shadow ${isExpanded ? 'w-60' : 'w-20'} transition-all duration-300 ease-in-out`} onMouseLeave={() => setIsExpanded(false)}>
