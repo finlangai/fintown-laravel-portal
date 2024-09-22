@@ -1,4 +1,4 @@
-import AuthenticatedLayout from "@/layouts/authenticated-layout";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { spawn } from "child_process";
 import { useState } from "react";

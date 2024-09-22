@@ -1,5 +1,5 @@
 import { useState, PropsWithChildren, ReactNode } from "react";
-import ApplicationLogo from "@/Components/application-logo";
+import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
 import { Link, usePage } from "@inertiajs/react";
 
