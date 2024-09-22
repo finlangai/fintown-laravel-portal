@@ -1,6 +1,8 @@
 services:
   app:
-    image: mcr.microsoft.com/devcontainers/php:1-8.2-bullseye
+    build:
+      context: .
+      dockerfile: Dockerfile
     init: true
     volumes:
     - type: bind
