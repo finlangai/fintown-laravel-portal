@@ -1,9 +1,9 @@
 FROM mcr.microsoft.com/devcontainers/php:1-8.2-bullseye
 
 # Install Node.js 22 and Yarn
-RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
-    && apt-get install -y nodejs \
-    && npm install -g yarn
+# RUN sudo curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+#     && sudo apt-get install -y nodejs \
+#     && sudo npm install -g yarn
 
 
 # Install mongodb extension
