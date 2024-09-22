@@ -10,6 +10,6 @@ class FinancialController extends Controller
     //
     public function index()
     {
-        return Inertia::render('Financial/financial-reports');
+        return Inertia::render('Financial/FinancialReports');
     }
 }

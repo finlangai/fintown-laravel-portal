@@ -1,9 +1,9 @@
 import { FormEventHandler } from "react";
-import GuestLayout from "@/layouts/guest-layout";
-import InputError from "@/components/input-error";
-import InputLabel from "@/components/input-label";
-import PrimaryButton from "@/components/primary-button";
-import TextInput from "@/components/text-input";
+import GuestLayout from "@/Layouts/GuestLayout";
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import PrimaryButton from "@/Components/PrimaryButton";
+import TextInput from "@/Components/TextInput";
 import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Register() {
