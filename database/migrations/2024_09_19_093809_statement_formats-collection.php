@@ -13,7 +13,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('statement_formats', function (Blueprint $collection) {
-            $collection->index([ 'icb_ranges.start' => 1, 'icb_ranges.end' => 1 ]);
+            if(!$collection->hasIndex([ 'icb_ranges.start' => 1, 'icb_ranges.end' => 1 ])){
+                $collection->index([ 'icb_ranges.start' => 1, 'icb_ranges.end' => 1 ]);
+            }
         });
     }
 
