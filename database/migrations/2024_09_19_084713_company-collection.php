@@ -13,7 +13,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('companies', function (Blueprint $collection) {
-            $collection->unique(columns: 'symbol', name: 'unique_symbol_idx');
+            if(!$collection->hasIndex('unique_symbol_idx')){
+                $collection->unique(columns: 'symbol', name: 'unique_symbol_idx');
+            }
         });
     }
 
