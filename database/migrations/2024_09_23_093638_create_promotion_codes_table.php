@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('promotion_codes', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class, 'partner_id');
-            $table->foreignIdFor(Program::class, 'program_id');
+            $table->string('program_id', 5);
             $table->string('code', 64);
             $table->integer('use_limit')->nullable();
             $table->float('discount')->default(0);

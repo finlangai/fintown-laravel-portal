@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('role_permissions', function (Blueprint $table) {
             $table->id();
-            $table->string('type_id', 3);
-            $table->string('username', 128);
-            $table->string('fullname', 128);
-            $table->string('email', 256)->unique();
-            $table->string('phone', 11);
-            $table->string('password');
-            $table->boolean('is_banned');
+            $table->string('permission_id', 5);
+            $table->foreign('permission_id')->references('id')->on('permissions')->cascadeOnDelete();
+            $table->string('role_id', 5);
+            $table->foreign('role_id')->references('id')->on('roles')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('role_permissions');
     }
 };

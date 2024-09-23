@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('user_type_features', function (Blueprint $table) {
             $table->id();
             $table->string('type_id', 3);
-            $table->string('username', 128);
-            $table->string('fullname', 128);
-            $table->string('email', 256)->unique();
-            $table->string('phone', 11);
-            $table->string('password');
-            $table->boolean('is_banned');
+            $table->foreign('type_id')->references('id')->on('user_types')->cascadeOnDelete();
+
+            $table->string('feature_id', 3);
+            $table->foreign('feature_id')->references('id')->on('features')->cascadeOnDelete();
+
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('user_type_features');
     }
 };

@@ -25,7 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('financial_statements', function (Blueprint $collection) {
-            $collection->dropIndex(index: 'query_idx');
+            $collection->dropIndex(index: [ 'symbol' => 1, 'year' => 1, 'quarter' => 1 ]);
         });
     }
 };

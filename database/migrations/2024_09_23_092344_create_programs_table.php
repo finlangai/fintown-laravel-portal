@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\SQL\User\Type;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('subcription_programs', function (Blueprint $table) {
             $table->string('id', 5)->primary();
-            $table->foreignIdFor(Type::class, 'incharge_id');
+            $table->string('incharge_id', 3);
             $table->string('name', 128);
             $table->string('description', 256);
             $table->float('price');

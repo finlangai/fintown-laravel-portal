@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\SQL\Subcription\Program;
 use App\Models\SQL\User\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -16,7 +15,7 @@ return new class extends Migration
         Schema::create('subcriptions', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class, 'user_id');
-            $table->foreignIdFor(Program::class, 'program_id');
+            $table->string('program_id', 5);
             $table->boolean('is_active');
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
