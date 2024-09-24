@@ -15,14 +15,24 @@ class FinancialStatementController extends Controller
 {
     /**
      * @OA\Get(
-     *      path="/api/symbols/{company}/financial-statements",
+     *      path="/api/symbols/{company}/financial-statements?type=1&year=2024&quarter=4&limit=1",
      *      operationId="TestId",
      *      tags={"Symbols"},
      *      summary="Financial Statement",
      *      description="Retrieve a specific type of financial statements for a company",
      *      @OA\Parameter(
-     *          description="Statement type",
+     *          description="Company Symbol",
      *          in="path",
+     *          name="company",
+     *          required=true,
+     *          @OA\Schema(type="string"),
+     *          @OA\Examples(example="Vietcomebank", value="VCB", summary="Vietcomebank"),
+     *          @OA\Examples(example="MB Bank", value="MBB", summary="MB Bank"),
+     *          @OA\Examples(example="Vietnamilk", value="VNM", summary="Vietnamilk"),
+     *      ),
+     *      @OA\Parameter(
+     *          description="Statement type",
+     *          in="query",
      *          name="type",
      *          required=true,
      *          @OA\Schema(type="int"),
@@ -32,7 +42,7 @@ class FinancialStatementController extends Controller
      *      ),
      *      @OA\Parameter(
      *          description="Year",
-     *          in="path",
+     *          in="query",
      *          name="year",
      *          required=true,
      *          @OA\Schema(type="int"),
@@ -40,7 +50,7 @@ class FinancialStatementController extends Controller
      *      ),
      *      @OA\Parameter(
      *          description="Quarter value to query retrieve from a specific quarter or retrieve yearly statements",
-     *          in="path",
+     *          in="query",
      *          name="quarter",
      *          required=true,
      *          @OA\Schema(type="int"),
@@ -52,7 +62,7 @@ class FinancialStatementController extends Controller
      *      ),
      *      @OA\Parameter(
      *          description="The amount of statement to get. Max is 8",
-     *          in="path",
+     *          in="query",
      *          name="limit",
      *          required=true,
      *          @OA\Schema(type="int"),

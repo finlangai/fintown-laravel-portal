@@ -3,6 +3,7 @@
 namespace App\Models\Mongo;
 
 use MongoDB\Laravel\Eloquent\Model;
+use MongoDB\Laravel\Relations\HasMany;
 
 class Company extends Model
 {
@@ -18,5 +19,10 @@ class Company extends Model
     public function getRouteKeyName(): string
     {
         return 'symbol';
+    }
+
+    public function metrics(): HasMany
+    {
+        return $this->hasMany(MetricRecord::class, 'symbol');
     }
 }
