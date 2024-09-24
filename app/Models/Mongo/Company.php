@@ -23,6 +23,6 @@ class Company extends Model
 
     public function metrics(): HasMany
     {
-        return $this->hasMany(MetricRecord::class, 'symbol');
+        return $this->hasMany(MetricRecord::class, 'symbol', 'symbol');
     }
 }

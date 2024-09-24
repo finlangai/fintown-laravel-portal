@@ -7,7 +7,7 @@
     },
     "servers": [
         {
-            "url": "/api",
+            "url": "/",
             "description": "server"
         }
     ],
@@ -19,18 +19,17 @@
                 ],
                 "summary": "Financial Statement",
                 "description": "Retrieve a specific type of financial statements for a company",
-                "operationId": "TestId",
+                "operationId": "GetFinancialStatement",
                 "parameters": [
                     {
                         "name": "company",
                         "in": "path",
                         "description": "Company Symbol",
-                        "required": true,
                         "schema": {
                             "type": "string"
                         },
                         "examples": {
-                            "Vietcomebank": {
+                            "Vietcombank": {
                                 "summary": "Vietcomebank",
                                 "value": "VCB"
                             },
@@ -48,7 +47,6 @@
                         "name": "type",
                         "in": "query",
                         "description": "Statement type",
-                        "required": true,
                         "schema": {
                             "type": "int"
                         },
@@ -71,7 +69,6 @@
                         "name": "year",
                         "in": "query",
                         "description": "Year",
-                        "required": true,
                         "schema": {
                             "type": "int"
                         },
@@ -86,7 +83,6 @@
                         "name": "quarter",
                         "in": "query",
                         "description": "Quarter value to query retrieve from a specific quarter or retrieve yearly statements",
-                        "required": true,
                         "schema": {
                             "type": "int"
                         },
@@ -116,22 +112,124 @@
                     {
                         "name": "limit",
                         "in": "query",
-                        "description": "The amount of statement to get. Max is 8",
-                        "required": true,
+                        "description": "The amount of ratios to get. Max is 9",
                         "schema": {
                             "type": "int"
                         },
                         "examples": {
                             "Limit": {
                                 "summary": "Limit value",
-                                "value": "8"
+                                "value": "9"
                             }
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "success"
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Bad request, maybe missing required parameters"
+                    },
+                    "404": {
+                        "description": "No ratio records found"
+                    }
+                }
+            }
+        },
+        "/api/symbols/{company}/ratio?year=2024&quarter=4&limit=1": {
+            "get": {
+                "tags": [
+                    "Symbols"
+                ],
+                "summary": "Financial Metrics",
+                "description": "Retrieve a Financial Metrics and Ratios of a company",
+                "operationId": "GetFinancialRatios",
+                "parameters": [
+                    {
+                        "name": "company",
+                        "in": "path",
+                        "description": "Company Symbol",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "Vietcombank": {
+                                "summary": "Vietcomebank",
+                                "value": "VCB"
+                            },
+                            "MB Bank": {
+                                "summary": "MB Bank",
+                                "value": "MBB"
+                            },
+                            "Vietnamilk": {
+                                "summary": "Vietnamilk",
+                                "value": "VNM"
+                            }
+                        }
+                    },
+                    {
+                        "name": "year",
+                        "in": "query",
+                        "description": "Year",
+                        "schema": {
+                            "type": "int"
+                        },
+                        "examples": {
+                            "Year": {
+                                "summary": "A year",
+                                "value": "2024"
+                            }
+                        }
+                    },
+                    {
+                        "name": "quarter",
+                        "in": "query",
+                        "description": "Quarter value to query retrieve from a specific quarter or retrieve yearly statements",
+                        "schema": {
+                            "type": "int"
+                        },
+                        "examples": {
+                            "First Quarter": {
+                                "summary": "First Quarter",
+                                "value": "1"
+                            },
+                            "Second Quarter": {
+                                "summary": "Second Quarter",
+                                "value": "2"
+                            },
+                            "Third Quarter": {
+                                "summary": "Third Quarter",
+                                "value": "3"
+                            },
+                            "Fourth Quarter": {
+                                "summary": "Fourth Quarter",
+                                "value": "4"
+                            },
+                            "Yearly": {
+                                "summary": "Yearly",
+                                "value": "0"
+                            }
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The amount of statement to get. Max is 9",
+                        "schema": {
+                            "type": "int"
+                        },
+                        "examples": {
+                            "Limit": {
+                                "summary": "Limit value",
+                                "value": "9"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
                     },
                     "400": {
                         "description": "Bad request, maybe missing required parameters"
