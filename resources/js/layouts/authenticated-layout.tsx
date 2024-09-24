@@ -16,12 +16,12 @@ export default function Authenticated({ header, children }: AuthenticatedProps) 
     return (
         <div className="bg-gray-100 min-h-screen flex transition-all duration-300">
             <header className={`bg-background-active shadow ${isExpanded ? 'w-60' : 'w-20'} transition-all duration-300 ease-in-out`} onMouseLeave={() => setIsExpanded(false)}>
-                <div className="h-full ml-3">
+                <div className="h-full ml-3 fixed">
                     {header ? header(handleSetIsExpanded, isExpanded) : null}
                 </div>
             </header>
-            <div className="flex-1 transition-all">
-                <nav className="bg-background-active">
+            <div className="flex-1 transition-all"> 
+                <nav className="bg-background-active ">
                     <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
                         <div className="flex justify-between h-16">
                             <div className="flex">
@@ -77,7 +77,7 @@ export default function Authenticated({ header, children }: AuthenticatedProps) 
                 </nav>
 
                 {/* Phần content */}
-                <main className="p-4 bg-background-theme">{children}</main>
+                <main className="bg-background-theme">{children}</main>
             </div>
         </div>
     );
