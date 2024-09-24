@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Enums\StatementType;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\FinancialStatementRequest;
 use App\Models\Mongo\Company;
 use App\Models\Mongo\FinancialStatement\Format;
 use App\Models\Mongo\FinancialStatement\Statement;
@@ -65,31 +66,26 @@ class FinancialStatementController extends Controller
      *          response=400,
      *          description="Bad request, maybe missing required parameters",
      *       ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="No statements found",
+     *       ),
      *     )
      */
-    public function show(Company $company, Request $request)
+    public function show(Company $company, FinancialStatementRequest $request)
     {
-        try {
-            $validated = $request->validate([
-                'type'    => 'required|numeric|min:1|max:3',
-                'year'    => 'required|numeric',
-                'quarter' => 'required|numeric|min:0|max:4',
-                'limit'   => 'required|numeric|min:1|max:8',
-             ]);
-        } catch (\Throwable $th) {
-            return ApiResponse::badRequest();
-        }
+        $validated = $request->validated();
 
         if (0 == $validated[ 'quarter' ]) {
             // YEARLY
-            $raw_statements = Statement::getYearlyRecordsBySymbolBefore(
+            $rawStatements = Statement::getYearlyRecordsBySymbolBefore(
                 $company[ 'symbol' ],
                 $validated[ 'year' ],
                 $validated[ 'limit' ]
             );
         } else {
             // QUARTERLY
-            $raw_statements = Statement::getQuarterlyRecordsBySymbolBefore(
+            $rawStatements = Statement::getQuarterlyRecordsBySymbolBefore(
                 $company[ 'symbol' ],
                 $validated[ 'year' ],
                 $validated[ 'quarter' ],
@@ -98,49 +94,50 @@ class FinancialStatementController extends Controller
         }
 
         // Handle zero length collection
-        if ($raw_statements->count() == 0) {
-            return ApiResponse::notFound('No records found');
+        if ($rawStatements->count() == 0) {
+            return ApiResponse::notFound('No statements found');
         }
 
         $format = Format::getByICB($company[ 'icb_code' ]);
-        $result = $format;
 
-        $statement_type = $validated[ 'type' ];
+        $statementType = $validated[ 'type' ];
         // Handle Direct and Indirect Cashflow type
-        if (3 == $statement_type) {
-            $statement_type = $raw_statements[ 0 ][ 'is_cashflow_direct' ] ? 3 : 4;
+        if (3 == $statementType) {
+            $statementType = $rawStatements[ 0 ][ 'is_cashflow_direct' ] ? 3 : 4;
         }
 
         // define the name of statement to retrieve the structure
-        $statement_name    = StatementType::tryFrom($statement_type)->name;
-        $mapped_statements = $format[ 'structures' ][ $statement_name ];
+        $statement_name   = StatementType::tryFrom($statementType)->name;
+        $mappedStatements = $format[ 'structures' ][ $statement_name ];
 
-        foreach ($mapped_statements as $field) {
+        foreach ($mappedStatements as $field) {
             $field[ 'values' ] = [  ];
         }
 
         // Handle the name for cashflow to accessing raw statement
-        if (3 == $statement_type || 4 == $statement_type) {
+        if (3 == $statementType || 4 == $statementType) {
             $statement_name = 'cashflow_statement';
         }
 
         // loop through each statement
-        foreach ($raw_statements as $statement) {
+        foreach ($rawStatements as $statement) {
             $year    = $statement[ "year" ];
             $quarter = $statement[ "quarter" ];
             foreach ($statement[ $statement_name ] as $index => $value) {
-                $timestamp = [
+                // Turn to Billion unit
+                $fieldValue = is_null($value) ? null : round((int) $value / 1000000000, 2);
+                $timestamp  = [
                     'period'  => (0 == $quarter ? "" : "Q$quarter ") . $year,
-                    'year'    => $statement[ 'year' ],
+                    'year'    => $year,
                     'quarter' => $quarter,
-                    'value'   => $value,
+                    'value'   => $fieldValue,
                  ];
-                $mapped_statements[ $index ][ 'values' ][  ] = $timestamp;
+                $mappedStatements[ $index ][ 'values' ][  ] = $timestamp;
             }
         }
 
         // dd($result);
-        return ApiResponse::success($mapped_statements);
+        return ApiResponse::success($mappedStatements);
     }
 
 }
