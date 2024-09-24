@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Actions\GetFinancialRatio;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\RatioRequest;
 use App\Models\Mongo\Company;
@@ -20,7 +21,6 @@ class RatioController extends Controller
      *          description="Company Symbol",
      *          in="path",
      *          name="company",
-     *
      *          @OA\Schema(type="string"),
      *          @OA\Examples(example="Vietcombank", value="VCB", summary="Vietcomebank"),
      *          @OA\Examples(example="MB Bank", value="MBB", summary="MB Bank"),
@@ -30,7 +30,6 @@ class RatioController extends Controller
      *          description="Year",
      *          in="query",
      *          name="year",
-     *
      *          @OA\Schema(type="int"),
      *          @OA\Examples(example="Year", value="2024", summary="A year"),
      *      ),
@@ -38,7 +37,6 @@ class RatioController extends Controller
      *          description="Quarter value to query retrieve from a specific quarter or retrieve yearly statements",
      *          in="query",
      *          name="quarter",
-     *
      *          @OA\Schema(type="int"),
      *          @OA\Examples(example="First Quarter", value="1", summary="First Quarter"),
      *          @OA\Examples(example="Second Quarter", value="2", summary="Second Quarter"),
@@ -50,7 +48,6 @@ class RatioController extends Controller
      *          description="The amount of statement to get. Max is 9",
      *          in="query",
      *          name="limit",
-     *
      *          @OA\Schema(type="int"),
      *          @OA\Examples(example="Limit", value="9", summary="Limit value"),
      *      ),
@@ -59,8 +56,8 @@ class RatioController extends Controller
      *          description="Success",
      *       ),
      *      @OA\Response(
-     *          response=400,
-     *          description="Bad request, maybe missing required parameters",
+     *          response=422,
+     *          description="Insufficent parameters",
      *       ),
      *      @OA\Response(
      *          response=404,
@@ -68,9 +65,13 @@ class RatioController extends Controller
      *       ),
      *     )
      */
-    public function show(Company $company, RatioRequest $request)
+    public function show(Company $company, RatioRequest $request, GetFinancialRatio $action)
     {
-        return ApiResponse::success($company->metrics()->get());
+        $result = $action->handle(
+            $request->validated(),
+            $company
+        );
+        return ApiResponse::success($result);
     }
 
 }

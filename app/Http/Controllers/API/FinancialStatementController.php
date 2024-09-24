@@ -67,8 +67,8 @@ class FinancialStatementController extends Controller
      *          description="Success",
      *       ),
      *      @OA\Response(
-     *          response=400,
-     *          description="Bad request, maybe missing required parameters",
+     *          response=422,
+     *          description="Insufficent parameters",
      *       ),
      *      @OA\Response(
      *          response=404,
