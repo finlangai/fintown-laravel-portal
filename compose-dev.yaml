@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    init: true
+    volumes:
+    - type: bind
+      source: /var/run/docker.sock
+      target: /var/run/docker.sock
+    environment:
+      - VSCODE_EXTENSIONS=kokororin.vscode-phpfmt,bradlc.vscode-tailwindcss,dejmedus.tailwind-sorter,usernamehw.errorlens,mhutchie.git-graph,esbenp.prettier-vscode,xdebug.php-debug,neilbrayfield.php-docblocker,bmewburn.vscode-intelephense-client,zobo.php-intellisense,MehediDracula.php-namespace-resolver,MrChetan.phpstorm-parameter-hints-in-vscode,nhedger.inertia,sleistner.vscode-fileutils
+    entrypoint:
+    - sleep
+    - infinity
+

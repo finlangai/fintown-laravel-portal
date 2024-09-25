@@ -21,7 +21,7 @@ class NewPasswordController extends Controller
      */
     public function create(Request $request): Response
     {
-        return Inertia::render('auth/reset-password', [
+        return Inertia::render('Auth/ResetPassword', [
             'email' => $request->email,
             'token' => $request->route('token'),
          ]);
@@ -61,7 +61,6 @@ class NewPasswordController extends Controller
         if (Password::PASSWORD_RESET == $status) {
             return redirect()->route('login')->with('status', __($status));
         }
-
         throw ValidationException::withMessages([
             'email' => [ trans($status) ],
          ]);
