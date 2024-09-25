@@ -48,7 +48,7 @@ class GetFinancialRatio
             ->get();
 
         $mappedMetrics = [  ];
-        // dd($rawMetrics);
+
         foreach ($formulars as $info) {
             $row                   = [  ];
             $row[ 'name' ]         = $info[ 'display_name' ];
@@ -57,13 +57,28 @@ class GetFinancialRatio
             $row[ 'description' ]  = $info[ 'description' ];
             $row[ 'values' ]       = [  ];
 
+            $identifer               = $info[ 'identifier' ];
+            $isShouldDivineByBillion = $info[ 'metadata' ][ 'is_should_divine_by_billion' ];
             foreach ($rawMetrics as $record) {
-                $year    = $record[ 'year' ];
-                $quarter = $record[ 'quarter' ];
-                $value   = $record[ 'metrics' ][ $info[ 'identifier' ] ];
+                $year       = $record[ 'year' ];
+                $quarter    = $record[ 'quarter' ];
+                $fieldValue = $record[ 'metrics' ][ $identifer ];
 
-                $period     = (0 == $quarter ? "" : "Q$quarter ") . $year;
-                $fieldValue = is_null($value) ? null : round($value, 2);
+                // check if null and set a flag
+                $isNullValue = is_null($fieldValue);
+
+                // pre-processing the value if not null
+                if (!$isNullValue) {
+                    // check is if should divine by billion
+                    if ($isShouldDivineByBillion) {
+                        $fieldValue /= 1000000000;
+                    }
+
+                    $fieldValue = round($fieldValue, 2);
+                }
+
+                // compile the string for period field
+                $period = (0 == $quarter ? "" : "Q$quarter ") . $year;
 
                 $row[ 'values' ][  ] = [
                     'period'  => $period,
