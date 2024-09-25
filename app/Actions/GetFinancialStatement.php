@@ -3,7 +3,7 @@
 namespace App\Actions;
 
 use App\Enums\StatementType;
-use App\Models\Mongo\Company;
+use App\Models\Mongo\Company\Company;
 use App\Models\Mongo\FinancialStatement\Format;
 use App\Models\Mongo\FinancialStatement\Statement;
 use Lorisleiva\Actions\Concerns\AsAction;

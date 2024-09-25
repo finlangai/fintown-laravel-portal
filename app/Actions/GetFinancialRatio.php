@@ -2,7 +2,7 @@
 
 namespace App\Actions;
 
-use App\Models\Mongo\Company;
+use App\Models\Mongo\Company\Company;
 use App\Models\Mongo\Formular;
 use App\Models\Mongo\MetricRecord;
 use Lorisleiva\Actions\Concerns\AsAction;

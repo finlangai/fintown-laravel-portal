@@ -2,6 +2,7 @@
 
 namespace App\Models\Mongo;
 
+use App\Models\Mongo\Company\Company;
 use App\Traits\QueryBySymbolPeriod;
 use MongoDB\Laravel\Eloquent\Model;
 use MongoDB\Laravel\Relations\BelongsTo;

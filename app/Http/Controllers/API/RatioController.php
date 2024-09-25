@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Actions\GetFinancialRatio;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\RatioRequest;
-use App\Models\Mongo\Company;
+use App\Models\Mongo\Company\Company;
 use App\Utils\ApiResponse;
 
 class RatioController extends Controller

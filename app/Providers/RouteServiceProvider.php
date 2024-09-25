@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\Mongo\Company;
+use App\Models\Mongo\Company\Company;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 

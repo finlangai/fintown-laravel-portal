@@ -5,10 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Actions\GetFinancialStatement;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\FinancialStatementRequest;
-use App\Models\Mongo\Company;
+use App\Models\Mongo\Company\Company;
 use App\Models\Mongo\FinancialStatement\Statement;
 use App\Utils\ApiResponse;
-use Illuminate\Http\Request;
 
 class FinancialStatementController extends Controller
 {
