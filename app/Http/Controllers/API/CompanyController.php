@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\Mongo\Company;
+use App\Models\Mongo\Company\Company;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller

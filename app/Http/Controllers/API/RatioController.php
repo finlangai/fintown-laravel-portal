@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Actions\GetFinancialStatement;
+use App\Actions\GetFinancialRatio;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\FinancialStatementRequest;
+use App\Http\Requests\API\RatioRequest;
 use App\Models\Mongo\Company\Company;
-use App\Models\Mongo\FinancialStatement\Statement;
 use App\Utils\ApiResponse;
 
-class FinancialStatementController extends Controller
+class RatioController extends Controller
 {
     /**
      * @OA\Get(
-     *      path="/api/symbols/{company}/financial-statements?type=1&year=2024&quarter=4&limit=1",
-     *      operationId="GetFinancialStatement",
+     *      path="/api/symbols/{company}/ratio?year=2024&quarter=4&limit=1",
+     *      operationId="GetFinancialRatios",
      *      tags={"Symbols"},
-     *      summary="Financial Statement",
-     *      description="Retrieve a specific type of financial statements for a company",
+     *      summary="Financial Metrics",
+     *      description="Retrieve a Financial Metrics and Ratios of a company",
      *      @OA\Parameter(
      *          description="Company Symbol",
      *          in="path",
@@ -26,15 +25,6 @@ class FinancialStatementController extends Controller
      *          @OA\Examples(example="Vietcombank", value="VCB", summary="Vietcomebank"),
      *          @OA\Examples(example="MB Bank", value="MBB", summary="MB Bank"),
      *          @OA\Examples(example="Vietnamilk", value="VNM", summary="Vietnamilk"),
-     *      ),
-     *      @OA\Parameter(
-     *          description="Statement type",
-     *          in="query",
-     *          name="type",
-     *          @OA\Schema(type="int"),
-     *          @OA\Examples(example="Balance Sheet", value="1", summary="Balance Sheet"),
-     *          @OA\Examples(example="Income Statement", value="2", summary="Income Statement"),
-     *          @OA\Examples(example="Cashflow Statement", value="3", summary="Cashflow Statement"),
      *      ),
      *      @OA\Parameter(
      *          description="Year",
@@ -55,7 +45,7 @@ class FinancialStatementController extends Controller
      *          @OA\Examples(example="Yearly", value="0", summary="Yearly"),
      *      ),
      *      @OA\Parameter(
-     *          description="The amount of ratios to get. Max is 9",
+     *          description="The amount of statement to get. Max is 9",
      *          in="query",
      *          name="limit",
      *          @OA\Schema(type="int"),
@@ -71,19 +61,16 @@ class FinancialStatementController extends Controller
      *       ),
      *      @OA\Response(
      *          response=404,
-     *          description="No ratio records found",
+     *          description="No statements found",
      *       ),
      *     )
      */
-    public function show(Company $company, FinancialStatementRequest $request, GetFinancialStatement $action)
+    public function show(Company $company, RatioRequest $request, GetFinancialRatio $action)
     {
-        $validated = $request->validated();
-
-        $result = $action->handle($validated, $company);
-        if (!$result) {
-            return ApiResponse::notFound('No statements found');
-        }
-
+        $result = $action->handle(
+            $request->validated(),
+            $company
+        );
         return ApiResponse::success($result);
     }
 
