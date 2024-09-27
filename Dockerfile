@@ -12,14 +12,15 @@ COPY package.json yarn.lock ./
 RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
     && apt-get install -y nodejs \
     && yes '' | pecl install mongodb && docker-php-ext-enable mongodb \
-    && cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini \
-    # && echo "extension=mongodb" >> /usr/local/etc/php/php.ini \
-    && yarn install --production \
-    && composer install --optimize-autoloader --no-dev \
-    && yarn apidoc && yarn build
+    && cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini 
 
 # Copy the rest of the project
 COPY . .
+
+# Install dependencies
+RUN yarn install --production \
+    && composer install --optimize-autoloader --no-dev \
+    && yarn apidoc && yarn build
 
 # Final stage
 FROM mcr.microsoft.com/devcontainers/php:1-8.2-bullseye
