@@ -23,3 +23,5 @@ WORKDIR /app
 
 # Copy the rest of the project
 COPY . .
+
+RUN php artisan serve
