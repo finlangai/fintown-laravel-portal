@@ -12,6 +12,12 @@ RUN sudo cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 # Append the MongoDB extension to php.ini
 # RUN sudo echo "extension=mongodb" >> /usr/local/etc/php/php.ini
 
+RUN yarn install --production
+
+RUN composer install --optimize-autoloader --no-dev
+
+RUN yarn apidoc && yarn build
+
 # Set working directory
 WORKDIR /app
 
