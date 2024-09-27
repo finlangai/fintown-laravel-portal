@@ -54,8 +54,8 @@ class GetFinancialRatio
             $row[ 'name' ]         = $info[ 'display_name' ];
             $row[ 'unit' ]         = $info[ 'metadata' ][ 'unit' ];
             $row[ 'isPercentage' ] = $info[ 'metadata' ][ 'is_percentage' ];
-            $row[ 'description' ]  = $info[ 'description' ];
-            $row[ 'values' ]       = [  ];
+            // $row[ 'description' ]  = $info[ 'description' ];
+            $row[ 'values' ] = [  ];
 
             $identifer               = $info[ 'identifier' ];
             $isShouldDivineByBillion = $info[ 'metadata' ][ 'is_should_divine_by_billion' ];
@@ -78,7 +78,7 @@ class GetFinancialRatio
                 }
 
                 // compile the string for period field
-                $period = (0 == $quarter ? "" : "Q$quarter ") . $year;
+                $period = (0 == $quarter ? "" : "Q$quarter/") . $year;
 
                 $row[ 'values' ][  ] = [
                     'period'  => $period,

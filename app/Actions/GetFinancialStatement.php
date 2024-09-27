@@ -66,7 +66,7 @@ class GetFinancialStatement
                 // Turn to Billion unit
                 $fieldValue = is_null($value) ? null : round((int) $value / 1000000000, 2);
                 $timestamp  = [
-                    'period'  => (0 == $quarter ? "" : "Q$quarter ") . $year,
+                    'period'  => (0 == $quarter ? "" : "Q$quarter/") . $year,
                     'year'    => $year,
                     'quarter' => $quarter,
                     'value'   => $fieldValue,
