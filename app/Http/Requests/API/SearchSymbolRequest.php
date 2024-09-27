@@ -22,7 +22,7 @@ class SearchSymbolRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'q' => 'required|max:64',
+            'q' => 'required|max:64|min:2',
          ];
     }
 }
