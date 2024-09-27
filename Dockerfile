@@ -18,7 +18,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
 COPY . .
 
 # Install dependencies
-RUN yarn install --production \
+RUN yarn install \
     && composer install --optimize-autoloader --no-dev \
     && yarn apidoc && yarn build
 
@@ -30,6 +30,9 @@ WORKDIR /app
 
 # Copy only the necessary files from the build stage
 COPY --from=build /app /app
+
+# Install only production dependencies
+RUN yarn install --production
 
 # Expose the port and start the application
 EXPOSE 8000
