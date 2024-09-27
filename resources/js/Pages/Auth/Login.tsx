@@ -1,5 +1,5 @@
 import { FormEventHandler } from "react";
-import Checkbox from "@/Components/checkbox";
+import Checkbox from "@/Components/Checkbox";
 import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
@@ -21,6 +21,7 @@ export default function Login({
   });
   const submit: FormEventHandler = (e) => {
     e.preventDefault();
+    console.log("submitting", data);
     post(route("login"), {
       onFinish: () => reset("password"),
     });

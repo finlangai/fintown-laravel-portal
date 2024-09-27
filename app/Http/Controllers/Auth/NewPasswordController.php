@@ -61,7 +61,6 @@ class NewPasswordController extends Controller
         if (Password::PASSWORD_RESET == $status) {
             return redirect()->route('login')->with('status', __($status));
         }
-
         throw ValidationException::withMessages([
             'email' => [ trans($status) ],
          ]);

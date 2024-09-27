@@ -6,14 +6,13 @@ import { useState } from "react";
 export default function Dashboard() {
     const activeNavLink = { 
         color : "#25B770",
-    }
+    } 
     const menuItem = [
         "Bảng điều khiển" ,"Người dùng", "Hóa đơn" , "Sản phẩm và dịch vụ" ,
     ]
     const menuFiintown = [
         "Hồ sơ công ty" , "Báo cáo tài chính" , "Chỉ số tài chính" , "Kết quả dự phóng"
     ]
-    const [isExpanded, setIsExpanded] = useState<boolean>(false);
     return (
         <AuthenticatedLayout
             header={(setIsExpanded , isExpanded) => ( 

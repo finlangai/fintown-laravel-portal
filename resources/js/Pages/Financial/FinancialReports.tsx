@@ -1,7 +1,19 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import { spawn } from "child_process";
-import { useState } from "react";
+import { useState , ChangeEvent } from "react";
+import {  Select,  SelectContent,  SelectGroup,  SelectItem,  SelectLabel,  SelectTrigger,  SelectValue, } from "@/Components/UI/select"
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+  } from "@/Components/UI/alert-dialog"
+  import { Button } from "@/Components/UI/Button"
 export default function Dashboard() {
   const activeNavLink = { 
       color : "#25B770",
@@ -12,7 +24,25 @@ export default function Dashboard() {
   const menuFiintown = [
       "Hồ sơ công ty" , "Báo cáo tài chính" , "Chỉ số tài chính" , "Kết quả dự phóng"
   ]
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  
+
+  // true là thủ công false là Tải từ nguồn cấp
+  const [sourceType , setSourceType] = useState<boolean>(true);
+  const handleHandmade = ()=>{
+        setSourceType(true);
+  }
+  const handleSource = ()=>{
+        setSourceType(false);
+  }
+
+
+  // mã hồ sơ công ty
+  const [stockCode, setStockCode] = useState('');
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setStockCode(event.target.value);
+  };
+ 
+
   return (
       <AuthenticatedLayout
           header={(setIsExpanded , isExpanded) => ( 
@@ -121,12 +151,678 @@ export default function Dashboard() {
           )}
           >
           <Head title="Dashboard" />
-          <div className="py-12">
+          <div className="py-5">
               <div className="mx-auto sm:px-6 lg:px-8 max-w-7xl">
-                  <div className="bg-white shadow-sm sm:rounded-lg overflow-hidden">
-                      <div className="p-6 text-gray-900">
-                          <p>nội dung trang Financial</p>
-                      </div>
+                  <div className="flex flex-col">
+                    <div className="py-3">
+                            <h2 className="text-text-Content text-2xl font-bold">Danh sách Công ty</h2>
+                    </div>
+                   <div className="flex justify-between items-center">
+                        <div id="tool" className="flex bg-background-active border-0 rounded-[8px] w-[600px] p-4">
+                                <div className="flex-1 relative flex items-center mx-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="absolute left-3 text-white"> 
+                                        <circle cx="11" cy="11" r="8" /> 
+                                        <path d="m21 21-4.3-4.3" /> 
+                                    </svg>
+                                    <input type="text" placeholder="Mã cổ phiếu..." className="pl-10 pr-4 py-2 border border-gray-300 rounded-3xl text-black bg-transparent placeholder-gray-500 w-full text-sm" />
+                                </div>
+                                <div id="date" className="flex-1 flex items-center justify-center mx-2 rounded">
+                                <Select >
+                                    <SelectTrigger className="w-[180px] text-text-Content border-none">
+                                        <SelectValue placeholder="Ngày cập nhập" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            <SelectLabel>Chọn ngày cập nhập</SelectLabel>
+                                            <SelectItem value="apple">Mới nhất</SelectItem>
+                                            <SelectItem value="banana">1 năm trước</SelectItem>
+                                            <SelectItem value="blueberry"> 5 năm trước</SelectItem>
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                                </div>
+                                <div id="reset" className="flex-1 flex items-center justify-center mx-2">
+                                    <div className="flex items-center cursor-pointer p-2 rounded hover:bg-background-theme hover:shadow-md transition-all duration-200">
+                                        <svg className="lucide lucide-rotate-ccw text-text-link" xmlns="http://www.w3.org/2000/svg" width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                                            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                                            <path d="M3 3v5h5" />
+                                        </svg>
+                                        <span className="ml-1 text-text-link text-sm">Đặt lại tất cả</span>
+                                    </div>
+                                </div>
+                        </div>
+                        <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                                <Button variant="outline" className="bg-custom-button-success hover:bg-slate-500 text-text-Content">Thêm công ty</Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent className="bg-background-active">
+                            <AlertDialogHeader className="flex flex-col p-4">
+                            <div className="flex space-x-2">
+                                <div onClick={handleHandmade}  className="cursor-pointer hover:text-blue-500 transition-colors text-text-Content text-sm">
+                                    Nguồn thủ công
+                                </div> 
+                                <div className="text-text-Content">|</div>
+                                <div  onClick={handleSource}  className="cursor-pointer hover:text-blue-500 transition-colors text-text-Content text-sm" >
+                                    Tải từ nguồn cấp
+                                </div>
+                            </div>
+                                {sourceType ? (
+                                    <AlertDialogTitle className="mt-2 text-text-Content">- Lấy hồ sơ Thủ công</AlertDialogTitle>
+                                ) : (
+                                    <AlertDialogTitle className="mt-2 text-text-Content">- Lấy hồ sơ công ty từ nguồn cấp</AlertDialogTitle>
+                                )}
+                                    <AlertDialogDescription className="text-sm">
+                                       {sourceType ? (
+                                        <>
+                                            Đây là nội dung của thủ công
+                                        </>
+                                       ) : (
+                                            <div className="border border-white rounded-[30px]">
+                                                <div className="p-4 border-b border-white">
+                                                    <input  className="bg-transparent border-none w-full h-2 text-text-Content focus:outline-none focus:ring-0 focus:border-none text-sm"
+                                                     type="text" 
+                                                     value={stockCode}
+                                                     onChange={handleChange}
+                                                     placeholder="Nhập mã cổ phiếu của công ty cần lấy ..."/>
+                                                </div>
+                                                <div id="listSearch" className="min-h-48">
+                                                    <div className="text-text-Content flex justify-center items-center">
+                                                        {stockCode.length > 0 ? 
+                                                        (
+                                                            <div className="flex flex-col w-full p-5">
+                                                                <div className=" border border-neutral-400 rounded-xl mt-2"> 
+                                                                    <div className="flex justify-between py-2 px-5">
+                                                                        <h2 className="font-semibold">VNM</h2>
+                                                                        <span className="bg-custom-button-success rounded-sm">
+                                                                            <p className="text-sm px-5  ">Đã có</p>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div className=" border border-neutral-400 rounded-xl mt-2"> 
+                                                                    <div className="flex justify-between py-2 px-5">
+                                                                        <h2 className="font-semibold">VNM</h2>
+                                                                        <span className="bg-custom-button-success rounded-sm">
+                                                                            <p className="text-sm px-5  ">Đã có</p>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div className=" border border-neutral-400 rounded-xl mt-2"> 
+                                                                    <div className="flex justify-between py-2 px-5">
+                                                                        <h2 className="font-semibold">VNM</h2>
+                                                                        <span className="bg-custom-button-success rounded-sm">
+                                                                            <p className="text-sm px-5  ">Đã có</p>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        ) : 
+                                                        (
+                                                            <span className="mt-16">Bạn chưa nhập mã cổ phiếu!</span>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                       )}
+                                    </AlertDialogDescription>
+                            </AlertDialogHeader>
+
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel>Thoát</AlertDialogCancel>
+                                    <AlertDialogAction>Cập nhập</AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                            </AlertDialog>
+                   </div>
+                   {/* danh sách stock */}
+                   <div className="listStock mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        <div className="item w-full p-3 bg-background-active rounded-xl">
+                            <div className="flex items-center justify-between border-b border-solid border-gray-300">
+                            <div className="flex justify-center items-center">
+                                <img className="rounded-full w-10 h-10 object-cover" src="https://iptime.com.vn/wp-content/uploads/2018/12/logo-fpt.jpg" alt="FPT" />
+                                <div className="ml-3">
+                                <h2 className="text-text-Content font-bold text-2xl">FPT</h2>
+                                <span className="text-text-Content font-extralight">HOSE</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex">
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pencil-line">
+                                    <path d="M12 20h9" />
+                                    <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z" />
+                                    <path d="m15 5 3 3" />
+                                    </svg>
+                                </div>
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-up-right">
+                                    <path d="M7 7h10v10" />
+                                    <path d="M7 17 17 7" />
+                                    </svg>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div>
+                            <div className="mt-4">
+                                <span className="text-xs text-text-Content-sub">Cập nhật lần cuối: <span className="text-text-link">24-9-2024</span></span>
+                            </div>
+                            <div className="mt-4">
+                                <p className="text-sm font-medium text-text-Content">Hồ sơ thông tin cơ bản của công ty cổ phần FPT</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div className="item w-full p-3 bg-background-active rounded-xl">
+                            <div className="flex items-center justify-between border-b border-solid border-gray-300">
+                            <div className="flex justify-center items-center">
+                                <img className="rounded-full w-10 h-10 object-cover" src="https://iptime.com.vn/wp-content/uploads/2018/12/logo-fpt.jpg" alt="FPT" />
+                                <div className="ml-3">
+                                <h2 className="text-text-Content font-bold text-2xl">FPT</h2>
+                                <span className="text-text-Content font-extralight">HOSE</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex">
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pencil-line">
+                                    <path d="M12 20h9" />
+                                    <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z" />
+                                    <path d="m15 5 3 3" />
+                                    </svg>
+                                </div>
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-up-right">
+                                    <path d="M7 7h10v10" />
+                                    <path d="M7 17 17 7" />
+                                    </svg>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div>
+                            <div className="mt-4">
+                                <span className="text-xs text-text-Content-sub">Cập nhật lần cuối: <span className="text-text-link">24-9-2024</span></span>
+                            </div>
+                            <div className="mt-4">
+                                <p className="text-sm font-medium text-text-Content">Hồ sơ thông tin cơ bản của công ty cổ phần FPT</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div className="item w-full p-3 bg-background-active rounded-xl">
+                            <div className="flex items-center justify-between border-b border-solid border-gray-300">
+                            <div className="flex justify-center items-center">
+                                <img className="rounded-full w-10 h-10 object-cover" src="https://iptime.com.vn/wp-content/uploads/2018/12/logo-fpt.jpg" alt="FPT" />
+                                <div className="ml-3">
+                                <h2 className="text-text-Content font-bold text-2xl">FPT</h2>
+                                <span className="text-text-Content font-extralight">HOSE</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex">
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pencil-line">
+                                    <path d="M12 20h9" />
+                                    <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z" />
+                                    <path d="m15 5 3 3" />
+                                    </svg>
+                                </div>
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-up-right">
+                                    <path d="M7 7h10v10" />
+                                    <path d="M7 17 17 7" />
+                                    </svg>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div>
+                            <div className="mt-4">
+                                <span className="text-xs text-text-Content-sub">Cập nhật lần cuối: <span className="text-text-link">24-9-2024</span></span>
+                            </div>
+                            <div className="mt-4">
+                                <p className="text-sm font-medium text-text-Content">Hồ sơ thông tin cơ bản của công ty cổ phần FPT</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div className="item w-full p-3 bg-background-active rounded-xl">
+                            <div className="flex items-center justify-between border-b border-solid border-gray-300">
+                            <div className="flex justify-center items-center">
+                                <img className="rounded-full w-10 h-10 object-cover" src="https://iptime.com.vn/wp-content/uploads/2018/12/logo-fpt.jpg" alt="FPT" />
+                                <div className="ml-3">
+                                <h2 className="text-text-Content font-bold text-2xl">FPT</h2>
+                                <span className="text-text-Content font-extralight">HOSE</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex">
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pencil-line">
+                                    <path d="M12 20h9" />
+                                    <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z" />
+                                    <path d="m15 5 3 3" />
+                                    </svg>
+                                </div>
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-up-right">
+                                    <path d="M7 7h10v10" />
+                                    <path d="M7 17 17 7" />
+                                    </svg>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div>
+                            <div className="mt-4">
+                                <span className="text-xs text-text-Content-sub">Cập nhật lần cuối: <span className="text-text-link">24-9-2024</span></span>
+                            </div>
+                            <div className="mt-4">
+                                <p className="text-sm font-medium text-text-Content">Hồ sơ thông tin cơ bản của công ty cổ phần FPT</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div className="item w-full p-3 bg-background-active rounded-xl">
+                            <div className="flex items-center justify-between border-b border-solid border-gray-300">
+                            <div className="flex justify-center items-center">
+                                <img className="rounded-full w-10 h-10 object-cover" src="https://iptime.com.vn/wp-content/uploads/2018/12/logo-fpt.jpg" alt="FPT" />
+                                <div className="ml-3">
+                                <h2 className="text-text-Content font-bold text-2xl">FPT</h2>
+                                <span className="text-text-Content font-extralight">HOSE</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex">
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pencil-line">
+                                    <path d="M12 20h9" />
+                                    <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z" />
+                                    <path d="m15 5 3 3" />
+                                    </svg>
+                                </div>
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-up-right">
+                                    <path d="M7 7h10v10" />
+                                    <path d="M7 17 17 7" />
+                                    </svg>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div>
+                            <div className="mt-4">
+                                <span className="text-xs text-text-Content-sub">Cập nhật lần cuối: <span className="text-text-link">24-9-2024</span></span>
+                            </div>
+                            <div className="mt-4">
+                                <p className="text-sm font-medium text-text-Content">Hồ sơ thông tin cơ bản của công ty cổ phần FPT</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div className="item w-full p-3 bg-background-active rounded-xl">
+                            <div className="flex items-center justify-between border-b border-solid border-gray-300">
+                            <div className="flex justify-center items-center">
+                                <img className="rounded-full w-10 h-10 object-cover" src="https://iptime.com.vn/wp-content/uploads/2018/12/logo-fpt.jpg" alt="FPT" />
+                                <div className="ml-3">
+                                <h2 className="text-text-Content font-bold text-2xl">FPT</h2>
+                                <span className="text-text-Content font-extralight">HOSE</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex">
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pencil-line">
+                                    <path d="M12 20h9" />
+                                    <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z" />
+                                    <path d="m15 5 3 3" />
+                                    </svg>
+                                </div>
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-up-right">
+                                    <path d="M7 7h10v10" />
+                                    <path d="M7 17 17 7" />
+                                    </svg>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div>
+                            <div className="mt-4">
+                                <span className="text-xs text-text-Content-sub">Cập nhật lần cuối: <span className="text-text-link">24-9-2024</span></span>
+                            </div>
+                            <div className="mt-4">
+                                <p className="text-sm font-medium text-text-Content">Hồ sơ thông tin cơ bản của công ty cổ phần FPT</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div className="item w-full p-3 bg-background-active rounded-xl">
+                            <div className="flex items-center justify-between border-b border-solid border-gray-300">
+                            <div className="flex justify-center items-center">
+                                <img className="rounded-full w-10 h-10 object-cover" src="https://iptime.com.vn/wp-content/uploads/2018/12/logo-fpt.jpg" alt="FPT" />
+                                <div className="ml-3">
+                                <h2 className="text-text-Content font-bold text-2xl">FPT</h2>
+                                <span className="text-text-Content font-extralight">HOSE</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex">
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pencil-line">
+                                    <path d="M12 20h9" />
+                                    <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z" />
+                                    <path d="m15 5 3 3" />
+                                    </svg>
+                                </div>
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-up-right">
+                                    <path d="M7 7h10v10" />
+                                    <path d="M7 17 17 7" />
+                                    </svg>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div>
+                            <div className="mt-4">
+                                <span className="text-xs text-text-Content-sub">Cập nhật lần cuối: <span className="text-text-link">24-9-2024</span></span>
+                            </div>
+                            <div className="mt-4">
+                                <p className="text-sm font-medium text-text-Content">Hồ sơ thông tin cơ bản của công ty cổ phần FPT</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div className="item w-full p-3 bg-background-active rounded-xl">
+                            <div className="flex items-center justify-between border-b border-solid border-gray-300">
+                            <div className="flex justify-center items-center">
+                                <img className="rounded-full w-10 h-10 object-cover" src="https://iptime.com.vn/wp-content/uploads/2018/12/logo-fpt.jpg" alt="FPT" />
+                                <div className="ml-3">
+                                <h2 className="text-text-Content font-bold text-2xl">FPT</h2>
+                                <span className="text-text-Content font-extralight">HOSE</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex">
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pencil-line">
+                                    <path d="M12 20h9" />
+                                    <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z" />
+                                    <path d="m15 5 3 3" />
+                                    </svg>
+                                </div>
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-up-right">
+                                    <path d="M7 7h10v10" />
+                                    <path d="M7 17 17 7" />
+                                    </svg>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div>
+                            <div className="mt-4">
+                                <span className="text-xs text-text-Content-sub">Cập nhật lần cuối: <span className="text-text-link">24-9-2024</span></span>
+                            </div>
+                            <div className="mt-4">
+                                <p className="text-sm font-medium text-text-Content">Hồ sơ thông tin cơ bản của công ty cổ phần FPT</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div className="item w-full p-3 bg-background-active rounded-xl">
+                            <div className="flex items-center justify-between border-b border-solid border-gray-300">
+                            <div className="flex justify-center items-center">
+                                <img className="rounded-full w-10 h-10 object-cover" src="https://iptime.com.vn/wp-content/uploads/2018/12/logo-fpt.jpg" alt="FPT" />
+                                <div className="ml-3">
+                                <h2 className="text-text-Content font-bold text-2xl">FPT</h2>
+                                <span className="text-text-Content font-extralight">HOSE</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex">
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pencil-line">
+                                    <path d="M12 20h9" />
+                                    <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z" />
+                                    <path d="m15 5 3 3" />
+                                    </svg>
+                                </div>
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-up-right">
+                                    <path d="M7 7h10v10" />
+                                    <path d="M7 17 17 7" />
+                                    </svg>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div>
+                            <div className="mt-4">
+                                <span className="text-xs text-text-Content-sub">Cập nhật lần cuối: <span className="text-text-link">24-9-2024</span></span>
+                            </div>
+                            <div className="mt-4">
+                                <p className="text-sm font-medium text-text-Content">Hồ sơ thông tin cơ bản của công ty cổ phần FPT</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div className="item w-full p-3 bg-background-active rounded-xl">
+                            <div className="flex items-center justify-between border-b border-solid border-gray-300">
+                            <div className="flex justify-center items-center">
+                                <img className="rounded-full w-10 h-10 object-cover" src="https://iptime.com.vn/wp-content/uploads/2018/12/logo-fpt.jpg" alt="FPT" />
+                                <div className="ml-3">
+                                <h2 className="text-text-Content font-bold text-2xl">FPT</h2>
+                                <span className="text-text-Content font-extralight">HOSE</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex">
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pencil-line">
+                                    <path d="M12 20h9" />
+                                    <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z" />
+                                    <path d="m15 5 3 3" />
+                                    </svg>
+                                </div>
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-up-right">
+                                    <path d="M7 7h10v10" />
+                                    <path d="M7 17 17 7" />
+                                    </svg>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div>
+                            <div className="mt-4">
+                                <span className="text-xs text-text-Content-sub">Cập nhật lần cuối: <span className="text-text-link">24-9-2024</span></span>
+                            </div>
+                            <div className="mt-4">
+                                <p className="text-sm font-medium text-text-Content">Hồ sơ thông tin cơ bản của công ty cổ phần FPT</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div className="item w-full p-3 bg-background-active rounded-xl">
+                            <div className="flex items-center justify-between border-b border-solid border-gray-300">
+                            <div className="flex justify-center items-center">
+                                <img className="rounded-full w-10 h-10 object-cover" src="https://iptime.com.vn/wp-content/uploads/2018/12/logo-fpt.jpg" alt="FPT" />
+                                <div className="ml-3">
+                                <h2 className="text-text-Content font-bold text-2xl">FPT</h2>
+                                <span className="text-text-Content font-extralight">HOSE</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex">
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pencil-line">
+                                    <path d="M12 20h9" />
+                                    <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z" />
+                                    <path d="m15 5 3 3" />
+                                    </svg>
+                                </div>
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-up-right">
+                                    <path d="M7 7h10v10" />
+                                    <path d="M7 17 17 7" />
+                                    </svg>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div>
+                            <div className="mt-4">
+                                <span className="text-xs text-text-Content-sub">Cập nhật lần cuối: <span className="text-text-link">24-9-2024</span></span>
+                            </div>
+                            <div className="mt-4">
+                                <p className="text-sm font-medium text-text-Content">Hồ sơ thông tin cơ bản của công ty cổ phần FPT</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div className="item w-full p-3 bg-background-active rounded-xl">
+                            <div className="flex items-center justify-between border-b border-solid border-gray-300">
+                            <div className="flex justify-center items-center">
+                                <img className="rounded-full w-10 h-10 object-cover" src="https://iptime.com.vn/wp-content/uploads/2018/12/logo-fpt.jpg" alt="FPT" />
+                                <div className="ml-3">
+                                <h2 className="text-text-Content font-bold text-2xl">FPT</h2>
+                                <span className="text-text-Content font-extralight">HOSE</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex">
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pencil-line">
+                                    <path d="M12 20h9" />
+                                    <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z" />
+                                    <path d="m15 5 3 3" />
+                                    </svg>
+                                </div>
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-up-right">
+                                    <path d="M7 7h10v10" />
+                                    <path d="M7 17 17 7" />
+                                    </svg>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div>
+                            <div className="mt-4">
+                                <span className="text-xs text-text-Content-sub">Cập nhật lần cuối: <span className="text-text-link">24-9-2024</span></span>
+                            </div>
+                            <div className="mt-4">
+                                <p className="text-sm font-medium text-text-Content">Hồ sơ thông tin cơ bản của công ty cổ phần FPT</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div className="item w-full p-3 bg-background-active rounded-xl">
+                            <div className="flex items-center justify-between border-b border-solid border-gray-300">
+                            <div className="flex justify-center items-center">
+                                <img className="rounded-full w-10 h-10 object-cover" src="https://iptime.com.vn/wp-content/uploads/2018/12/logo-fpt.jpg" alt="FPT" />
+                                <div className="ml-3">
+                                <h2 className="text-text-Content font-bold text-2xl">FPT</h2>
+                                <span className="text-text-Content font-extralight">HOSE</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex">
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pencil-line">
+                                    <path d="M12 20h9" />
+                                    <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z" />
+                                    <path d="m15 5 3 3" />
+                                    </svg>
+                                </div>
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-up-right">
+                                    <path d="M7 7h10v10" />
+                                    <path d="M7 17 17 7" />
+                                    </svg>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div>
+                            <div className="mt-4">
+                                <span className="text-xs text-text-Content-sub">Cập nhật lần cuối: <span className="text-text-link">24-9-2024</span></span>
+                            </div>
+                            <div className="mt-4">
+                                <p className="text-sm font-medium text-text-Content">Hồ sơ thông tin cơ bản của công ty cổ phần FPT</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div className="item w-full p-3 bg-background-active rounded-xl">
+                            <div className="flex items-center justify-between border-b border-solid border-gray-300">
+                            <div className="flex justify-center items-center">
+                                <img className="rounded-full w-10 h-10 object-cover" src="https://iptime.com.vn/wp-content/uploads/2018/12/logo-fpt.jpg" alt="FPT" />
+                                <div className="ml-3">
+                                <h2 className="text-text-Content font-bold text-2xl">FPT</h2>
+                                <span className="text-text-Content font-extralight">HOSE</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex">
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pencil-line">
+                                    <path d="M12 20h9" />
+                                    <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z" />
+                                    <path d="m15 5 3 3" />
+                                    </svg>
+                                </div>
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-up-right">
+                                    <path d="M7 7h10v10" />
+                                    <path d="M7 17 17 7" />
+                                    </svg>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div>
+                            <div className="mt-4">
+                                <span className="text-xs text-text-Content-sub">Cập nhật lần cuối: <span className="text-text-link">24-9-2024</span></span>
+                            </div>
+                            <div className="mt-4">
+                                <p className="text-sm font-medium text-text-Content">Hồ sơ thông tin cơ bản của công ty cổ phần FPT</p>
+                            </div>
+                            </div>
+                        </div>
+                        <div className="item w-full p-3 bg-background-active rounded-xl">
+                            <div className="flex items-center justify-between border-b border-solid border-gray-300">
+                            <div className="flex justify-center items-center">
+                                <img className="rounded-full w-10 h-10 object-cover" src="https://iptime.com.vn/wp-content/uploads/2018/12/logo-fpt.jpg" alt="FPT" />
+                                <div className="ml-3">
+                                <h2 className="text-text-Content font-bold text-2xl">FPT</h2>
+                                <span className="text-text-Content font-extralight">HOSE</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="flex">
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg mr-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-pencil-line">
+                                    <path d="M12 20h9" />
+                                    <path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z" />
+                                    <path d="m15 5 3 3" />
+                                    </svg>
+                                </div>
+                                <div className="w-8 h-8 bg-white flex justify-center items-center rounded-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-arrow-up-right">
+                                    <path d="M7 7h10v10" />
+                                    <path d="M7 17 17 7" />
+                                    </svg>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div>
+                            <div className="mt-4">
+                                <span className="text-xs text-text-Content-sub">Cập nhật lần cuối: <span className="text-text-link">24-9-2024</span></span>
+                            </div>
+                            <div className="mt-4">
+                                <p className="text-sm font-medium text-text-Content">Hồ sơ thông tin cơ bản của công ty cổ phần FPT</p>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
                   </div>
               </div>
           </div>

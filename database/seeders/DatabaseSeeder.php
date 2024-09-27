@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Staff\Staff;
+use App\Models\SQL\Staff\Staff;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -16,8 +16,10 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         Staff::factory()->create([
-            'name'  => 'Test User',
+            'username' => 'ADMIN',
+            'fullname'  => 'Test User',
             'email' => 'test@example.com',
+            'password'=> '1'
          ]);
     }
 }
