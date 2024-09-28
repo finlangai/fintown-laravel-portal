@@ -25,7 +25,7 @@ class FinancialStatementRequest extends FormRequest
             'type'    => 'required|numeric|min:1|max:3',
             'year'    => 'required|numeric',
             'quarter' => 'required|numeric|min:0|max:4',
-            'limit'   => 'required|numeric|min:1|max:9',
+            'limit'   => 'required|numeric|min:1|max:10',
          ];
     }
 }
