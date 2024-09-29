@@ -63,7 +63,7 @@ trait RatioAnnotation
      *       ),
      *      @OA\Response(
      *          response=500,
-     *          description="Internal server error",
+     *          description="Internal Server Error",
      *       ),
      *     )
      */

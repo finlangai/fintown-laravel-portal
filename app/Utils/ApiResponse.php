@@ -19,6 +19,28 @@ class ApiResponse
     }
 
     /**
+     * Return a created successfully response.
+     *
+     * @param mixed $data
+     * @return JsonResponse
+     */
+    public static function created($data = null): JsonResponse
+    {
+        return response()->json($data, 201);
+    }
+
+    /**
+     * Return a no content response.
+     *
+     * @param mixed $data
+     * @return JsonResponse
+     */
+    public static function noContent($data = null): JsonResponse
+    {
+        return response()->json($data, 204);
+    }
+
+    /**
      * Return an error response.
      *
      * @param string $message
