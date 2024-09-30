@@ -7,6 +7,7 @@ use App\Models\SQL\Subcription\PromotionCode;
 use App\Models\SQL\Subcription\Subcription;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Arr;
 use MongoDB\Laravel\Relations\HasMany;
 use MongoDB\Laravel\Relations\HasOne;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -21,10 +22,10 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
-        'username',
         'fullname',
         'email',
         'phone',
+        'address',
         'password',
      ];
 
@@ -34,7 +35,12 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $hidden = [
+        'id',
+        'type_id',
+        'is_banned',
         'password',
+        'updated_at',
+        'created_at',
         // 'remember_token',
      ];
 
@@ -53,6 +59,16 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
+     * Define default values for columns
+     *
+     * @return array<string, any>
+     */
+    protected $attributes = [
+        'is_banned' => false,
+        'type_id'   => 0,
+     ];
+
+    /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
      * @return mixed
@@ -69,8 +85,23 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return [  ];
+        return [
+            "clientType" => $this->type_id,
+            "scope"       => $this->getSelfScope(),
+         ];
     }
+
+    /**
+     * Return this user's permission scope.
+     *
+     * @return array
+     */
+    public function getSelfScope(): array
+    {
+        return [ "*" ];
+    }
+
+    // === RELATIONS
 
     public function watchlists(): HasMany
     {

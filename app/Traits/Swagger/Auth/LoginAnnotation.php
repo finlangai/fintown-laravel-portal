@@ -37,10 +37,20 @@ trait LoginAnnotation
      *          @OA\JsonContent(
      *              type="object",
      *              @OA\Property(
+     *                  property="type",
+     *                  type="string",
+     *                  example="Bearer"
+     *              ),
+     *              @OA\Property(
      *                  property="token",
      *                  type="string",
      *                  example="I_am_the_token_of_my_sword"
-     *              )
+     *              ),
+     *              @OA\Property(
+     *                  property="expiresIn",
+     *                  type="int",
+     *                  example="1209600"
+     *              ),
      *          )
      *      ),
      *      @OA\Response(

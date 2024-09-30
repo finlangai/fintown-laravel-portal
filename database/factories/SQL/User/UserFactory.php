@@ -19,11 +19,11 @@ class UserFactory extends Factory
     {
         return [
             "type_id"   => 0,
-            "username"  => fake()->userName(),
             "fullname"  => fake()->firstName() . " " . fake()->lastName(),
             "email"     => fake()->email(),
             "phone"     => "0" . rand(100000000, 999999999),
-            "password"  => Hash::make('password'),
+            "address"   => fake()->boolean() ? fake()->address() : null,
+            "password"  => Hash::make('Password!123'),
             "is_banned" => false,
          ];
     }

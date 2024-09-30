@@ -2,18 +2,40 @@
 
 namespace App\Http\Controllers\API\Auth;
 
+use App\Actions\RegisterNewUser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Auth\LoginRequest;
-use App\Traits\Swagger\Auth\LoginAnnotation;
-use App\Traits\Swagger\Auth\LogoutAnnotation;
-use App\Traits\Swagger\Auth\RefreshAnnotation;
+use App\Http\Requests\API\Auth\RegisterRequest;
+use App\Traits\Swagger\Auth as AuthSwagger;
 use App\Utils\ApiResponse;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
-    use LoginAnnotation;
+    private function respondeWithToken(string $token, string $type = 'Bearer')
+    {
+        return ApiResponse::success([
+            'type'      => $type,
+            'token'     => $token,
+            'expiresIn' => config('jwt.refresh_ttl') * 60,
+         ]);
+    }
+
+    use AuthSwagger\RegisterAnnotation;
+    public function register(RegisterRequest $request, RegisterNewUser $action)
+    {
+        $validated = $request->validated();
+        $result    = $action->handle($validated);
+
+        if (!$result[ 'isSuccess' ]) {
+            return ApiResponse::validationError($result[ 'errors' ], "Đăng ký không thành công");
+        }
+
+        return ApiResponse::created([ 'message' => 'Đăng ký thành công.' ]);
+    }
+
+    use AuthSwagger\LoginAnnotation;
     public function login(LoginRequest $request)
     {
         $credentials = $request->validated();
@@ -22,37 +44,27 @@ class AuthController extends Controller
             return ApiResponse::unauthorized();
         }
 
-        return ApiResponse::success([ 'token' => $token ]);
+        return $this->respondeWithToken($token);
     }
 
-    public function me()
+    use AuthSwagger\ProfileAnnotation;
+    public function profile()
     {
-        try {
-            return ApiResponse::success(auth('api')->user());
-        } catch (\Throwable $th) {
-            return ApiResponse::internalServerError();
-        }
+        return ApiResponse::success(auth('api')->user());
     }
 
-    use RefreshAnnotation;
+    use AuthSwagger\RefreshAnnotation;
     public function refresh()
     {
-        try {
-            return ApiResponse::success([ 'token' => JWTAuth::refresh(JWTAuth::getToken()) ]);
-        } catch (\Throwable $th) {
-            return ApiResponse::internalServerError();
-        }
+        $newToken = JWTAuth::refresh(JWTAuth::getToken());
+        return $this->respondeWithToken($newToken);
     }
 
-    use LogoutAnnotation;
+    use AuthSwagger\LogoutAnnotation;
     public function logout()
     {
-        try {
-            JWTAuth::invalidate(JWTAuth::getToken());
-            return ApiResponse::noContent();
-        } catch (\Throwable $th) {
-            return ApiResponse::internalServerError();
-        }
+        JWTAuth::invalidate(JWTAuth::getToken());
+        return ApiResponse::noContent();
     }
 
 }
