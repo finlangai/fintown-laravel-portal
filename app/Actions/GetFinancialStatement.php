@@ -6,72 +6,91 @@ use App\Enums\StatementType;
 use App\Models\Mongo\Company\Company;
 use App\Models\Mongo\FinancialStatement\Format;
 use App\Models\Mongo\FinancialStatement\Statement;
+use App\Traits\GetRawStatements;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetFinancialStatement
 {
-    use AsAction;
+    use AsAction, GetRawStatements;
 
-    public function handle(array $validated, Company $company): false | array
+    /**
+     * Get the statement name from the StatementType enum
+     *
+     * @param integer $type
+     * @return string
+     */
+    private function getStatementName(int $type): string
     {
-        if (0 == $validated[ 'quarter' ]) {
-            // YEARLY
-            $rawStatements = Statement::getYearlyRecordsBySymbolBefore(
-                $company[ 'symbol' ],
-                $validated[ 'year' ],
-                $validated[ 'limit' ]
-            );
-        } else {
-            // QUARTERLY
-            $rawStatements = Statement::getQuarterlyRecordsBySymbolBefore(
-                $company[ 'symbol' ],
-                $validated[ 'year' ],
-                $validated[ 'quarter' ],
-                $validated[ 'limit' ]
-            );
+        return StatementType::tryFrom($type)->name;
+    }
+
+    public function handle(array $validated, Company $company): false|array
+    {
+        $statementType = $validated["type"];
+
+        // get the name of the statement inside records for easier reference
+        $rawStatementName =
+            $statementType == 3
+                ? "cashflow_statement"
+                : $this->getStatementName($statementType);
+
+        // Get raw statement data of the required statement type
+        $rawStatements = $this->getRawStatement(
+            symbol: $company["symbol"],
+            validated: $validated,
+            projection: [
+                "_id" => 0,
+                "year" => 1,
+                "quarter" => 1,
+                $rawStatementName => 1,
+            ],
+            skipIfNull: [$rawStatementName]
+        );
+
+        // Handle cashflow type to decide what structure to use
+        if (3 == $statementType) {
+            $statementType = $company->profile["is_using_cf_direct"] ? 3 : 4;
         }
+        // Define the name of statement to retrieve the structure
+        $structureName = $this->getStatementName($statementType);
+
+        // Get the statement format through the icb code of the company
+        $format = Format::getByICB($company["icb_code"], $structureName);
+        // Use the structure as parent array
+        $mappedStatements = $format["structures"][$structureName];
 
         // Handle zero length collection
         if ($rawStatements->count() == 0) {
             return false;
         }
 
-        // get the statement format through the icb code of the company
-        $format = Format::getByICB($company[ 'icb_code' ]);
-
-        $statementType = $validated[ 'type' ];
-        // Handle Direct and Indirect Cashflow type
-        if (3 == $statementType) {
-            $statementType = $rawStatements[ 0 ][ 'is_cashflow_direct' ] ? 3 : 4;
-        }
-
-        // define the name of statement to retrieve the structure
-        $statement_name   = StatementType::tryFrom($statementType)->name;
-        $mappedStatements = $format[ 'structures' ][ $statement_name ];
-
         foreach ($mappedStatements as $field) {
-            $field[ 'values' ] = [  ];
+            $field["values"] = [];
         }
 
-        // Handle the name for cashflow to accessing raw statement
-        if (3 == $statementType || 4 == $statementType) {
-            $statement_name = 'cashflow_statement';
-        }
-
-        // loop through each statement
+        // Map final document
         foreach ($rawStatements as $statement) {
-            $year    = $statement[ "year" ];
-            $quarter = $statement[ "quarter" ];
-            foreach ($statement[ $statement_name ] as $index => $value) {
+            $year = $statement["year"];
+            $quarter = $statement["quarter"];
+            $requiredStatement = $statement[$rawStatementName];
+
+            // skip if the statement is null
+            if (is_null($requiredStatement)) {
+                continue;
+            }
+
+            foreach ($statement[$rawStatementName] as $index => $value) {
                 // Turn to Billion unit
-                $fieldValue = is_null($value) ? null : round((int) $value / 1000000000, 2);
-                $timestamp  = [
-                    'period'  => (0 == $quarter ? "" : "Q$quarter/") . $year,
-                    'year'    => $year,
-                    'quarter' => $quarter,
-                    'value'   => $fieldValue,
-                 ];
-                $mappedStatements[ $index ][ 'values' ][  ] = $timestamp;
+                $fieldValue = is_null($value)
+                    ? null
+                    : round((int) $value / 1000000000, 2);
+                $timestamp = [
+                    "period" => (0 == $quarter ? "" : "Q$quarter/") . $year,
+                    "year" => $year,
+                    "quarter" => $quarter,
+                    "value" => $fieldValue,
+                ];
+                $mappedStatements[$index]["values"][] = $timestamp;
             }
         }
 

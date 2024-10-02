@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\API;
+namespace App\Http\Requests\API\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SearchSymbolRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,8 @@ class SearchSymbolRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'q' => 'required|max:64|min:1',
+            'email'    => 'required|max:256|email',
+            'password' => 'required|min:8|max:128',
          ];
     }
 }
