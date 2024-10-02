@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class RatioController extends Controller
 {
     use RatioAnnotation;
-    public function show(
+    public function __invoke(
         string $symbol,
         RatioRequest $request,
         GetFinancialRatio $action
