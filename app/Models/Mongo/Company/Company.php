@@ -8,10 +8,10 @@ use MongoDB\Laravel\Relations\HasMany;
 
 class Company extends Model
 {
-    protected $connection = 'mongodb';
-    protected $table      = 'companies';
+    protected $connection = "mongodb";
+    protected $table = "companies";
 
-    protected $hidden  = [ 'id' ];
+    protected $hidden = ["id"];
     public $timestamps = false;
 
     /**
@@ -19,11 +19,11 @@ class Company extends Model
      */
     public function getRouteKeyName(): string
     {
-        return 'symbol';
+        return "symbol";
     }
 
     public function metrics(): HasMany
     {
-        return $this->hasMany(MetricRecord::class, 'symbol', 'symbol');
+        return $this->hasMany(MetricRecord::class, "symbol", "symbol");
     }
 }

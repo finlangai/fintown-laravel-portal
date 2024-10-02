@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class FinancialStatementController extends Controller
 {
     use FinancialStatementAnnotation;
-    public function show(
+    public function __invoke(
         string $symbol,
         FinancialStatementRequest $request,
         GetFinancialStatement $action
