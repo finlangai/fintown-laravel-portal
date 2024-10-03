@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\API\CompanyProfile;
 use App\Http\Controllers\API\FinancialStatementController;
 use App\Http\Controllers\API\QuotesController;
 use App\Http\Controllers\API\RatioController;
@@ -35,5 +36,6 @@ Route::prefix("symbols")->group(function () {
         Route::get("financial-statements", FinancialStatementController::class);
         Route::get("ratio", RatioController::class);
         Route::get("quotes", QuotesController::class);
+        Route::get("profile", CompanyProfile::class);
     });
 });

@@ -25,7 +25,9 @@ class QuotesRequest extends FormRequest
             "start" => "required|integer|lt:end",
             "end" => "required|integer|gt:start",
             "interval" => "required|string|in:1m,1H,1D,1W,1M",
+            "type" => "required|integer|in:1,2",
             "limit" => "nullable|integer|min:1",
+            "offset" => "nullable|integer|min:1",
         ];
     }
 }
