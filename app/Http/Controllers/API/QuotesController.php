@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Enums\QuoteType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\QuotesRequest;
 use App\Models\Mongo\Company\Quote;
 use App\Traits\Swagger\Symbols\QuotesAnnotation;
 use App\Utils\ApiResponse;
-
-use function PHPSTORM_META\type;
 
 class QuotesController extends Controller
 {
@@ -19,6 +18,7 @@ class QuotesController extends Controller
 
         $validated = $request->validated();
         $intervalIndex = $this->getIntervalIndex($validated["interval"]);
+        $DEFAULT_LIMIT = 100;
 
         $query = Quote::whereRaw([
             "time" => [
@@ -27,10 +27,26 @@ class QuotesController extends Controller
             ],
             "interval" => $intervalIndex,
             "symbol" => strtoupper($symbol),
-        ]);
+        ])->orderBy("time", "desc");
 
+        // limit the amount of quotes
         if (array_key_exists("limit", $validated)) {
             $query->limit($validated["limit"]);
+        } else {
+            $query->limit($DEFAULT_LIMIT);
+        }
+
+        // skipping records if offset is specified
+        if (array_key_exists("offset", $validated)) {
+            $query->skip($validated["offset"]);
+        }
+
+        // the type of quotes
+        if ($validated["type"] == QuoteType::MINIMAL->value) {
+            $query->project([
+                "time" => 1,
+                "price" => '$close',
+            ]);
         }
 
         $result = $query->get();
