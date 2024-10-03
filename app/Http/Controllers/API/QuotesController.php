@@ -6,11 +6,13 @@ use App\Enums\QuoteType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\QuotesRequest;
 use App\Models\Mongo\Company\Quote;
+use App\Traits\GetIntervalIndex;
 use App\Traits\Swagger\Symbols\QuotesAnnotation;
 use App\Utils\ApiResponse;
 
 class QuotesController extends Controller
 {
+    use GetIntervalIndex;
     use QuotesAnnotation;
     public function __invoke(string $symbol, QuotesRequest $request)
     {
@@ -56,16 +58,5 @@ class QuotesController extends Controller
         }
 
         return ApiResponse::success($result);
-    }
-
-    private function getIntervalIndex(string $interval): int
-    {
-        return [
-            "1m" => 0,
-            "1H" => 4,
-            "1D" => 5,
-            "1W" => 6,
-            "1M" => 7,
-        ][$interval];
     }
 }
