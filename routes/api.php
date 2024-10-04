@@ -37,9 +37,12 @@ Route::prefix("symbols")->group(function () {
     Route::get("vn30", VN30BucketController::class);
 
     Route::prefix("{symbol}")->group(function () {
-        Route::get("financial-statements", FinancialStatementController::class);
         Route::get("ratio", RatioController::class);
         Route::get("quotes", QuotesController::class);
         Route::get("profile", ProfileController::class);
+        // Route::get("events", ProfileController::class);
+        // Route::get("news", ProfileController::class);
+        // Route::get("dividends", ProfileController::class);
+        Route::get("financial-statements", FinancialStatementController::class);
     });
 });

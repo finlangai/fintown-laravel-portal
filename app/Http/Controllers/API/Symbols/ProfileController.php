@@ -19,11 +19,11 @@ class ProfileController extends Controller
                 ->project([
                     "_id" => 0,
                     "symbol" => 1,
-                    "companyName" => 1,
+                    "companyName" => "\$company_name",
                     "logo" => 1,
                     "industry" => 1,
                     "exchange" => "\$profile.exchange",
-                    "website" => "\$profile.website",
+                    "website" => "\$profile.web_address",
                     "overview" => "\$summary.overview",
                     "marketCap" => "\$profile.market_cap",
                     "listingVolume" => "\$profile.listing_volume",
