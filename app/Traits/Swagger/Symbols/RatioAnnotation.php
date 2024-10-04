@@ -6,15 +6,15 @@ trait RatioAnnotation
 {
     /**
      * @OA\Get(
-     *      path="/api/symbols/{company}/ratio?year=2024&quarter=4&limit=10",
+     *      path="/api/symbols/{symbol}/ratio",
      *      operationId="GetFinancialRatios",
      *      tags={"Symbols"},
      *      summary="Financial Metrics",
      *      description="Retrieve a Financial Metrics and Ratios of a company",
      *      @OA\Parameter(
-     *          description="Company Symbol",
+     *          description="Symbol of the instrument",
      *          in="path",
-     *          name="company",
+     *          name="symbol",
      *          @OA\Schema(type="string"),
      *          @OA\Examples(example="Vietcombank", value="VCB", summary="Vietcomebank"),
      *          @OA\Examples(example="MB Bank", value="MBB", summary="MB Bank"),
@@ -68,5 +68,6 @@ trait RatioAnnotation
      *     )
      */
     public function RatioAnnotation()
-    {}
+    {
+    }
 }

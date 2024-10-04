@@ -6,18 +6,17 @@ trait ProfileAnnotation
 {
     /**
      * @OA\Get(
-     *      path="/api/symbols/{company}/profile",
+     *      path="/api/symbols/{symbol}/profile",
      *      operationId="GetStockProfile",
      *      tags={"Symbols"},
      *      summary="Stock Profile",
      *      description="Retrieve the company's profile",
      *      @OA\Parameter(
-     *          name="company",
+     *          description="Symbol of the instrument",
      *          in="path",
-     *          description="Company Symbol",
-     *          required=true,
+     *          name="symbol",
      *          @OA\Schema(type="string"),
-     *          @OA\Examples(example="Vietcombank", value="VCB", summary="Vietcombank"),
+     *          @OA\Examples(example="Vietcombank", value="VCB", summary="Vietcomebank"),
      *          @OA\Examples(example="MB Bank", value="MBB", summary="MB Bank"),
      *          @OA\Examples(example="Vietnamilk", value="VNM", summary="Vietnamilk"),
      *      ),

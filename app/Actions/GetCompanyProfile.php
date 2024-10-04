@@ -68,9 +68,11 @@ class GetCompanyProfile
             }
         }
 
-        // convert to average value
-        foreach ($metricSum as $name => $total) {
-            $profile[$name] = round($total / 4, 2);
+        $profile["eps"] = round($metricSum["eps"], 2);
+
+        // calculate average for pe, pb, roe, roa
+        foreach (["pe", "pb", "roe", "roa"] as $metricName) {
+            $profile[$metricName] = round($metricSum[$metricName] / 4, 2);
         }
 
         // convert marketCap to Billion unit

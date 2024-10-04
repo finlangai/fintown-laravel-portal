@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\Symbols;
 
 use App\Actions\GetFinancialRatio;
 use App\Http\Controllers\Controller;
