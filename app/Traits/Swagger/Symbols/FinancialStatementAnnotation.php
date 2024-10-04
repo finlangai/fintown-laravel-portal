@@ -6,15 +6,15 @@ trait FinancialStatementAnnotation
 {
     /**
      * @OA\Get(
-     *      path="/api/symbols/{company}/financial-statements?type=1&year=2024&quarter=4&limit=10",
+     *      path="/api/symbols/{symbol}/financial-statements",
      *      operationId="GetFinancialStatement",
      *      tags={"Symbols"},
      *      summary="Financial Statement",
      *      description="Retrieve a specific type of financial statements for a company",
      *      @OA\Parameter(
-     *          description="Company Symbol",
+     *          description="Symbol of the instrument",
      *          in="path",
-     *          name="company",
+     *          name="symbol",
      *          @OA\Schema(type="string"),
      *          @OA\Examples(example="Vietcombank", value="VCB", summary="Vietcomebank"),
      *          @OA\Examples(example="MB Bank", value="MBB", summary="MB Bank"),
@@ -77,5 +77,6 @@ trait FinancialStatementAnnotation
      *     )
      */
     public function FinancialStatementAnnotation()
-    {}
+    {
+    }
 }
