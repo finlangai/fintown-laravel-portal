@@ -6,18 +6,17 @@ trait QuotesAnnotation
 {
     /**
      * @OA\Get(
-     *      path="/api/symbols/{company}/quotes?start=1709251200&end=1727740800&interval=1D&limit=90",
+     *      path="/api/symbols/{symbol}/quotes",
      *      operationId="GetStockQuotes",
      *      tags={"Symbols"},
      *      summary="Stock Quotes",
      *      description="Retrieve the stock price of a company with OHLC and Volume within the quote",
      *      @OA\Parameter(
-     *          name="company",
+     *          description="Symbol of the instrument",
      *          in="path",
-     *          description="Company Symbol",
-     *          required=true,
+     *          name="symbol",
      *          @OA\Schema(type="string"),
-     *          @OA\Examples(example="Vietcombank", value="VCB", summary="Vietcombank"),
+     *          @OA\Examples(example="Vietcombank", value="VCB", summary="Vietcomebank"),
      *          @OA\Examples(example="MB Bank", value="MBB", summary="MB Bank"),
      *          @OA\Examples(example="Vietnamilk", value="VNM", summary="Vietnamilk"),
      *      ),

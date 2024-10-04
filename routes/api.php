@@ -1,11 +1,15 @@
 <?php
 
 use App\Http\Controllers\API\Auth\AuthController;
-use App\Http\Controllers\API\CompanyProfile;
-use App\Http\Controllers\API\FinancialStatementController;
-use App\Http\Controllers\API\QuotesController;
-use App\Http\Controllers\API\RatioController;
+
+use App\Http\Controllers\API\Symbols\FinancialStatementController;
+use App\Http\Controllers\API\Symbols\ProfileController;
+use App\Http\Controllers\API\Symbols\QuotesController;
+use App\Http\Controllers\API\Symbols\RatioController;
+use App\Http\Controllers\API\Symbols\SearchController;
+use App\Http\Controllers\API\Symbols\VN30BucketController;
 use App\Http\Controllers\API\SymbolSearchController;
+
 use App\Http\Controllers\API\VN30StockController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,15 +31,15 @@ Route::prefix("auth")
 // === SYMBOLS ROUTE
 Route::prefix("symbols")->group(function () {
     // Search symbols
-    Route::get("search", SymbolSearchController::class);
+    Route::get("search", SearchController::class);
 
     // VN30
-    Route::get("vn30", VN30StockController::class);
+    Route::get("vn30", VN30BucketController::class);
 
-    Route::prefix("{company}")->group(function () {
+    Route::prefix("{symbol}")->group(function () {
         Route::get("financial-statements", FinancialStatementController::class);
         Route::get("ratio", RatioController::class);
         Route::get("quotes", QuotesController::class);
-        Route::get("profile", CompanyProfile::class);
+        Route::get("profile", ProfileController::class);
     });
 });

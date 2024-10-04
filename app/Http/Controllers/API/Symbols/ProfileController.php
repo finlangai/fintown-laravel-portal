@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\Symbols;
 
 use App\Actions\GetCompanyProfile;
 use App\Http\Controllers\Controller;
@@ -8,9 +8,8 @@ use App\Models\Mongo\Company\Company;
 use App\Traits\Swagger\Symbols\ProfileAnnotation;
 use App\Utils\ApiResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
 
-class CompanyProfile extends Controller
+class ProfileController extends Controller
 {
     use ProfileAnnotation;
     public function __invoke(string $symbol, GetCompanyProfile $action)
