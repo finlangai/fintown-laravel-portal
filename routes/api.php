@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\Symbols\EventsController;
 use App\Http\Controllers\API\Symbols\FinancialStatementController;
+use App\Http\Controllers\API\Symbols\NewsController;
 use App\Http\Controllers\API\Symbols\ProfileController;
 use App\Http\Controllers\API\Symbols\QuotesController;
 use App\Http\Controllers\API\Symbols\RatioController;
@@ -41,7 +42,7 @@ Route::prefix("symbols")->group(function () {
         Route::get("quotes", QuotesController::class);
         Route::get("profile", ProfileController::class);
         Route::get("events", EventsController::class);
-        // Route::get("news", ProfileController::class);
+        Route::get("news", NewsController::class);
         // Route::get("dividends", ProfileController::class);
         Route::get("financial-statements", FinancialStatementController::class);
     });
