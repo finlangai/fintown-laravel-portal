@@ -1,9 +1,10 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
-import { spawn } from "child_process";
+import { Head, usePage } from "@inertiajs/react";
 import { useState } from "react";
+import ProfileCompany from './ProfileCompany';
+import ShareHolder from './ShareHolder';
 
-export default function Dashboard() {
+export default function CompanyEdit() {
     const activeNavLink = { 
         color : "#25B770",
     } 
@@ -13,12 +14,25 @@ export default function Dashboard() {
     const menuFiintown = [
         "Hồ sơ công ty" , "Báo cáo tài chính" , "Chỉ số tài chính" , "Kết quả dự phóng"
     ]
+
+    const { company , holders }:any = usePage().props;
+    const holdersData:Holder[] = holders;
+    const ProfileData:CompanyInfo = company;
+    
+    const [profileAndshareholder, setProfileAndshareholder] = useState<Boolean>(true);
+
+    const toggleProfile = ()=>{
+        setProfileAndshareholder(true);
+    }
+    const toggleShareholder= ()=>{
+        setProfileAndshareholder(false);
+    }
     return (
         <AuthenticatedLayout
             header={(setIsExpanded , isExpanded) => ( 
             <div> 
                 <ul className="flex flex-col space-y-4 mt-5">
-                        <li className="p-2 ml-2 text-white cursor-pointer" onClick={() => setIsExpanded(true)} style={activeNavLink}>
+                        <li className="p-2 ml-2 text-white cursor-pointer" onClick={() => setIsExpanded(true)} >
                             <div className="flex items-center">
                                 {isExpanded ? ( 
                                     <a href="/">
@@ -125,12 +139,42 @@ export default function Dashboard() {
             <Head title="Dashboard" />
             <div className="py-12">
                 <div className="mx-auto sm:px-6 lg:px-8 max-w-7xl">
-                    <div className="bg-white shadow-sm sm:rounded-lg overflow-hidden">
-                        <div className="p-6 text-gray-900">
-                            <p>nội dung trang Dashboard</p>
+                    <div className="bg-background-theme shadow-sm sm:rounded-lg overflow-hidden">
+                        <div className="text-gray-900 flex items-center">
+                            <div className="w-[150px] h-[150px] relative">
+                            
+                                <div className="left-0 top-0 absolute justify-end items-center inline-flex w-[140px] h-[140px]">
+                                    <img src={ProfileData.logo} className=" bg-[#d9d9d9] rounded-[10px]" style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'contain', maxWidth: '100%', display: 'block' }} />
+                                </div>
+                                <div className="w-[130px] h-[130px] left-[10px] top-[10px] absolute bg-white/0 rounded-[80px]" />
+                            </div>
+                            <div className="ml-5">
+                                <div className="text-white text-xl font-bold font-['Nunito Sans']">{ProfileData.company_name || "Tên ngân hàng"}</div>
+                                <div className="opacity-90 text-white/70 text-base font-semibold font-['Nunito Sans']">{ProfileData.profile.web_address || 'web.example.com'}</div>      
+                            </div>
                         </div>
                     </div>
+                    <div className="w-48 h-[50px] mt-10 flex">
+                        <button className={`w-48 h-[40px] ${profileAndshareholder ? `bg-custom-button-success` : 'bg-background-active'} rounded-lg flex justify-center items-center`} onClick={toggleProfile}>
+                            <div className="w-[148px] text-center text-text-Content text-sm font-medium font-['Inter']">Hồ sơ công ty</div>
+                        </button>
+                        <button className={`w-48 h-[40px]  ${profileAndshareholder ? `bg-background-active` : 'bg-custom-button-success'} rounded-lg flex justify-center items-center ml-5`} onClick={toggleShareholder}>
+                            <div className="w-[148px] text-center text-text-Content text-sm font-medium font-['Inter']">Danh sách cổ đông</div>
+                        </button>
+                    </div>
+                    <div className="w-[1259.43px] h-[0px] border border-[#848484] mt-10"></div>
+
+                    {profileAndshareholder ? (
+                        <ProfileCompany  profile={ProfileData} />
+                    ) : (
+                        <div>
+                        <ShareHolder holders={holdersData}/>
+                        </div>
+                    )}
+                   
                 </div>
+               
+                
             </div>
         </AuthenticatedLayout>
     );

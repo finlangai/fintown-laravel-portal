@@ -59,7 +59,7 @@ export default function UpdateProfileInformation({
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="email" value="Email" />
+                    <InputLabel htmlFor="email" value="Email " />
 
                     <TextInput
                         id="email"
@@ -69,6 +69,7 @@ export default function UpdateProfileInformation({
                         onChange={(e) => setData("email", e.target.value)}
                         required
                         autoComplete="username"
+                        readOnly
                     />
 
                     <InputError className="mt-2" message={errors.email} />
