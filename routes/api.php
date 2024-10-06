@@ -11,6 +11,7 @@ use App\Http\Controllers\API\Symbols\SearchController;
 use App\Http\Controllers\API\Symbols\VN30BucketController;
 use App\Http\Controllers\API\Tickers\IndustryTickersController;
 use App\Http\Controllers\API\Tickers\TickersController;
+use App\Http\Controllers\API\Tickers\TopGainerTickersController;
 use Illuminate\Support\Facades\Route;
 
 // AUTH ROUTE
@@ -32,6 +33,7 @@ Route::prefix("auth")
 Route::get("tickers", TickersController::class);
 Route::prefix("tickers")->group(function () {
     //top-gainers
+    Route::get("top-gainers", TopGainerTickersController::class);
     //industry
     Route::get("industry", IndustryTickersController::class);
 });

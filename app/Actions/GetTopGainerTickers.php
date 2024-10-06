@@ -7,7 +7,7 @@ use App\Traits\GetLatestQuotes;
 use App\Traits\TickerProjection;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class GetTickerByIndustry
+class GetTopGainerTickers
 {
     use AsAction, GetLatestQuotes, TickerProjection;
 
@@ -17,14 +17,12 @@ class GetTickerByIndustry
     public function handle(
         array $validated,
         MapTickerCardData $tickerMapper = new MapTickerCardData()
-    ): array|false {
-        $industryName = $validated["name"];
-
+    ) {
         if (array_key_exists("limit", $validated)) {
             $this->tickersLimit = $validated["limit"];
         }
 
-        $companies = Company::where("industry", $industryName)
+        $companies = Company::orderBy("delta.delta_in_week", "desc")
             ->limit($this->tickersLimit)
             ->project($this->getTickerProjection())
             ->get();
@@ -35,6 +33,7 @@ class GetTickerByIndustry
         }
 
         $companies = $companies->toArray();
+
         $result = $tickerMapper->handle($companies, $this->quotesLimit);
 
         return $result;

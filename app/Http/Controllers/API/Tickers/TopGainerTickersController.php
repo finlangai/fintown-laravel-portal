@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\API\Tickers;
 
-use App\Actions\GetTickerByIndustry;
+use App\Actions\GetTopGainerTickers;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\IndustryTickersRequest;
-use App\Models\Mongo\Company\Company;
-use App\Traits\GetLatestQuotes;
-use App\Traits\Swagger\Tickers\IndustryTickersAnnotation;
+use App\Http\Requests\TopGainerTickersRequest;
 use App\Utils\ApiResponse;
+use Illuminate\Http\Request;
 
-class IndustryTickersController extends Controller
+class TopGainerTickersController extends Controller
 {
-    use IndustryTickersAnnotation;
+    /**
+     * Handle the incoming request.
+     */
     public function __invoke(
-        IndustryTickersRequest $request,
-        GetTickerByIndustry $action
+        TopGainerTickersRequest $request,
+        GetTopGainerTickers $action
     ) {
         $validated = $request->validated();
 
