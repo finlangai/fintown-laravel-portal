@@ -6,7 +6,7 @@ use App\Actions\PopulateTickers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\TickersRequest;
 use App\Models\Mongo\Company\Company;
-use App\Traits\Swagger\Symbols\TickersAnnotation;
+use App\Traits\Swagger\Tickers\TickersAnnotation;
 use App\Utils\ApiResponse;
 
 class TickersController extends Controller

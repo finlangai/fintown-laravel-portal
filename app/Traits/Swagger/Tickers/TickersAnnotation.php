@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Swagger\Symbols;
+namespace App\Traits\Swagger\Tickers;
 
 trait TickersAnnotation
 {
