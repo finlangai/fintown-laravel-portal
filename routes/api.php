@@ -8,6 +8,7 @@ use App\Http\Controllers\API\Symbols\ProfileController;
 use App\Http\Controllers\API\Symbols\QuotesController;
 use App\Http\Controllers\API\Symbols\RatioController;
 use App\Http\Controllers\API\Symbols\SearchController;
+use App\Http\Controllers\API\Symbols\SummaryController;
 use App\Http\Controllers\API\Symbols\VN30BucketController;
 use App\Http\Controllers\API\Tickers\IndustryTickersController;
 use App\Http\Controllers\API\Tickers\TickersController;
@@ -53,5 +54,6 @@ Route::prefix("symbols")->group(function () {
         Route::get("news", NewsController::class);
         // Route::get("dividends", ProfileController::class);
         Route::get("financial-statements", FinancialStatementController::class);
+        Route::get("summary", SummaryController::class);
     });
 });
