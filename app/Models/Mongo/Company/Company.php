@@ -26,4 +26,9 @@ class Company extends Model
     {
         return $this->hasMany(MetricRecord::class, "symbol", "symbol");
     }
+
+    public function quotes(): HasMany
+    {
+        return $this->hasMany(Quote::class, "symbol", "symbol");
+    }
 }
