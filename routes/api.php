@@ -9,9 +9,9 @@ use App\Http\Controllers\API\Symbols\QuotesController;
 use App\Http\Controllers\API\Symbols\RatioController;
 use App\Http\Controllers\API\Symbols\SearchController;
 use App\Http\Controllers\API\Symbols\VN30BucketController;
-use App\Http\Controllers\API\SymbolSearchController;
-
-use App\Http\Controllers\API\VN30StockController;
+use App\Http\Controllers\API\Tickers\IndustryTickersController;
+use App\Http\Controllers\API\Tickers\TickersController;
+use App\Http\Controllers\API\Tickers\TopGainerTickersController;
 use Illuminate\Support\Facades\Route;
 
 // AUTH ROUTE
@@ -29,11 +29,19 @@ Route::prefix("auth")
         Route::get("logout", [AuthController::class, "logout"]);
     });
 
+// === TICKERS ROUTE
+Route::get("tickers", TickersController::class);
+Route::prefix("tickers")->group(function () {
+    //top-gainers
+    Route::get("top-gainers", TopGainerTickersController::class);
+    //industry
+    Route::get("industry", IndustryTickersController::class);
+});
+
 // === SYMBOLS ROUTE
 Route::prefix("symbols")->group(function () {
     // Search symbols
     Route::get("search", SearchController::class);
-
     // VN30
     Route::get("vn30", VN30BucketController::class);
 

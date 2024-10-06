@@ -4,7 +4,7 @@ namespace App\Traits;
 
 trait GetIntervalIndex
 {
-    public function getIntervalIndex(string $interval): int
+    public static function getIntervalIndex(string $interval): int
     {
         $intervalMap = [
             "1m" => 0,
