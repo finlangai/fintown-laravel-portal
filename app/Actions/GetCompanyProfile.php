@@ -69,9 +69,10 @@ class GetCompanyProfile
         }
 
         $profile["eps"] = round($metricSum["eps"], 2);
+        $profile["pe"] = round($firstQuote["close"] / $metricSum["eps"], 2);
 
         // calculate average for pe, pb, roe, roa
-        foreach (["pe", "pb", "roe", "roa"] as $metricName) {
+        foreach (["pb", "roe", "roa"] as $metricName) {
             $profile[$metricName] = round($metricSum[$metricName] / 4, 2);
         }
 

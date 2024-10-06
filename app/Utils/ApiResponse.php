@@ -13,8 +13,10 @@ class ApiResponse
      * @param int $statusCode
      * @return JsonResponse
      */
-    public static function success($data = null, int $statusCode = 200): JsonResponse
-    {
+    public static function success(
+        $data = null,
+        int $statusCode = 200
+    ): JsonResponse {
         return response()->json($data, $statusCode);
     }
 
@@ -48,12 +50,15 @@ class ApiResponse
      * @param array $errors
      * @return JsonResponse
      */
-    public static function error(string $message, int $statusCode = 400, array $errors = [  ]): JsonResponse
-    {
-        $response = [ 'message' => $message ];
+    public static function error(
+        string $message,
+        int $statusCode = 400,
+        array $errors = []
+    ): JsonResponse {
+        $response = ["message" => $message];
 
         if (!empty($errors)) {
-            $response[ 'errors' ] = $errors;
+            $response["errors"] = $errors;
         }
 
         return response()->json($response, $statusCode);
@@ -65,8 +70,9 @@ class ApiResponse
      * @param string $message
      * @return JsonResponse
      */
-    public static function badRequest(string $message = 'Bad requesst'): JsonResponse
-    {
+    public static function badRequest(
+        string $message = "Bad requesst"
+    ): JsonResponse {
         return self::error($message);
     }
 
@@ -76,8 +82,9 @@ class ApiResponse
      * @param string $message
      * @return JsonResponse
      */
-    public static function notFound(string $message = 'Resource not found'): JsonResponse
-    {
+    public static function notFound(
+        string $message = "Resource not found"
+    ): JsonResponse {
         return self::error($message, 404);
     }
 
@@ -87,8 +94,9 @@ class ApiResponse
      * @param string $message
      * @return JsonResponse
      */
-    public static function unauthorized(string $message = 'Unauthorized'): JsonResponse
-    {
+    public static function unauthorized(
+        string $message = "Unauthorized"
+    ): JsonResponse {
         return self::error($message, 401);
     }
 
@@ -98,8 +106,9 @@ class ApiResponse
      * @param string $message
      * @return JsonResponse
      */
-    public static function forbidden(string $message = 'Forbidden'): JsonResponse
-    {
+    public static function forbidden(
+        string $message = "Forbidden"
+    ): JsonResponse {
         return self::error($message, 403);
     }
 
@@ -110,8 +119,10 @@ class ApiResponse
      * @param string $message
      * @return JsonResponse
      */
-    public static function validationError(array $errors, string $message = 'Validation failed'): JsonResponse
-    {
+    public static function validationError(
+        array $errors,
+        string $message = "Validation failed"
+    ): JsonResponse {
         return self::error($message, 422, $errors);
     }
 
@@ -121,8 +132,9 @@ class ApiResponse
      * @param string $message
      * @return JsonResponse
      */
-    public static function internalServerError(string $message = 'Internal Server Error'): JsonResponse
-    {
+    public static function internalServerError(
+        string $message = "Internal Server Error"
+    ): JsonResponse {
         return self::error($message, 500);
     }
 }
