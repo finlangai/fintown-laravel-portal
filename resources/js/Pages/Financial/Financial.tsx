@@ -1,23 +1,9 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, usePage } from "@inertiajs/react";
 import * as React from "react";
-import { format } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react" 
-import { cn } from "@/Lib/utils"
-import { Button } from "@/Components/UI/Button"
-import { Calendar } from "@/Components/UI/calendar"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/Components/UI/popover"
-import {
-   Select,
-   SelectContent,
-   SelectItem,
-   SelectTrigger,
-   SelectValue,
- } from "@/Components/UI/select"
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious, } from "@/Components/UI/pagination"
+import DataFinancial from '@/Pages/Financial/FinancialData/dataFinancial'
+import SearchFinancial from './FinancialData/SearchComponent'
 
 export default function Financial () {
     const activeNavLink = { 
@@ -29,14 +15,51 @@ export default function Financial () {
     const menuFiintown = [
         "Hồ sơ công ty" , "Báo cáo tài chính" , "Chỉ số tài chính" , "Kết quả dự phóng"
     ]
-    const [date, setDate] = React.useState<Date | undefined>(new Date())
-    const { statements, currentPage, totalPages} = usePage().props;
-    const dataStatements: any  = statements;
 
 
+// phân trang và tìm kiếm 
+const { statements } = usePage().props;
+const dataStatements: any = statements;
+const itemsPerPage = 10;
+const [currentPage, setCurrentPage] = React.useState(1);
+const [searchTerm, setSearchTerm] = React.useState<string>("");
+const [quy, setQuy] = React.useState<number>(NaN);
+const [nam , setNam] = React.useState<number>(NaN);
+const filteredStatements = React.useMemo(
+  () =>
+    dataStatements.filter((statement: any) => {
+      const matchesSymbol = searchTerm === "" || statement.symbol.toLowerCase().includes(searchTerm.toLowerCase());
+      let  matchesQuy = true;
+    
+      if (!isNaN(quy)) { 
+        matchesQuy = statement.quarter === quy; 
+      }
+      
+      const matchesNam = nam ? statement.year === nam : true;
+      return matchesSymbol && matchesQuy && matchesNam;
+    }),
+  [dataStatements, searchTerm, quy ,nam]
+);
 
+const totalPages = Math.ceil(filteredStatements.length / itemsPerPage);
+const indexOfLastStatement = currentPage * itemsPerPage;
+const indexOfFirstStatement = indexOfLastStatement - itemsPerPage;
+const currentStatements = filteredStatements.slice(
+  indexOfFirstStatement,
+  indexOfLastStatement
+);
 
+const handlePageChange = (page: number) => {
+  setCurrentPage(page);
+};
 
+   
+const reset = ()=>{
+    setCurrentPage(1);
+    setSearchTerm('');
+    setQuy(NaN);
+    setNam(NaN)
+}
     return(
       <>
           <AuthenticatedLayout
@@ -147,109 +170,79 @@ export default function Financial () {
             </div>
             )}
             >
-            <Head title="Financial"/>
-            <div className="py-5">
-               <div className="mx-auto sm:px-6 lg:px-8 max-w-7xl">
-                  <div className="flex flex-col min-h-[86vh]">
-                     <div className="py-3">
-                            <h2 className="text-text-Content text-2xl font-bold">Danh sách báo cáo tài chính </h2>
-                     </div>
-                     <div className="flex justify-between items-center">
-                        <div id="tool" className="flex bg-background-active border-0 rounded-[8px] w-[1000px] p-4">
-                                 <div className="flex-1 relative flex items-center mx-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="absolute left-3 text-white"> 
-                                        <circle cx="11" cy="11" r="8" /> 
-                                        <path d="m21 21-4.3-4.3" /> 
-                                    </svg>
-                                    <input type="text" placeholder="Mã cổ phiếu..." className="pl-10 pr-4 py-2 border border-gray-300 rounded-3xl bg-transparent placeholder-gray-500 w-full text-sm text-white" />
-                                </div>
-                                <div id="date" className="flex-1 flex items-center justify-center mx-2 rounded">
-                                 <Popover>
-                                       <PopoverTrigger asChild>
-                                          <Button variant={"outline"} className="bg-transparent text-text-Content rounded-2xl">
-                                             <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
-                                                   <span>Chọn ngày cập nhập</span>
-                                          </Button>
-                                       </PopoverTrigger>
-                                       <PopoverContent className="w-auto p-0  text-text-content border bg-background-active shadow-lg">
-                                             <Calendar mode="single" selected={date} onSelect={setDate} initialFocus className="text-text-Content" />
-                                          <div className="flex m-auto bg-background-active justify-evenly py-3">
-                                                <button type="button" className="bg-custom-button-success w-20 h-8 rounded-xl border text-text-Content border-white bg-transparent">Hủy</button>
-                                                <button type="button" className="bg-custom-button-success w-20 h-8 rounded-xl " >Xác nhận</button>
-                                          </div>
-                                       </PopoverContent>
-
-                                 </Popover>
-
-                                </div>
-                                <div className="flex-1 flex items-center justify-center mx-2">
-                                <Select>
-                                    <SelectTrigger className="w-[180px] text-text-Content">
-                                       <SelectValue placeholder="Loại báo cáo" />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-background-active text-text-Content">
-                                       <SelectItem value="light">Kết quả kinh doanh</SelectItem>
-                                       <SelectItem value="dark">Cân đối kế toán</SelectItem>
-                                       <SelectItem value="system">Lưu chuyển tiền tệ</SelectItem>
-                                    </SelectContent>
-                                 </Select>
-                                 </div>
-                                <div id="reset" className="flex-1 flex items-center justify-center mx-2">
-                                    <div className="flex items-center cursor-pointer p-2 rounded hover:bg-background-theme hover:shadow-md transition-all duration-200">
+           <Head title="Financial" />
+        <div className="py-5">
+          <div className="mx-auto sm:px-6 lg:px-8 max-w-7xl">
+            <div className="flex flex-col min-h-[86vh]">
+              <div className="py-3">
+                <h2 className="text-text-Content text-2xl font-bold">Danh sách báo cáo tài chính </h2>
+              </div>
+              <div className="flex justify-between items-center">
+                <div id="tool" className="flex bg-background-active border-0 rounded-[8px] w-[1000px] p-4">
+                  <SearchFinancial searchTerm={searchTerm} setSearchTerm={setSearchTerm}  setquy={setQuy} setnam={setNam}/>
+                  <div id="reset" className="flex-1 flex items-center justify-center mx-2">
+                                    <div className="flex items-center cursor-pointer p-2 rounded hover:bg-background-theme hover:shadow-md transition-all duration-200" onClick={reset}>
                                         <svg className="lucide lucide-rotate-ccw text-text-link" xmlns="http://www.w3.org/2000/svg" width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
                                             <path d="M3 3v5h5" />
                                         </svg>
                                         <span className="ml-1 text-text-link text-sm">Đặt lại tất cả</span>
                                     </div>
-                                </div>
-                        </div>
                      </div>
-                     <div className="w-[1281px] h-auto bg-[#274241] rounded-tl-[14px] rounded-tr-[14px] flex flex-col border border-[#274241] mt-10">
-                        {/* Header */}
-                        <div className="flex justify-between px-4 py-2 bg-[#274241] text-white  rounded-tr-[14px]  rounded-tl-[14px]">
-                           <div className="w-1/6 opacity-90 text-white text-xs font-medium font-['Nunito Sans']">MÃ CP</div>
-                           <div className="w-1/6 opacity-90 text-white text-xs font-medium font-['Nunito Sans']">LOẠI BÁO CÁO</div>
-                           <div className="w-1/6 opacity-90 text-white text-xs font-medium font-['Nunito Sans']">CẬP NHẬT LẦN CUỐI</div>
-                           <div className="w-1/6 opacity-90 text-white text-xs font-medium font-['Nunito Sans']">KỲ BÁO CÁO</div>
-                           <div className="w-1/6 opacity-90 text-white text-xs font-medium font-['Nunito Sans']">TÌNH TRẠNG CẬP NHẬT</div>
-                           <div className="w-1/6 opacity-90 text-white text-xs font-medium font-['Nunito Sans']">HÀNH ĐỘNG</div>
-                        </div>
-                        {/* Body */}
-                        <div className="w-[1280px] h-auto bg-background-active flex-col border-t border-[#8a8a8a]">
-                        {
-                           dataStatements.map((item: any) => (
-                              <React.Fragment key={`${item.symbol}-${item.year}-${item.quarter}`}>
-                                    <div className="flex justify-between px-4 py-2 items-center">
-                                       <div className="w-1/6 text-text-Content text-xs font-normal font-['Inter']">{item.symbol}</div>
-                                       <div className="w-1/6 text-text-Content text-xs font-normal font-['Nunito Sans']">Lưu chuyển tiền tệ</div>
-                                       <div className="w-1/6 text-text-Content text-sm font-medium font-['Inter']">---</div>
-                                       <div className="w-1/6 text-text-Content text-xs font-normal font-['Inter']">Quý {item.quarter} năm {item.year}</div>
-                                       <div className="w-1/6 text-center text-white">
-                                          <button className="bg-custom-button-warning font-normal font-['Inter'] text-xs float-start rounded-md p-1">
-                                                Đang cập nhật
-                                          </button>
-                                       </div>
-                                       <div className="w-1/6 flex gap-2">
-                                          <div className="w-[30px] h-[30px] bg-white border border-[#8a8a8a] rounded-lg"></div>
-                                          <div className="w-[30px] h-[30px] bg-white border border-[#8a8a8a] rounded-lg"></div>
-                                          <div className="w-[30px] h-[30px] bg-white border border-[#8a8a8a] rounded-lg"></div>
-                                       </div>
-                                    </div>
-                                    <div className="border-t border-[#8a8a8a]"></div>
-                              </React.Fragment>
-                           ))
+                </div>
+              </div>
+              <div id="page" className="my-3 flex justify-end">
+                <div className="flex space-x-2 list-none bg-background-active rounded-sm p-2 text-text-Content">
+                  <Pagination>
+                    <PaginationContent>
+                      <PaginationItem>
+                        <PaginationPrevious
+                          href="#"
+                          onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
+                        />
+                      </PaginationItem>
+                      {Array.from({ length: totalPages }, (_, index) => {
+                        const pageNumber = index + 1;
+                        if (
+                          pageNumber === 1 ||
+                          pageNumber === totalPages ||
+                          (pageNumber >= currentPage - 2 && pageNumber <= currentPage + 2)
+                        ) {
+                          return (
+                            <PaginationItem key={pageNumber}>
+                              <PaginationLink
+                                href="#"
+                                onClick={() => handlePageChange(pageNumber)}
+                                isActive={pageNumber === currentPage}
+                                className="bg-transparent"
+                              >
+                                {pageNumber}
+                              </PaginationLink>
+                            </PaginationItem>
+                          );
                         }
-
-                        </div>
-                        </div>
-
-                  </div>
-               </div>
+                        return null;
+                      })}
+                      {currentPage < totalPages - 1 && (
+                        <PaginationItem>
+                          <PaginationEllipsis />
+                        </PaginationItem>
+                      )}
+                      <PaginationItem>
+                        <PaginationNext
+                          href="#"
+                          onClick={() => currentPage < totalPages && handlePageChange(currentPage + 1)}
+                        />
+                      </PaginationItem>
+                    </PaginationContent>
+                  </Pagination>
+                </div>
+              </div>
+              <DataFinancial dataStatements={currentStatements} />
             </div>
-
-               
-            </AuthenticatedLayout>
-      </>
-    )
+          </div>
+        </div>
+      </AuthenticatedLayout>
+    </>
+  );
 }
