@@ -1,18 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Traits\Swagger\Symbols;
 
-use App\Actions\GetSymbolsByQuery;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\API\SearchSymbolRequest;
-use App\Utils\ApiResponse;
-use function PHPSTORM_META\type;
-
-class SymbolSearchController extends Controller
+trait SearchAnnotation
 {
     /**
      * @OA\Get(
-     *      path="/api/symbols/search?q=Hòa",
+     *      path="/api/symbols/search",
      *      operationId="StockSearch",
      *      tags={"Symbols"},
      *      summary="Stock searching",
@@ -42,24 +36,7 @@ class SymbolSearchController extends Controller
      *       ),
      *     )
      */
-    public function __invoke(SearchSymbolRequest $request, GetSymbolsByQuery $action)
+    public function SearchAnnotation()
     {
-        $query      = $request->input('q');
-        $limit      = 12;
-        $projection = [
-            '_id'          => 0,
-            'symbol'       => 1,
-            'company_name' => 1,
-            'exchange'     => '$profile.exchange',
-         ];
-
-        $result = $action->handle($query, $limit, $projection);
-
-        // Not found if return false
-        if (!$result) {
-            return ApiResponse::notFound('Not found');
-        }
-
-        return ApiResponse::success($result);
     }
 }

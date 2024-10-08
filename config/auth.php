@@ -38,6 +38,11 @@ return [
     'guards'           => [
         'web' => [
             'driver'   => 'session',
+            'provider' => 'staffs',
+         ],
+
+        'api' => [
+            'driver'   => 'jwt',
             'provider' => 'users',
          ],
      ],
@@ -60,9 +65,16 @@ return [
      */
 
     'providers'        => [
-        'users' => [
+        'staffs' => [
             'driver' => 'eloquent',
-            'model'  => env('AUTH_MODEL', App\Models\SQL\Staff\Staff::class),
+            'model'  => App\Models\SQL\Staff\Staff::class,
+         ],
+
+        'users'  => [
+            'driver'   => 'eloquent',
+            'model'    => App\Models\SQL\User\User::class,
+            'table'    => 'users',
+            'username' => 'email',
          ],
 
         // 'users' => [

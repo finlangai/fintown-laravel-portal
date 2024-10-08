@@ -7,10 +7,12 @@ use App\Models\SQL\Subcription\PromotionCode;
 use App\Models\SQL\Subcription\Subcription;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Arr;
 use MongoDB\Laravel\Relations\HasMany;
 use MongoDB\Laravel\Relations\HasOne;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasFactory;
 
@@ -20,10 +22,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'username',
         'fullname',
         'email',
         'phone',
+        'address',
         'password',
      ];
 
@@ -33,7 +35,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
+        'id',
+        'type_id',
+        'is_banned',
         'password',
+        'updated_at',
+        'created_at',
         // 'remember_token',
      ];
 
@@ -46,9 +53,55 @@ class User extends Authenticatable
     {
         return [
             // 'email_verified_at' => 'datetime',
+            // password as hashed for automatically hashing with bcrypt when saving model
             'password' => 'hashed',
          ];
     }
+
+    /**
+     * Define default values for columns
+     *
+     * @return array<string, any>
+     */
+    protected $attributes = [
+        'is_banned' => false,
+        'type_id'   => 0,
+     ];
+
+    /**
+     * Get the identifier that will be stored in the subject claim of the JWT.
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    /**
+     * Return a key value array, containing any custom claims to be added to the JWT.
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [
+            "clientType" => $this->type_id,
+            "scope"       => $this->getSelfScope(),
+         ];
+    }
+
+    /**
+     * Return this user's permission scope.
+     *
+     * @return array
+     */
+    public function getSelfScope(): array
+    {
+        return [ "*" ];
+    }
+
+    // === RELATIONS
 
     public function watchlists(): HasMany
     {
@@ -69,4 +122,5 @@ class User extends Authenticatable
     {
         return $this->hasOne(CommissionHistory::class, 'user_id');
     }
+
 }

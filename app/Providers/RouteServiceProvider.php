@@ -2,8 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\Mongo\Company\Company;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
@@ -21,8 +19,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Route::bind('company', function ($value) {
-            return Company::where('symbol', strtoupper($value))->firstOrFail();
-        });
+        // Route::bind('company', function ($value) {
+        //     return Company::where('symbol', strtoupper($value))->firstOrFail();
+        // });
     }
 }
