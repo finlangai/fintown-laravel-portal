@@ -6,6 +6,8 @@ use App\Actions\GetTopGainerTickers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TopGainerTickersRequest;
 use App\Utils\ApiResponse;
+use App\Utils\Redis;
+use App\Utils\Unix;
 use Illuminate\Http\Request;
 
 class TopGainerTickersController extends Controller
@@ -19,11 +21,25 @@ class TopGainerTickersController extends Controller
     ) {
         $validated = $request->validated();
 
+        // redis cache name tickers:top-gainers:limit?
+        $cacheName = "tickers:top-gainers:";
+        $cacheName .= isset($validated["limit"])
+            ? $validated["limit"]
+            : $action->tickersLimit;
+
+        $cache = Redis::get($cacheName);
+        if ($cache) {
+            return ApiResponse::success($cache);
+        }
+
         $result = $action->handle($validated);
 
         if (!$result) {
             return ApiResponse::notFound("Không tìm thấy công ty");
         }
+
+        // set cache
+        Redis::set($cacheName, $result, Unix::hour(6));
 
         return ApiResponse::success($result);
     }

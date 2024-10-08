@@ -8,28 +8,41 @@ use App\Http\Requests\API\TickersRequest;
 use App\Models\Mongo\Company\Company;
 use App\Traits\Swagger\Tickers\TickersAnnotation;
 use App\Utils\ApiResponse;
+use App\Utils\Redis;
+use App\Utils\Unix;
 
 class TickersController extends Controller
 {
     use TickersAnnotation;
+
+    public int $tickersLimit = 10;
+    public int $tickersOffset = 0;
+
+    public string $cacheName = "tickers:list:";
+
     public function __invoke(TickersRequest $request, PopulateTickers $action)
     {
         $validated = $request->validated();
-        $tickersLimit = 10;
 
         $query = Company::orderBy("profile.market_cap", "desc")->project(
             $this->getTickerProjection()
         );
 
         if (array_key_exists("limit", $validated)) {
-            $tickersLimit = $validated["limit"];
+            $this->tickersLimit = $validated["limit"];
         }
 
         if (array_key_exists("offset", $validated)) {
-            $query->skip($validated["offset"]);
+            $this->tickersOffset = $validated["offset"];
+        }
+        // Check if cached
+        $cache = $this->getCache();
+        if ($cache) {
+            return ApiResponse::success($cache);
         }
 
-        $query->limit($tickersLimit);
+        $query->skip($this->tickersOffset);
+        $query->limit($this->tickersLimit);
         $tickers = $query->get();
 
         // handle zero length collection
@@ -38,8 +51,17 @@ class TickersController extends Controller
         }
 
         $result = $action->handle($tickers);
+        // caching
+        Redis::set($this->cacheName, $result, Unix::hour(6));
 
         return $result;
+    }
+
+    public function getCache()
+    {
+        $this->cacheName .= $this->tickersLimit . ":" . $this->tickersOffset;
+        $cache = Redis::get($this->cacheName);
+        return $cache;
     }
 
     private function getTickerProjection(): array
