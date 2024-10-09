@@ -14,11 +14,8 @@ class Redis
      * @param int|null $ttl
      * @return bool
      */
-    public static function set(
-        string $key,
-        mixed $value,
-        int $ttl = Unix::hour(6)
-    ): bool {
+    public static function set(string $key, mixed $value, int $ttl): bool
+    {
         if ($ttl) {
             return Cache::store("redis")->put($key, $value, $ttl);
         }

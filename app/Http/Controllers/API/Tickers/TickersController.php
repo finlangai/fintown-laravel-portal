@@ -69,7 +69,7 @@ class TickersController extends Controller
         return [
             "_id" => 0,
             "symbol" => 1,
-            "companyName" => "\$compane_name",
+            "companyName" => "\$company_name",
             "logo" => 1,
             "industry" => "\$industry",
             "marketCap" => "\$profile.market_cap",
