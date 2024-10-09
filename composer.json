@@ -12,7 +12,9 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "lorisleiva/laravel-actions": "^2.8",
+        "mongodb/builder": "^0.2.0",
         "mongodb/laravel-mongodb": "^5.0",
+        "predis/predis": "^2.0",
         "tightenco/ziggy": "^2.0",
         "tymon/jwt-auth": "^2.1",
         "zircote/swagger-php": "^4.10"

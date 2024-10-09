@@ -13,7 +13,16 @@ class Company extends Model
 
     protected $hidden = ["id"];
     public $timestamps = false;
-
+    
+    # ké thêm fill vào đây nha đại ka bảo
+    protected $fillable = [
+        'symbol',
+        'icb_code',
+        'company_name',
+        'industry',
+        'logo',
+        'profile',
+    ];
     /**
      * Get the route key for the model.
      */

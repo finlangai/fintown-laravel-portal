@@ -11,8 +11,8 @@ class GetTickerByIndustry
 {
     use AsAction, GetLatestQuotes, TickerProjection;
 
-    private int $tickersLimit = 4;
-    private int $quotesLimit = 21;
+    public int $tickersLimit = 4;
+    public int $quotesLimit = 21;
 
     public function handle(
         array $validated,

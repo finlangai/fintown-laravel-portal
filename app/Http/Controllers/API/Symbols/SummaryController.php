@@ -6,14 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Mongo\Company\Company;
 use App\Utils\ApiResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
 
 class SummaryController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke(string $symbol, Request $request)
+    public function __invoke(string $symbol)
     {
         try {
             $company = Company::where("symbol", strtoupper($symbol))

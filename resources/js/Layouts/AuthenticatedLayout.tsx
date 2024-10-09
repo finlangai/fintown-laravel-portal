@@ -18,7 +18,6 @@ export default function Authenticated({
     fullname: "ADMIN",
     email: "Email@example.com",
   };
-  console.log(user);
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const handleSetIsExpanded = (value: boolean) => {
     setIsExpanded(value);

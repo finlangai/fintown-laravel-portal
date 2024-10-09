@@ -1,0 +1,26 @@
+{
+    "symbol": "ACB",
+    "icb_code": "8355",
+    "company_name": "Ngân hàng Thương mại Cổ phần Á Châu.",
+    "industry": "Ngân hàng",
+    "profile": {
+        "short_name": "ACB",
+        "international_name": "Asia Commercial Joint Stock Bank",
+        "head_quarters": "442 Nguyễn Thị Minh Khai, Q. 3, TP. Hồ Chí Minh",
+        "phone": "+84 (28) 833-4085",
+        "fax": "+84 (28) 383-99885",
+        "email": "acb@acb.com.vn",
+        "web_address": "www.acb.com.vn",
+        "employees": 13655,
+        "business_license_number": "0301452948",
+        "date_of_issue": "2024-06-25T00:00:00",
+        "tax_id_number": "0301452948",
+        "charter_capital": 44666579120000,
+        "date_of_listing": "2020-12-09T00:00:00",
+        "exchange": "HOSE",
+        "initial_listing_price": 26400,
+        "listing_volume": 4466657912,
+        "market_cap": 115016441234000,
+        "is_using_cf_direct": true
+    }
+}
