@@ -4,11 +4,10 @@ namespace App\Http\Controllers\API\Tickers;
 
 use App\Actions\GetTopGainerTickers;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TopGainerTickersRequest;
+use App\Http\Requests\API\TopGainerTickersRequest;
 use App\Utils\ApiResponse;
 use App\Utils\Redis;
 use App\Utils\Unix;
-use Illuminate\Http\Request;
 
 class TopGainerTickersController extends Controller
 {
@@ -39,7 +38,7 @@ class TopGainerTickersController extends Controller
         }
 
         // set cache
-        Redis::set($cacheName, $result, Unix::hour(6));
+        Redis::set($cacheName, $result, Unix::hour(12));
 
         return ApiResponse::success($result);
     }

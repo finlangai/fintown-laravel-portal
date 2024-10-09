@@ -38,7 +38,7 @@ class IndustryTickersController extends Controller
         }
 
         // set cache
-        Redis::set($cacheName, $result, Unix::hour(6));
+        Redis::set($cacheName, $result, Unix::hour(12));
 
         return ApiResponse::success($result);
     }
