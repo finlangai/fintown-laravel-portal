@@ -2,14 +2,14 @@
 
 namespace App\Traits\Swagger\Symbols;
 
-trait OfficersAnnotation
+trait HoldersAnnotation
 {
     /**
      * @OA\Get(
-     *      path="/api/symbols/{symbol}/officers",
-     *      operationId="GetCompanyOfficers",
+     *      path="/api/symbols/{symbol}/holders",
+     *      operationId="GetCompanyHolders",
      *      tags={"Symbols"},
-     *      summary="Company Officers",
+     *      summary="Company Holders",
      *      description="Retrieve officers of a company",
      *      @OA\Parameter(
      *          description="Symbol of the instrument",
@@ -21,14 +21,14 @@ trait OfficersAnnotation
      *          @OA\Examples(example="Vietnamilk", value="VNM", summary="Vietnamilk"),
      *      ),
      *      @OA\Parameter(
-     *          description="The amount of officers data to get. 9 by default",
+     *          description="The amount of holders data to get. 9 by default",
      *          in="query",
      *          name="limit",
      *          @OA\Schema(type="int"),
-     *          @OA\Examples(example="Limit", value="9", summary="9 officers data"),
+     *          @OA\Examples(example="Limit", value="9", summary="9 holders data"),
      *      ),
      *      @OA\Parameter(
-     *          description="The amount of records to skip if specified, if offset is 3, skipping 3 officers before actually taking data. Zero by default",
+     *          description="The amount of records to skip if specified, if offset is 3, skipping 3 holders before actually taking data. Zero by default",
      *          in="query",
      *          name="offset",
      *          @OA\Schema(type="int"),
@@ -38,9 +38,13 @@ trait OfficersAnnotation
      *          description="Success",
      *          @OA\JsonContent(
      *              type="object",
-     *              @OA\Property(property="avatar", type="string", example="https://firebasestorage.googleapis.com/v0/b/fintown-4ddd6.appspot.com/o/individual%2F46611.png?alt=media"),
-     *              @OA\Property(property="name", type="string", example="Nguyễn Thanh Tùng"),
-     *              @OA\Property(property="position", type="string", example="Tổng giám đốc")
+     *              @OA\Property(property="name", type="string", example="CTCP FPT"),
+     *              @OA\Property(property="position", type="string", nullable=true),
+     *              @OA\Property(property="shares", type="integer", example=43235549),
+     *              @OA\Property(property="ownership", type="number", format="float", example=0.011657314000308807),
+     *              @OA\Property(property="isOrganization", type="boolean", example=true),
+     *              @OA\Property(property="isForeigner", type="boolean", example=false),
+     *              @OA\Property(property="isFounder", type="boolean", example=false)
      *          )
      *       ),
      *      @OA\Response(
@@ -61,7 +65,7 @@ trait OfficersAnnotation
      *       ),
      *     )
      */
-    public function OfficersAnnotation()
+    public function HoldersAnnotation()
     {
     }
 }

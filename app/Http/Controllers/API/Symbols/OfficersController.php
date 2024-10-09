@@ -41,8 +41,10 @@ class OfficersController extends Controller
             ->get();
 
         if (!$officers->count()) {
-            return ApiResponse::notFound();
+            return ApiResponse::notFound("Không tìm thấy dữ liệu ban lãnh đạo");
         }
+
+        // reformat fields
         $officers = $officers->toArray();
         foreach ($officers as &$record) {
             unset($record["symbol"]);

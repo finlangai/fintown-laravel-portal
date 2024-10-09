@@ -2,6 +2,7 @@
 use App\Http\Controllers\API\Symbols\EventsController;
 use App\Http\Controllers\API\Symbols\FinancialStatementController;
 use App\Http\Controllers\API\Symbols\FluctuationController;
+use App\Http\Controllers\API\Symbols\HoldersController;
 use App\Http\Controllers\API\Symbols\NewsController;
 use App\Http\Controllers\API\Symbols\OfficersController;
 use App\Http\Controllers\API\Symbols\ProfileController;
@@ -25,6 +26,7 @@ Route::prefix("symbols")->group(function () {
         Route::get("summary", SummaryController::class);
         Route::get("fluctuation", FluctuationController::class);
         Route::get("officers", OfficersController::class);
+        Route::get("holders", HoldersController::class);
         Route::get("events", EventsController::class);
         Route::get("news", NewsController::class);
         // Route::get("dividends", ProfileController::class);
