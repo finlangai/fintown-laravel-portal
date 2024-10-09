@@ -22,12 +22,13 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
-        'fullname',
-        'email',
-        'phone',
-        'address',
-        'password',
-     ];
+        "fullname",
+        "email",
+        "phone",
+        "address",
+        "avatar",
+        "password",
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -35,14 +36,14 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $hidden = [
-        'id',
-        'type_id',
-        'is_banned',
-        'password',
-        'updated_at',
-        'created_at',
+        "id",
+        "type_id",
+        "is_banned",
+        "password",
+        "updated_at",
+        "created_at",
         // 'remember_token',
-     ];
+    ];
 
     /**
      * Get the attributes that should be cast.
@@ -52,10 +53,9 @@ class User extends Authenticatable implements JWTSubject
     protected function casts(): array
     {
         return [
-            // 'email_verified_at' => 'datetime',
             // password as hashed for automatically hashing with bcrypt when saving model
-            'password' => 'hashed',
-         ];
+            "password" => "hashed",
+        ];
     }
 
     /**
@@ -64,9 +64,9 @@ class User extends Authenticatable implements JWTSubject
      * @return array<string, any>
      */
     protected $attributes = [
-        'is_banned' => false,
-        'type_id'   => 0,
-     ];
+        "is_banned" => false,
+        "type_id" => 0,
+    ];
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
@@ -87,8 +87,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return [
             "clientType" => $this->type_id,
-            "scope"       => $this->getSelfScope(),
-         ];
+            "scope" => $this->getSelfScope(),
+        ];
     }
 
     /**
@@ -98,29 +98,28 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getSelfScope(): array
     {
-        return [ "*" ];
+        return ["*"];
     }
 
     // === RELATIONS
 
     public function watchlists(): HasMany
     {
-        return $this->hasMany(Watchlist::class, 'user_id');
+        return $this->hasMany(Watchlist::class, "user_id");
     }
 
     public function subcriptions(): HasMany
     {
-        return $this->hasMany(Subcription::class, 'user_id');
+        return $this->hasMany(Subcription::class, "user_id");
     }
 
     public function promotionCodes(): HasMany
     {
-        return $this->hasMany(PromotionCode::class, 'partner_id');
+        return $this->hasMany(PromotionCode::class, "partner_id");
     }
 
     public function commissionHistory(): HasOne
     {
-        return $this->hasOne(CommissionHistory::class, 'user_id');
+        return $this->hasOne(CommissionHistory::class, "user_id");
     }
-
 }

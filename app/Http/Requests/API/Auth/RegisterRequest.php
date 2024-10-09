@@ -38,7 +38,7 @@ class RegisterRequest extends FormRequest
         //  ];
         return [
             "fullname" => "required",
-            "email" => "required",
+            "email" => "required|email",
             "phone" => "required",
             "address" => "nullable|string",
             "password" => "required|string",
