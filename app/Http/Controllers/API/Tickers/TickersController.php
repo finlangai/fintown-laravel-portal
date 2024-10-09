@@ -52,7 +52,7 @@ class TickersController extends Controller
 
         $result = $action->handle($tickers);
         // caching
-        Redis::set($this->cacheName, $result, Unix::hour(6));
+        Redis::set($this->cacheName, $result, Unix::hour(12));
 
         return $result;
     }
