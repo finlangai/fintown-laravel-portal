@@ -37,4 +37,24 @@ class Util
         }
         return $arr;
     }
+
+    /**
+     * Get the path on the bucket for resources on firebase storage
+     *
+     * @param string $url
+     * @return string
+     */
+    public static function getPathFromUrl(string $url): string
+    {
+        $parts = parse_url($url);
+        if (!isset($parts["path"])) {
+            throw new \InvalidArgumentException("Invalid URL");
+        }
+
+        // The path is in format /v0/b/bucket-name.appspot.com/o/encoded-file-path
+        $pathParts = explode("/", $parts["path"]);
+        $encodedPath = end($pathParts);
+
+        return urldecode($encodedPath);
+    }
 }

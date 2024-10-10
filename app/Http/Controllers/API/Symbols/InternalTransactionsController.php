@@ -52,7 +52,7 @@ class InternalTransactionsController extends Controller
         }
 
         // set cache
-        // Redis::set($cacheName, $transactions, Unix::hour(24));
+        Redis::set($cacheName, $transactions, Unix::hour(24));
 
         return ApiResponse::success($transactions);
     }

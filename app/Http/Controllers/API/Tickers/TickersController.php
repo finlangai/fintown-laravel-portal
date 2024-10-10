@@ -20,6 +20,12 @@ class TickersController extends Controller
 
     public string $cacheName = "tickers:list:";
 
+    public function total()
+    {
+        $total = Company::count();
+        return ApiResponse::success(["total" => $total]);
+    }
+
     public function __invoke(TickersRequest $request, PopulateTickers $action)
     {
         $validated = $request->validated();
