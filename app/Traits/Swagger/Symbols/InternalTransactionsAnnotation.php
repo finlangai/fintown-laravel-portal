@@ -44,7 +44,7 @@ trait InternalTransactionsAnnotation
      *                  @OA\Property(property="volumeBeforeTransaction", type="integer", example=0),
      *                  @OA\Property(property="volumeAfterTransaction", type="integer", example=5000),
      *                  @OA\Property(
-     *                      property="transitioner",
+     *                      property="transactioner",
      *                      type="object",
      *                      @OA\Property(property="name", type="string", example="Nguyễn Thị Kim Oanh"),
      *                      @OA\Property(property="position", type="string", example="Thành Viên HĐQT")

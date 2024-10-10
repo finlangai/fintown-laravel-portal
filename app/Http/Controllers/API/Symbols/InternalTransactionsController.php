@@ -73,7 +73,7 @@ class InternalTransactionsController extends Controller
             "ownership" => 1,
             "volumeBeforeTransaction" => "\$volume_before_transaction",
             "volumeAfterTransaction" => "\$volume_after_transaction",
-            "transitioner" => [
+            "transactioner" => [
                 "name" => "\$transaction_man",
                 "position" => "\$transaction_man_position",
             ],
