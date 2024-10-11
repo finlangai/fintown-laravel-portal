@@ -40,7 +40,9 @@ class ChangeUserAvatar
 
         // delete old one old firebase storage
         $pathOnBucket = Util::getPathFromUrl($oldAvatarUrl);
-        $this->firebaseService->delete($pathOnBucket);
+        if ($pathOnBucket != "avatar/default.jpg") {
+            $this->firebaseService->delete($pathOnBucket);
+        }
 
         return $publicUrl;
     }
