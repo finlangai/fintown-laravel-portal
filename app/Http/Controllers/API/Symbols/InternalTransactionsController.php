@@ -50,11 +50,15 @@ class InternalTransactionsController extends Controller
         foreach ($transactions as &$t) {
             $t["ownership"] = round($t["ownership"] * 100, 3);
         }
+        $result = [
+            "total" => InternalTransaction::where("symbol", $symbol)->count(),
+            "records" => $transactions,
+        ];
 
         // set cache
-        Redis::set($cacheName, $transactions, Unix::hour(24));
+        // Redis::set($cacheName, $transactions, Unix::hour(24));
 
-        return ApiResponse::success($transactions);
+        return ApiResponse::success($result);
     }
 
     public function getTransactions(string $symbol): Collection

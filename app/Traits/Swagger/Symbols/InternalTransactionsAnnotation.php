@@ -37,38 +37,43 @@ trait InternalTransactionsAnnotation
      *          response=200,
      *          description="Success",
      *          @OA\JsonContent(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="object",
-     *                  @OA\Property(property="ownership", type="number", format="float", example=0.009),
-     *                  @OA\Property(property="volumeBeforeTransaction", type="integer", example=0),
-     *                  @OA\Property(property="volumeAfterTransaction", type="integer", example=5000),
-     *                  @OA\Property(
-     *                      property="transactioner",
+     *              type="object",
+     *              @OA\Property(property="total", type="integer", example=240),
+     *              @OA\Property(
+     *                  property="records",
+     *                  type="array",
+     *                  @OA\Items(
      *                      type="object",
-     *                      @OA\Property(property="name", type="string", example="Nguyễn Thị Kim Oanh"),
-     *                      @OA\Property(property="position", type="string", example="Thành Viên HĐQT")
-     *                  ),
-     *                  @OA\Property(
-     *                      property="related",
-     *                      type="object",
-     *                      @OA\Property(property="name", type="string", nullable=true),
-     *                      @OA\Property(property="position", type="string", nullable=true)
-     *                  ),
-     *                  @OA\Property(
-     *                      property="plan",
-     *                      type="object",
-     *                      @OA\Property(property="buyVolume", type="integer", example=10000),
-     *                      @OA\Property(property="sellVolume", type="integer", example=0),
-     *                      @OA\Property(property="beginDate", type="integer", example=1701277200000),
-     *                      @OA\Property(property="endDate", type="integer", example=1703782800000)
-     *                  ),
-     *                  @OA\Property(
-     *                      property="result",
-     *                      type="object",
-     *                      @OA\Property(property="buyVolume", type="integer", example=5000),
-     *                      @OA\Property(property="sellVolume", type="integer", example=0),
-     *                      @OA\Property(property="executionDate", type="integer", example=1703005200000)
+     *                      @OA\Property(property="ownership", type="number", format="float", example=0.009),
+     *                      @OA\Property(property="volumeBeforeTransaction", type="integer", example=0),
+     *                      @OA\Property(property="volumeAfterTransaction", type="integer", example=5000),
+     *                      @OA\Property(
+     *                          property="transactioner",
+     *                          type="object",
+     *                          @OA\Property(property="name", type="string", example="Lê Ngọc Hổ"),
+     *                          @OA\Property(property="position", type="string", example="Em rể")
+     *                      ),
+     *                      @OA\Property(
+     *                          property="related",
+     *                          type="object",
+     *                          @OA\Property(property="name", type="string", nullable=true),
+     *                          @OA\Property(property="position", type="string", nullable=true)
+     *                      ),
+     *                      @OA\Property(
+     *                          property="plan",
+     *                          type="object",
+     *                          @OA\Property(property="buyVolume", type="integer", example=0),
+     *                          @OA\Property(property="sellVolume", type="integer", example=221100),
+     *                          @OA\Property(property="beginDate", type="integer", example=1724086800000),
+     *                          @OA\Property(property="endDate", type="integer", example=1726592400000)
+     *                      ),
+     *                      @OA\Property(
+     *                          property="result",
+     *                          type="object",
+     *                          @OA\Property(property="buyVolume", type="integer", example=0),
+     *                          @OA\Property(property="sellVolume", type="integer", example=221100),
+     *                          @OA\Property(property="executionDate", type="integer", example=1725382800000)
+     *                      )
      *                  )
      *              )
      *          )

@@ -26,29 +26,56 @@ trait SummaryAnnotation
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(
-     *                 property="overview",
-     *                 type="array",
-     *                 @OA\Items(type="string")
+     *                 property="summary",
+     *                 type="object",
+     *                 @OA\Property(
+     *                     property="overview",
+     *                     type="array",
+     *                     @OA\Items(type="string")
+     *                 ),
+     *                 @OA\Property(
+     *                     property="historyDev",
+     *                     type="array",
+     *                     @OA\Items(type="string")
+     *                 ),
+     *                 @OA\Property(
+     *                     property="companyPromise",
+     *                     type="array",
+     *                     @OA\Items(type="string")
+     *                 ),
+     *                 @OA\Property(
+     *                     property="businessRisk",
+     *                     type="array",
+     *                     @OA\Items(type="string")
+     *                 ),
+     *                 @OA\Property(
+     *                     property="keyDevelopments",
+     *                     type="array",
+     *                     @OA\Items(type="string")
+     *                 )
      *             ),
      *             @OA\Property(
-     *                 property="historyDev",
-     *                 type="array",
-     *                 @OA\Items(type="string")
+     *                 property="fundamental",
+     *                 type="object",
+     *                 @OA\Property(property="sic", type="string"),
+     *                 @OA\Property(property="icbCode", type="string"),
+     *                 @OA\Property(property="internationName", type="string"),
+     *                 @OA\Property(property="headQuarters", type="string"),
+     *                 @OA\Property(property="phone", type="string"),
+     *                 @OA\Property(property="fax", type="string"),
+     *                 @OA\Property(property="email", type="string"),
+     *                 @OA\Property(property="taxIdNumber", type="string"),
+     *                 @OA\Property(property="employees", type="integer"),
+     *                 @OA\Property(property="charterCapital", type="integer")
      *             ),
      *             @OA\Property(
-     *                 property="companyPromise",
-     *                 type="array",
-     *                 @OA\Items(type="string")
-     *             ),
-     *             @OA\Property(
-     *                 property="businessRisk",
-     *                 type="array",
-     *                 @OA\Items(type="string")
-     *             ),
-     *             @OA\Property(
-     *                 property="keyDevelopments",
-     *                 type="array",
-     *                 @OA\Items(type="string")
+     *                 property="listingInfo",
+     *                 type="object",
+     *                 @OA\Property(property="exchange", type="string"),
+     *                 @OA\Property(property="dateOfListing", type="string"),
+     *                 @OA\Property(property="initialListingPrice", type="integer"),
+     *                 @OA\Property(property="dateOfIssue", type="string"),
+     *                 @OA\Property(property="listingVolume", type="integer")
      *             )
      *         )
      *     ),
