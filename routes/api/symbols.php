@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\API\Symbols\AssessmentsController;
 use App\Http\Controllers\API\Symbols\EventsController;
 use App\Http\Controllers\API\Symbols\FinancialStatementController;
 use App\Http\Controllers\API\Symbols\FluctuationController;
@@ -34,5 +36,8 @@ Route::prefix("symbols")->group(function () {
         // Route::get("dividends", ProfileController::class);
         Route::get("ratio", RatioController::class);
         Route::get("financial-statements", FinancialStatementController::class);
+
+        // Assessments
+        Route::get("assessment", AssessmentsController::class);
     });
 });
