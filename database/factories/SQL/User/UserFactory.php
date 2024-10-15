@@ -18,13 +18,14 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            "type_id"   => 0,
-            "fullname"  => fake()->firstName() . " " . fake()->lastName(),
-            "email"     => fake()->email(),
-            "phone"     => "0" . rand(100000000, 999999999),
-            "address"   => fake()->boolean() ? fake()->address() : null,
-            "password"  => Hash::make('Password!123'),
+            "type_id" => 0,
+            "fullname" => fake()->firstName() . " " . fake()->lastName(),
+            "email" => fake()->email(),
+            "phone" => "0" . rand(100000000, 999999999),
+            "address" => fake()->boolean() ? fake()->address() : null,
+            "avatar" => env("DEFAULT_AVATAR"),
+            "password" => Hash::make("Password!123"),
             "is_banned" => false,
-         ];
+        ];
     }
 }

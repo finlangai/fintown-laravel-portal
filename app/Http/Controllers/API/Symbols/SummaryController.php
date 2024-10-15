@@ -2,62 +2,73 @@
 
 namespace App\Http\Controllers\API\Symbols;
 
+use App\Actions\MapCompanySummary;
 use App\Http\Controllers\Controller;
 use App\Models\Mongo\Company\Company;
 use App\Utils\ApiResponse;
+use App\Utils\Redis;
+use App\Utils\Unix;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
 
 class SummaryController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke(string $symbol, Request $request)
+    public function __invoke(string $symbol, MapCompanySummary $action)
     {
+        $symbol = strtoupper($symbol);
+
+        // check cache
+        $cacheName = "symbols:summary:$symbol";
+        if ($cache = Redis::get($cacheName)) {
+            return ApiResponse::success($cache);
+        }
+
         try {
-            $company = Company::where("symbol", strtoupper($symbol))
+            $company = Company::where("symbol", $symbol)
                 ->project($this->getSummaryProjection())
                 ->firstOrFail();
         } catch (ModelNotFoundException $e) {
             return ApiResponse::notFound("Không tìm thấy công ty");
         }
 
-        $summary = $company->toArray();
+        $info = $company->toArray();
+        $result = $action->handle($info);
 
-        // Trim and remove special characters from all paragraph
-        foreach ($summary as &$paragraph) {
-            // trim and remove the special character to see if it's null
-            $paragraph = trim(str_replace("  ", "", $paragraph));
-            if (!$paragraph) {
-                $paragraph = null;
-                continue;
-            }
+        // caching
+        Redis::set($cacheName, $result, Unix::hour(24));
 
-            // split the paragraph by ';'
-            $paragraph = explode(";", $paragraph);
-
-            // loop through and reformat each chunk in the paragraph
-            foreach ($paragraph as $index => &$chunk) {
-                $chunk = trim($chunk);
-                if (!$chunk) {
-                    unset($paragraph[$index]);
-                }
-            }
-        }
-
-        return ApiResponse::success($summary);
+        return ApiResponse::success($result);
     }
 
     private function getSummaryProjection(): array
     {
         return [
-            "_id" => 0,
-            "overview" => "\$summary.overview",
-            "historyDev" => "\$summary.history_dev",
-            "companyPromise" => "\$summary.company_promise",
-            "businessRisk" => "\$summary.business_risk",
-            "keyDevelopments" => "\$summary.business_strategies",
+            "summary" => [
+                "overview" => "\$summary.overview",
+                "historyDev" => "\$summary.history_dev",
+                "companyPromise" => "\$summary.company_promise",
+                "businessRisk" => "\$summary.business_risk",
+                "keyDevelopments" => "\$summary.business_strategies",
+            ],
+            "fundamental" => [
+                "sic" => "\$symbol",
+                "icbCode" => "\$icb_code",
+                "internationName" => "\$profile.international_name",
+                "headQuarters" => "\$profile.head_quarters",
+                "phone" => "\$profile.phone",
+                "fax" => "\$profile.fax",
+                "email" => "\$profile.email",
+                "taxIdNumber" => "\$profile.tax_id_number",
+                "employees" => "\$profile.employees",
+                "charterCapital" => "\$profile.charter_capital",
+            ],
+            "listingInfo" => [
+                "exchange" => "\$profile.exchange",
+                "dateOfListing" => "\$profile.date_of_listing",
+                "initialListingPrice" => "\$profile.initial_listing_price",
+                "dateOfIssue" => "\$profile.date_of_issue",
+                "listingVolume" => "\$profile.listing_volume",
+            ],
         ];
     }
 }

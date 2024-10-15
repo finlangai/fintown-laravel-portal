@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\API\General;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TopGainerTickersRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,11 @@ class TopGainerTickersRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "limit" => "nullable|integer|min:1",
+            "fullname" => "sometimes|required",
+            "email" => "sometimes|required|email",
+            "phone" => "sometimes|required",
+            "address" => "sometimes|required|string",
+            "password" => "sometimes|required|string",
         ];
     }
 }

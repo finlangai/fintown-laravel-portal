@@ -1,59 +1,16 @@
 <?php
 
-use App\Http\Controllers\API\Auth\AuthController;
-use App\Http\Controllers\API\Symbols\EventsController;
-use App\Http\Controllers\API\Symbols\FinancialStatementController;
-use App\Http\Controllers\API\Symbols\NewsController;
-use App\Http\Controllers\API\Symbols\ProfileController;
-use App\Http\Controllers\API\Symbols\QuotesController;
-use App\Http\Controllers\API\Symbols\RatioController;
-use App\Http\Controllers\API\Symbols\SearchController;
-use App\Http\Controllers\API\Symbols\SummaryController;
-use App\Http\Controllers\API\Symbols\VN30BucketController;
-use App\Http\Controllers\API\Tickers\IndustryTickersController;
-use App\Http\Controllers\API\Tickers\TickersController;
-use App\Http\Controllers\API\Tickers\TopGainerTickersController;
 use Illuminate\Support\Facades\Route;
 
-// AUTH ROUTE
-Route::prefix("auth")
-    ->middleware("auth:api")
-    ->group(function () {
-        // Bypass API Guard
-        Route::withoutMiddleware("auth:api")->group(function () {
-            Route::post("login", [AuthController::class, "login"]);
-            Route::post("register", [AuthController::class, "register"]);
+Route::middleware([])->group(function () {
+    require __DIR__ . "/api/auth.php";
+
+    require __DIR__ . "/api/tickers.php";
+    require __DIR__ . "/api/symbols.php";
+
+    Route::prefix("general")
+        ->middleware(["auth:api"])
+        ->group(function () {
+            require __DIR__ . "/api/user.php";
         });
-
-        Route::get("refresh", [AuthController::class, "refresh"]);
-        Route::get("profile", [AuthController::class, "profile"]);
-        Route::get("logout", [AuthController::class, "logout"]);
-    });
-
-// === TICKERS ROUTE
-Route::get("tickers", TickersController::class);
-Route::prefix("tickers")->group(function () {
-    //top-gainers
-    Route::get("top-gainers", TopGainerTickersController::class);
-    //industry
-    Route::get("industry", IndustryTickersController::class);
-});
-
-// === SYMBOLS ROUTE
-Route::prefix("symbols")->group(function () {
-    // Search symbols
-    Route::get("search", SearchController::class);
-    // VN30
-    Route::get("vn30", VN30BucketController::class);
-
-    Route::prefix("{symbol}")->group(function () {
-        Route::get("ratio", RatioController::class);
-        Route::get("quotes", QuotesController::class);
-        Route::get("profile", ProfileController::class);
-        Route::get("events", EventsController::class);
-        Route::get("news", NewsController::class);
-        // Route::get("dividends", ProfileController::class);
-        Route::get("financial-statements", FinancialStatementController::class);
-        Route::get("summary", SummaryController::class);
-    });
 });

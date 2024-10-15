@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Mongo\Company\Company;
 use App\Traits\Swagger\Symbols\ProfileAnnotation;
 use App\Utils\ApiResponse;
+use App\Utils\Redis;
+use App\Utils\Unix;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProfileController extends Controller
@@ -14,6 +16,12 @@ class ProfileController extends Controller
     use ProfileAnnotation;
     public function __invoke(string $symbol, GetCompanyProfile $action)
     {
+        $cacheName = "symbols:profile:$symbol:";
+        $cache = Redis::get($cacheName);
+        if ($cache) {
+            return ApiResponse::success($cache);
+        }
+
         try {
             $company = Company::where("symbol", strtoupper($symbol))
                 ->project([
@@ -35,6 +43,7 @@ class ProfileController extends Controller
         }
 
         $result = $action->handle($company);
+        Redis::set($cacheName, $result, Unix::hour(6));
 
         return ApiResponse::success($result);
     }
