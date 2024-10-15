@@ -6,6 +6,7 @@ use App\Http\Controllers\CompanyWebController;
 use App\Http\Controllers\FinancialController;
 use App\Http\Controllers\HolderWebController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StaffWebController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -40,7 +41,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/financial', [FinancialController::class, 'index']);
     
 
-
+    // staff và các trang liên quan đến Staff
+    Route::get('/staff',  [StaffWebController::class, 'index'])->name('staff.index'); 
+    
 
 
     Route::get('/profile', [ ProfileController::class, 'edit' ])->name('profile.edit');

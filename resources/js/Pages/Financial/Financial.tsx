@@ -15,9 +15,7 @@ export default function Financial () {
     const menuFiintown = [
         "Hồ sơ công ty" , "Báo cáo tài chính" , "Chỉ số tài chính" , "Kết quả dự phóng"
     ]
-
-
-// phân trang và tìm kiếm 
+ 
 const { statements } = usePage().props;
 const dataStatements: any = statements;
 const itemsPerPage = 10;
@@ -25,22 +23,21 @@ const [currentPage, setCurrentPage] = React.useState(1);
 const [searchTerm, setSearchTerm] = React.useState<string>("");
 const [quy, setQuy] = React.useState<number>(NaN);
 const [nam , setNam] = React.useState<number>(NaN);
-const filteredStatements = React.useMemo(
-  () =>
-    dataStatements.filter((statement: any) => {
+
+const filteredStatements = React.useMemo(() => {
+  
+  return dataStatements.filter((statement: any) => {
       const matchesSymbol = searchTerm === "" || statement.symbol.toLowerCase().includes(searchTerm.toLowerCase());
-      let  matchesQuy = true;
-    
+      let matchesQuy = true;
+
       if (!isNaN(quy)) { 
-        matchesQuy = statement.quarter === quy; 
+          matchesQuy = statement.quarter === quy; 
       }
       
       const matchesNam = nam ? statement.year === nam : true;
       return matchesSymbol && matchesQuy && matchesNam;
-    }),
-  [dataStatements, searchTerm, quy ,nam]
-);
-
+  });
+}, [dataStatements, searchTerm, quy, nam, currentPage, ]);
 const totalPages = Math.ceil(filteredStatements.length / itemsPerPage);
 const indexOfLastStatement = currentPage * itemsPerPage;
 const indexOfFirstStatement = indexOfLastStatement - itemsPerPage;
@@ -48,17 +45,21 @@ const currentStatements = filteredStatements.slice(
   indexOfFirstStatement,
   indexOfLastStatement
 );
-
+React.useEffect(() => {
+  if (filteredStatements.length === 0 || currentPage > totalPages) {
+      setCurrentPage(1); 
+  }
+}, [filteredStatements, totalPages]);
 const handlePageChange = (page: number) => {
   setCurrentPage(page);
 };
-
-   
+const [resetOption , SetResetOption ] = React.useState(false);
 const reset = ()=>{
     setCurrentPage(1);
     setSearchTerm('');
     setQuy(NaN);
-    setNam(NaN)
+    setNam(NaN);
+    SetResetOption(true);
 }
     return(
       <>
@@ -179,7 +180,7 @@ const reset = ()=>{
               </div>
               <div className="flex justify-between items-center">
                 <div id="tool" className="flex bg-background-active border-0 rounded-[8px] w-[1000px] p-4">
-                  <SearchFinancial searchTerm={searchTerm} setSearchTerm={setSearchTerm}  setquy={setQuy} setnam={setNam}/>
+                  <SearchFinancial searchTerm={searchTerm} setSearchTerm={setSearchTerm}  setquy={setQuy} setnam={setNam} reset={resetOption} SetResetOption={SetResetOption}/>
                   <div id="reset" className="flex-1 flex items-center justify-center mx-2">
                                     <div className="flex items-center cursor-pointer p-2 rounded hover:bg-background-theme hover:shadow-md transition-all duration-200" onClick={reset}>
                                         <svg className="lucide lucide-rotate-ccw text-text-link" xmlns="http://www.w3.org/2000/svg" width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
