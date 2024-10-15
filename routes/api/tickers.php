@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 Route::get("tickers", TickersController::class);
 Route::prefix("tickers")->group(function () {
     Route::get("total", [TickersController::class, "total"]);
+    Route::get("overview", [TickersController::class, "overview"]);
     Route::get("top-gainers", TopGainerTickersController::class);
     Route::get("industry", IndustryTickersController::class);
 });
