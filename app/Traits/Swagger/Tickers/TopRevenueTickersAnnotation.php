@@ -2,15 +2,15 @@
 
 namespace App\Traits\Swagger\Tickers;
 
-trait TopGainerTickersAnnotation
+trait TopRevenueTickersAnnotation
 {
     /**
      * @OA\Get(
-     *     path="/api/tickers/top-gainers",
-     *     operationId="GetTopGainerTickers",
+     *     path="/api/tickers/top-revenue",
+     *     operationId="GetTopRevenueTickers",
      *     tags={"Tickers"},
-     *     summary="Get Top gainers tickers",
-     *     description="Retrieve the list of top gainer tickers",
+     *     summary="Get Top revenue tickers",
+     *     description="Retrieve the list of top revenue tickers",
      *     @OA\Parameter(
      *         name="limit",
      *         in="query",
@@ -93,7 +93,7 @@ trait TopGainerTickersAnnotation
      *     )
      * )
      */
-    public function TopGainerTickersAnnotation()
+    public function TopRevenueTickersAnnotation()
     {
     }
 }
