@@ -24,7 +24,7 @@ WORKDIR /app
 
 # Install MongoDB extension
 RUN yes '' | pecl install mongodb && docker-php-ext-enable mongodb \
-    && docker-php-ext-install pdo pdo_mysql \
+    && docker-php-ext-install pdo pdo_mysql sodium \
     && cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 
 # Copy only the necessary files from the build stage

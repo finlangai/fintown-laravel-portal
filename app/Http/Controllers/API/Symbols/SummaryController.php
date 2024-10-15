@@ -2,18 +2,29 @@
 
 namespace App\Http\Controllers\API\Symbols;
 
+use App\Actions\MapCompanySummary;
 use App\Http\Controllers\Controller;
 use App\Models\Mongo\Company\Company;
 use App\Utils\ApiResponse;
+use App\Utils\Redis;
+use App\Utils\Unix;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class SummaryController extends Controller
 {
-    public function __invoke(string $symbol)
+    public function __invoke(string $symbol, MapCompanySummary $action)
     {
+        $symbol = strtoupper($symbol);
+
+        // check cache
+        $cacheName = "symbols:summary:$symbol";
+        if ($cache = Redis::get($cacheName)) {
+            return ApiResponse::success($cache);
+        }
+
         try {
-            $company = Company::where("symbol", strtoupper($symbol))
+            $company = Company::where("symbol", $symbol)
                 ->project($this->getSummaryProjection())
                 ->firstOrFail();
         } catch (ModelNotFoundException $e) {
@@ -21,41 +32,12 @@ class SummaryController extends Controller
         }
 
         $info = $company->toArray();
+        $result = $action->handle($info);
 
-        // Trim and remove special characters from all paragraph
-        foreach ($info["summary"] as &$paragraph) {
-            // trim and remove the special character to see if it's null
-            $paragraph = trim(str_replace("  ", "", $paragraph));
-            if (!$paragraph) {
-                $paragraph = null;
-                continue;
-            }
+        // caching
+        Redis::set($cacheName, $result, Unix::hour(24));
 
-            // split the paragraph by ';'
-            $paragraph = explode(";", $paragraph);
-
-            // loop through and reformat each chunk in the paragraph
-            foreach ($paragraph as $index => &$chunk) {
-                $chunk = trim($chunk);
-                if (!$chunk) {
-                    unset($paragraph[$index]);
-                }
-            }
-        }
-
-        // format the date for listingInfo
-        $dateOfIssue = &$info["listingInfo"]["dateOfIssue"];
-        $dateOfListing = &$info["listingInfo"]["dateOfListing"];
-
-        $dateToParse = [&$dateOfIssue, &$dateOfListing];
-        foreach ($dateToParse as &$dateString) {
-            if (isset($dateString)) {
-                $date = Carbon::parse($dateString);
-                $dateString = $date->format("d-m-Y");
-            }
-        }
-
-        return ApiResponse::success($info);
+        return ApiResponse::success($result);
     }
 
     private function getSummaryProjection(): array
