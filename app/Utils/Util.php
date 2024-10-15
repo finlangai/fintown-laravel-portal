@@ -57,4 +57,15 @@ class Util
 
         return urldecode($encodedPath);
     }
+
+    public static function removeNewLine(array $source)
+    {
+        array_walk_recursive($source, function (&$item) {
+            if (is_string($item)) {
+                $item = str_replace("\n", "", $item);
+            }
+        });
+
+        return $source;
+    }
 }

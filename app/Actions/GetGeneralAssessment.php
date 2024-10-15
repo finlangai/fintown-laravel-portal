@@ -7,6 +7,7 @@ use Exception;
 use App\Models\Mongo\Company\Assessment;
 use App\Traits\GetAssessmentCriterias;
 use App\Utils\ApiResponse;
+use App\Utils\Util;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Lorisleiva\Actions\Concerns\AsAction;
 
@@ -62,7 +63,7 @@ class GetGeneralAssessment
             }
             $group = $clusterInfos;
         }
-        return $assessment;
+        return Util::CamelizeArray($assessment);
     }
 
     private function getProjection()

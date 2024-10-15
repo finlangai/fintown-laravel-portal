@@ -38,6 +38,9 @@ Route::prefix("symbols")->group(function () {
         Route::get("financial-statements", FinancialStatementController::class);
 
         // Assessments
-        Route::get("assessment", AssessmentsController::class);
+        Route::prefix("assessment")->group(function () {
+            Route::get("overview", AssessmentsController::class);
+            Route::get("criteria", [AssessmentsController::class, "criteria"]);
+        });
     });
 });
