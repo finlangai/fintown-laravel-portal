@@ -11,22 +11,22 @@ class GetFinancialRatio
 {
     use AsAction;
 
-    public function handle(array $validated, Company $company): false | array
+    public function handle(array $validated, Company $company): false|array
     {
-        if (0 == $validated[ 'quarter' ]) {
+        if (0 == $validated["quarter"]) {
             // YEARLY
             $rawMetrics = MetricRecord::getYearlyRecordsBySymbolBefore(
-                $company[ 'symbol' ],
-                $validated[ 'year' ],
-                $validated[ 'limit' ]
+                $company["symbol"],
+                $validated["year"],
+                $validated["limit"]
             );
         } else {
             // QUARTERLY
             $rawMetrics = MetricRecord::getQuarterlyRecordsBySymbolBefore(
-                $company[ 'symbol' ],
-                $validated[ 'year' ],
-                $validated[ 'quarter' ],
-                $validated[ 'limit' ]
+                $company["symbol"],
+                $validated["year"],
+                $validated["quarter"],
+                $validated["limit"]
             );
         }
 
@@ -35,34 +35,36 @@ class GetFinancialRatio
             return false;
         }
 
-        $formulars = [  ];
-        foreach ($rawMetrics[ 0 ][ 'metrics' ] as $identifer => $v) {
+        $formulars = [];
+        foreach ($rawMetrics[0]["metrics"] as $identifer => $v) {
             // shove identifiders into array for querying
-            $formulars[  ] = $identifer;
+            $formulars[] = $identifer;
         }
 
         // query and sort formulars
         $formulars = Formular::query()
-            ->whereIn('identifier', $formulars)
-            ->orderBy('metadata.order', 'asc')
+            ->whereIn("identifier", $formulars)
+            ->where("metadata.is_viewable", true)
+            ->orderBy("metadata.order", "asc")
             ->get();
 
-        $mappedMetrics = [  ];
+        $mappedMetrics = [];
 
         foreach ($formulars as $info) {
-            $row                   = [  ];
-            $row[ 'name' ]         = $info[ 'display_name' ];
-            $row[ 'unit' ]         = $info[ 'metadata' ][ 'unit' ];
-            $row[ 'isPercentage' ] = $info[ 'metadata' ][ 'is_percentage' ];
+            $row = [];
+            $row["name"] = $info["display_name"];
+            $row["unit"] = $info["metadata"]["unit"];
+            $row["isPercentage"] = $info["metadata"]["is_percentage"];
             // $row[ 'description' ]  = $info[ 'description' ];
-            $row[ 'values' ] = [  ];
+            $row["values"] = [];
 
-            $identifer               = $info[ 'identifier' ];
-            $isShouldDivineByBillion = $info[ 'metadata' ][ 'is_should_divine_by_billion' ];
+            $identifer = $info["identifier"];
+            $isShouldDivineByBillion =
+                $info["metadata"]["is_should_divine_by_billion"];
             foreach ($rawMetrics as $record) {
-                $year       = $record[ 'year' ];
-                $quarter    = $record[ 'quarter' ];
-                $fieldValue = $record[ 'metrics' ][ $identifer ];
+                $year = $record["year"];
+                $quarter = $record["quarter"];
+                $fieldValue = $record["metrics"][$identifer];
 
                 // check if null and set a flag
                 $isNullValue = is_null($fieldValue);
@@ -80,14 +82,14 @@ class GetFinancialRatio
                 // compile the string for period field
                 $period = (0 == $quarter ? "" : "Q$quarter/") . $year;
 
-                $row[ 'values' ][  ] = [
-                    'period'  => $period,
-                    'year'    => $year,
-                    'quarter' => $quarter,
-                    'value'   => $fieldValue,
-                 ];
+                $row["values"][] = [
+                    "period" => $period,
+                    "year" => $year,
+                    "quarter" => $quarter,
+                    "value" => $fieldValue,
+                ];
             }
-            $mappedMetrics[  ] = $row;
+            $mappedMetrics[] = $row;
         }
 
         return $mappedMetrics;

@@ -48,8 +48,8 @@ class Staff extends Authenticatable
          ];
     }
 
-    public function roles(): BelongsToMany
-    {
-        return $this->belongsToMany(Role::class, 'staff_roles', 'staff_id', 'role_id');
-    }
+    // public function roles(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Role::class, 'staff_roles', 'staff_id', 'role_id');
+    // }
 }
