@@ -85,7 +85,7 @@ class GetCriteriaAssessment
                             "value" => $metricValue,
                         ];
                     }
-                    // sorting
+                    // sorting asc
                     usort(
                         $metricData[$key],
                         fn($q1, $q2) => $q1["year"] > $q2["year"]

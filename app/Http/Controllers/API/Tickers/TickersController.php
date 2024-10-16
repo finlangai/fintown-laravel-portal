@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\API\Tickers;
 
+use App\Actions\FilterTickersList;
 use App\Actions\PopulateTickers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\TickersRequest;
 use App\Models\Mongo\Company\Company;
+use App\Models\Mongo\Company\Stash;
 use App\Traits\Swagger\Tickers\TickersAnnotation;
 use App\Utils\ApiResponse;
 use App\Utils\Redis;
@@ -15,59 +17,33 @@ class TickersController extends Controller
 {
     use TickersAnnotation;
 
-    public int $tickersLimit = 10;
-    public int $tickersOffset = 0;
-
-    public string $cacheName = "tickers:list:";
-
     public function total()
     {
         $total = Company::count();
         return ApiResponse::success(["total" => $total]);
     }
 
-    public function __invoke(TickersRequest $request, PopulateTickers $action)
+    public function overview()
     {
-        $validated = $request->validated();
-
-        $query = Company::orderBy("profile.market_cap", "desc")->project(
-            $this->getTickerProjection()
-        );
-
-        if (array_key_exists("limit", $validated)) {
-            $this->tickersLimit = $validated["limit"];
+        $vn30Stash = Stash::where("symbol", "VN30")->first()->toArray();
+        unset($vn30Stash["symbol"]);
+        $billionList = ["revenue", "marketcap", "earnings", "equity"];
+        foreach ($billionList as $key) {
+            $vn30Stash[$key] /= 1000000000;
         }
-
-        if (array_key_exists("offset", $validated)) {
-            $this->tickersOffset = $validated["offset"];
+        foreach ($vn30Stash as $key => &$value) {
+            $value = round($value, 2);
         }
-        // Check if cached
-        $cache = $this->getCache();
-        if ($cache) {
-            return ApiResponse::success($cache);
-        }
-
-        $query->skip($this->tickersOffset);
-        $query->limit($this->tickersLimit);
-        $tickers = $query->get();
-
-        // handle zero length collection
-        if (!$tickers->count()) {
-            return ApiResponse::notFound();
-        }
-
-        $result = $action->handle($tickers);
-        // caching
-        Redis::set($this->cacheName, $result, Unix::hour(12));
-
-        return $result;
+        $vn30Stash["total"] = Company::count();
+        return ApiResponse::success($vn30Stash);
     }
 
-    public function getCache()
+    public function __invoke(TickersRequest $request, FilterTickersList $action)
     {
-        $this->cacheName .= $this->tickersLimit . ":" . $this->tickersOffset;
-        $cache = Redis::get($this->cacheName);
-        return $cache;
+        $validated = $request->validated();
+        $result = $action->handle($validated);
+
+        return ApiResponse::success($result);
     }
 
     private function getTickerProjection(): array

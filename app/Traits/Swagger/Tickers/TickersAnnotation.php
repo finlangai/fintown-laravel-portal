@@ -32,6 +32,28 @@ trait TickersAnnotation
      *             minimum=1,
      *         )
      *     ),
+     *     @OA\Parameter(
+     *         name="sortOn",
+     *         in="query",
+     *         description="Field to sort on",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string",
+     *             enum={"marketcap", "price", "dailyDelta", "weeklyDelta", "yearlyDelta", "pe", "pb", "roe", "exchange", "industry"},
+     *             default="marketcap"
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="sortOrder",
+     *         in="query",
+     *         description="Order of sorting",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string",
+     *             enum={"asc", "desc"},
+     *             default="desc"
+     *         )
+     *     ),
      *     @OA\Response(
      *         response=200,
      *         description="Success",
@@ -67,12 +89,11 @@ trait TickersAnnotation
      *         description="Unprocessable Entity"
      *     ),
      *     @OA\Response(
-     *         response=500,   
-
-    *         description="Internal Server Error"
-    *     )
-    * )
-    */
+     *         response=500,
+     *         description="Internal Server Error"
+     *     )
+     * )
+     */
     public function TickersAnnotation()
     {
     }
