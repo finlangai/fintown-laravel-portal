@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Tickers;
 
+use App\Actions\FilterTickersList;
 use App\Actions\PopulateTickers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\TickersRequest;
@@ -15,11 +16,6 @@ use App\Utils\Unix;
 class TickersController extends Controller
 {
     use TickersAnnotation;
-
-    public int $tickersLimit = 10;
-    public int $tickersOffset = 0;
-
-    public string $cacheName = "tickers:list:";
 
     public function total()
     {
@@ -42,48 +38,12 @@ class TickersController extends Controller
         return ApiResponse::success($vn30Stash);
     }
 
-    public function __invoke(TickersRequest $request, PopulateTickers $action)
+    public function __invoke(TickersRequest $request, FilterTickersList $action)
     {
         $validated = $request->validated();
+        $result = $action->handle($validated);
 
-        $query = Company::orderBy("profile.market_cap", "desc")->project(
-            $this->getTickerProjection()
-        );
-
-        if (array_key_exists("limit", $validated)) {
-            $this->tickersLimit = $validated["limit"];
-        }
-
-        if (array_key_exists("offset", $validated)) {
-            $this->tickersOffset = $validated["offset"];
-        }
-        // Check if cached
-        $cache = $this->getCache();
-        if ($cache) {
-            return ApiResponse::success($cache);
-        }
-
-        $query->skip($this->tickersOffset);
-        $query->limit($this->tickersLimit);
-        $tickers = $query->get();
-
-        // handle zero length collection
-        if (!$tickers->count()) {
-            return ApiResponse::notFound();
-        }
-
-        $result = $action->handle($tickers);
-        // caching
-        Redis::set($this->cacheName, $result, Unix::hour(12));
-
-        return $result;
-    }
-
-    public function getCache()
-    {
-        $this->cacheName .= $this->tickersLimit . ":" . $this->tickersOffset;
-        $cache = Redis::get($this->cacheName);
-        return $cache;
+        return ApiResponse::success($result);
     }
 
     private function getTickerProjection(): array

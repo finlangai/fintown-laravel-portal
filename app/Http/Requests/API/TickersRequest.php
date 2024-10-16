@@ -24,6 +24,9 @@ class TickersRequest extends FormRequest
         return [
             "limit" => "nullable|integer|min:1",
             "offset" => "nullable|integer|min:1",
+            "sortOn" =>
+                "nullable|string|in:marketcap,price,dailyDelta,weeklyDelta,yearlyDelta,pe,pb,roe,exchange,industry",
+            "sortOrder" => "nullable|string|in:asc,desc",
         ];
     }
 }
