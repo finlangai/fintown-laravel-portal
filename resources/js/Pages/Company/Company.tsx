@@ -23,7 +23,7 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
-  } from "@/components/ui/breadcrumb"
+  } from "@/Components/UI/breadcrumb"
 export default function FinancialReports({ companies }: { companies: CompanyInfo[] }) {
   // true là thủ công false là Tải từ nguồn cấp
   const [sourceType , setSourceType] = useState<boolean>(true);
@@ -71,20 +71,20 @@ export default function FinancialReports({ companies }: { companies: CompanyInfo
                     </Breadcrumb>
 
                     <div className="py-3">
-                            <h2 className="text-text-Content text-2xl font-bold">Danh sách Công ty</h2>
+                            <h2 className="font-bold text-2xl text-text-Content">Danh sách Công ty</h2>
                     </div>
                    <div className="flex justify-between items-center">
-                        <div id="tool" className="flex bg-background-active border-0 rounded-[8px] w-[600px] p-4">
-                                <div className="flex-1 relative flex items-center mx-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="absolute left-3 text-white"> 
+                        <div id="tool" className="flex border-0 bg-background-active p-4 rounded-[8px] w-[600px]">
+                                <div className="relative flex flex-1 items-center mx-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="left-3 absolute text-white"> 
                                         <circle cx="11" cy="11" r="8" /> 
                                         <path d="m21 21-4.3-4.3" /> 
                                     </svg>
                                     <InputComponent companies={companies} onSymbolsFiltered={handleSymbolsFiltered} />
                                 </div>
-                                <div id="date" className="flex-1 flex items-center justify-center mx-2 rounded">
+                                <div id="date" className="flex flex-1 justify-center items-center mx-2 rounded">
                                 <Select >
-                                    <SelectTrigger className="w-[180px] text-text-Content border-none">
+                                    <SelectTrigger className="border-none w-[180px] text-text-Content">
                                         <SelectValue placeholder="Ngày cập nhập" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -97,13 +97,13 @@ export default function FinancialReports({ companies }: { companies: CompanyInfo
                                     </SelectContent>
                                 </Select>
                                 </div>
-                                <div id="reset" className="flex-1 flex items-center justify-center mx-2">
-                                    <div className="flex items-center cursor-pointer p-2 rounded hover:bg-background-theme hover:shadow-md transition-all duration-200">
-                                        <svg className="lucide lucide-rotate-ccw text-text-link" xmlns="http://www.w3.org/2000/svg" width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                                <div id="reset" className="flex flex-1 justify-center items-center mx-2">
+                                    <div className="flex items-center hover:bg-background-theme hover:shadow-md p-2 rounded transition-all duration-200 cursor-pointer">
+                                        <svg className="text-text-link lucide lucide-rotate-ccw" xmlns="http://www.w3.org/2000/svg" width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
                                             <path d="M3 3v5h5" />
                                         </svg>
-                                        <span className="ml-1 text-text-link text-sm">Đặt lại tất cả</span>
+                                        <span className="ml-1 text-sm text-text-link">Đặt lại tất cả</span>
                                     </div>
                                 </div>
                         </div>
@@ -114,11 +114,11 @@ export default function FinancialReports({ companies }: { companies: CompanyInfo
                             <AlertDialogContent className="bg-background-active">
                             <AlertDialogHeader className="flex flex-col p-4">
                             <div className="flex space-x-2">
-                                <div onClick={handleHandmade}  className="cursor-pointer hover:text-blue-500 transition-colors text-text-Content text-sm">
+                                <div onClick={handleHandmade}  className="text-sm text-text-Content hover:text-blue-500 transition-colors cursor-pointer">
                                     Nguồn thủ công
                                 </div> 
                                 <div className="text-text-Content">|</div>
-                                <div  onClick={handleSource}  className="cursor-pointer hover:text-blue-500 transition-colors text-text-Content text-sm" >
+                                <div  onClick={handleSource}  className="text-sm text-text-Content hover:text-blue-500 transition-colors cursor-pointer" >
                                     Tải từ nguồn cấp
                                 </div>
                             </div>
@@ -133,40 +133,40 @@ export default function FinancialReports({ companies }: { companies: CompanyInfo
                                             Đây là nội dung của thủ công
                                         </>
                                        ) : (
-                                            <div className="border border-white rounded-[30px]">
-                                                <div className="p-4 border-b border-white">
-                                                    <input  className="bg-transparent border-none w-full h-2 text-text-Content focus:outline-none focus:ring-0 focus:border-none text-sm"
+                                            <div className="border-white border rounded-[30px]">
+                                                <div className="border-white p-4 border-b">
+                                                    <input  className="bg-transparent border-none focus:border-none w-full h-2 text-text-Content focus:outline-none focus:ring-0 text-sm"
                                                      type="text" 
                                                      value={stockCode}
                                                      onChange={handleChange}
                                                      placeholder="Nhập mã cổ phiếu của công ty cần lấy ..."/>
                                                 </div>
                                                 <div id="listSearch" className="min-h-48">
-                                                    <div className="text-text-Content flex justify-center items-center">
+                                                    <div className="flex justify-center items-center text-text-Content">
                                                         {stockCode.length > 0 ? 
                                                         (
-                                                            <div className="flex flex-col w-full p-5">
-                                                                <div className=" border border-neutral-400 rounded-xl mt-2"> 
-                                                                    <div className="flex justify-between py-2 px-5">
+                                                            <div className="flex flex-col p-5 w-full">
+                                                                <div className="border-neutral-400 mt-2 border rounded-xl"> 
+                                                                    <div className="flex justify-between px-5 py-2">
                                                                         <h2 className="font-semibold">VNM</h2>
                                                                         <span className="bg-custom-button-success rounded-sm">
-                                                                            <p className="text-sm px-5  ">Đã có</p>
+                                                                            <p className="px-5 text-sm">Đã có</p>
                                                                         </span>
                                                                     </div>
                                                                 </div>
-                                                                <div className=" border border-neutral-400 rounded-xl mt-2"> 
-                                                                    <div className="flex justify-between py-2 px-5">
+                                                                <div className="border-neutral-400 mt-2 border rounded-xl"> 
+                                                                    <div className="flex justify-between px-5 py-2">
                                                                         <h2 className="font-semibold">VNM</h2>
                                                                         <span className="bg-custom-button-success rounded-sm">
-                                                                            <p className="text-sm px-5  ">Đã có</p>
+                                                                            <p className="px-5 text-sm">Đã có</p>
                                                                         </span>
                                                                     </div>
                                                                 </div>
-                                                                <div className=" border border-neutral-400 rounded-xl mt-2"> 
-                                                                    <div className="flex justify-between py-2 px-5">
+                                                                <div className="border-neutral-400 mt-2 border rounded-xl"> 
+                                                                    <div className="flex justify-between px-5 py-2">
                                                                         <h2 className="font-semibold">VNM</h2>
                                                                         <span className="bg-custom-button-success rounded-sm">
-                                                                            <p className="text-sm px-5  ">Đã có</p>
+                                                                            <p className="px-5 text-sm">Đã có</p>
                                                                         </span>
                                                                     </div>
                                                                 </div>
