@@ -21,17 +21,41 @@ trait InternalTransactionsAnnotation
      *          @OA\Examples(example="Vietnamilk", value="VNM", summary="Vietnamilk"),
      *      ),
      *      @OA\Parameter(
-     *          description="The amount of transactions data to get. 20 by default",
-     *          in="query",
      *          name="limit",
-     *          @OA\Schema(type="int"),
-     *          @OA\Examples(example="Limit", value="20", summary="20 transactions data"),
+     *          in="query",
+     *          description="Limit the number of results returned",
+     *          required=false,
+     *          @OA\Schema(
+     *              type="integer",
+     *              minimum=1,
+     *              default=10
+     *          ),
+     *          @OA\Examples(example="Limit", value=20, summary="20 transactions data")
      *      ),
      *      @OA\Parameter(
-     *          description="The amount of records to skip if specified, if offset is 3, skipping 3 transactions before actually taking data. Zero by default",
-     *          in="query",
      *          name="offset",
-     *          @OA\Schema(type="int"),
+     *          in="query",
+     *          description="Offset the start of the results",
+     *          required=false,
+     *          @OA\Schema(
+     *              type="integer",
+     *              minimum=0,
+     *              default=0
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="start",
+     *          in="query",
+     *          description="Start unix timestamp, must be less than end if present",
+     *          required=false,
+     *          @OA\Schema(type="integer")
+     *      ),
+     *      @OA\Parameter(
+     *          name="end",
+     *          in="query",
+     *          description="End unix timestamp, must be greater than start if present",
+     *          required=false,
+     *          @OA\Schema(type="integer")
      *      ),
      *      @OA\Response(
      *          response=200,

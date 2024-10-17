@@ -9,15 +9,20 @@ use App\Http\Controllers\Controller;
 use App\Models\Mongo\Company\InternalTransaction;
 use App\Http\Requests\API\InternalTransactionsRequest;
 use App\Traits\ProcessLimitAndOffset;
-use App\Utils\Util;
+use App\Traits\TimeRangeConditions;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 
 class InternalTransactionsController extends Controller
 {
-    use ProcessLimitAndOffset;
+    use ProcessLimitAndOffset, TimeRangeConditions;
 
     public int $limit = 20;
     public int $offset = 0;
+
+    // -1 mean non filter
+    public int $start = -1;
+    public int $end = -1;
 
     public function __invoke(
         string $symbol,
@@ -27,23 +32,25 @@ class InternalTransactionsController extends Controller
         // uppercasing symbol param for later use
         $symbol = strtoupper($symbol);
 
-        // take a look at params: limit, offset
-        $this->processLimitAndOffset($validated);
+        // check parameters
+        $this->checkParameters($validated);
 
-        // define cache name for later use
-        $cacheName = "symbols:$symbol:transactions:$this->limit:$this->offset";
-
-        // Check if cached
+        // define cache name for later use symbols:symbol:start:end:limit:offset
+        $cacheName = "symbols:$symbol:transactions:$this->start:$this->end:$this->limit:$this->offset";
+        // === Check if cached
         $cache = Redis::get($cacheName);
         if ($cache) {
             return ApiResponse::success($cache);
         }
 
+        // getting transaction, must be called after checking parameters
         $transactions = $this->getTransactions($symbol);
 
         // 404
         if (!$transactions->count()) {
-            return ApiResponse::notFound("Không tìm thấy dữ liệu cổ đông");
+            return ApiResponse::notFound(
+                "Không tìm thấy dữ liệu lịch sử giao dịch nội bộ"
+            );
         }
         // reformat fields
         $transactions = $transactions->toArray();
@@ -51,24 +58,65 @@ class InternalTransactionsController extends Controller
             $t["ownership"] = round($t["ownership"] * 100, 3);
         }
         $result = [
-            "total" => InternalTransaction::where("symbol", $symbol)->count(),
+            "total" => $this->getTransactionCount($symbol),
             "records" => $transactions,
         ];
 
-        // set cache
+        // === set cache
         Redis::set($cacheName, $transactions, Unix::hour(24));
 
         return ApiResponse::success($result);
     }
 
+    /**
+     * Checking on parameters and set instance variables
+     *
+     * @param array $validated
+     * @return void
+     */
+    public function checkParameters(array $validated): void
+    {
+        // take a look at params: limit, offset
+        $this->processLimitAndOffset($validated);
+
+        // check on start and end
+        if (array_key_exists("start", $validated)) {
+            $this->start = $validated["start"];
+        }
+
+        if (array_key_exists("end", $validated)) {
+            $this->end = $validated["end"];
+        }
+    }
+
+    /**
+     * Get the total amount of transaction whether there are filter or not
+     *
+     * @param string $symbol
+     * @return integer
+     */
+    public function getTransactionCount(string $symbol): int
+    {
+        $timeField = "published_date";
+        $countQuery = InternalTransaction::where("symbol", $symbol);
+
+        $countQuery = $this->addTimeRangeConditions($countQuery, $timeField);
+
+        return $countQuery->count();
+    }
+
     public function getTransactions(string $symbol): Collection
     {
-        return InternalTransaction::where("symbol", $symbol)
-            ->orderBy("order_date", "desc")
+        $timeField = "published_date";
+        $query = InternalTransaction::where("symbol", $symbol)
+            ->orderBy($timeField, "desc")
             ->limit($this->limit)
             ->skip($this->offset)
-            ->project($this->getInternalTransactionProjection())
-            ->get();
+            ->project($this->getInternalTransactionProjection());
+
+        $query = $this->addTimeRangeConditions($query, $timeField);
+
+        return $query->get();
     }
 
     public function getInternalTransactionProjection(): array
