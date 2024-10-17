@@ -24,6 +24,33 @@ class InternalTransactionsRequest extends FormRequest
         return [
             "limit" => "nullable|integer|min:1",
             "offset" => "nullable|integer|min:1",
+            "start" => "nullable|integer",
+            "end" => "nullable|integer",
         ];
+    }
+
+    /**
+     * Configure the validator instance.
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
+     * @return void
+     */
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $start = $this->input("start");
+            $end = $this->input("end");
+
+            if ($start !== null && $end !== null) {
+                if ($start >= $end) {
+                    $validator
+                        ->errors()
+                        ->add("start", "The start must be less than the end.");
+                    $validator
+                        ->errors()
+                        ->add("end", "The end must be greater than the start.");
+                }
+            }
+        });
     }
 }

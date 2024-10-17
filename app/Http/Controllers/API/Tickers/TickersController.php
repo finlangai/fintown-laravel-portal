@@ -46,18 +46,4 @@ class TickersController extends Controller
         return ApiResponse::success($result);
     }
 
-    private function getTickerProjection(): array
-    {
-        return [
-            "_id" => 0,
-            "symbol" => 1,
-            "companyName" => "\$company_name",
-            "logo" => 1,
-            "industry" => "\$industry",
-            "marketCap" => "\$profile.market_cap",
-            "weeklyDelta" => "\$delta.delta_in_week",
-            "yearlyDelta" => "\$delta.delta_in_year",
-            "exchange" => "\$profile.exchange",
-        ];
-    }
 }
