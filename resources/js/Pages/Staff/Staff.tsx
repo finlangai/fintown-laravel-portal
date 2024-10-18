@@ -1,4 +1,11 @@
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/Components/UI/breadcrumb";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/Components/UI/breadcrumb";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, usePage } from "@inertiajs/react";
 import { useState } from "react";
@@ -11,7 +18,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/Components/UI/table"
+} from "@/Components/UI/table";
 import {
   Dialog,
   DialogContent,
@@ -20,13 +27,13 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/Components/UI/dialog"
-import AddRole from "./StaffFunction/addRole";
+} from "@/Components/UI/dialog";
+import AddRole from "./StaffFunction/AddRole";
 import RemoveStaff from "./StaffFunction/RemoveStaff";
 
 export default function Staff() {
   const [searchTerm, setSearchTerm] = useState("");
-  const permissionTranslations:any = {
+  const permissionTranslations: any = {
     view_users: "Xem danh sách người dùng",
     create_users: "Tạo người dùng mới",
     edit_users: "Chỉnh sửa thông tin người dùng",
@@ -56,8 +63,8 @@ export default function Staff() {
     edit_products_services: "Chỉnh sửa sản phẩm và dịch vụ",
     delete_products_services: "Xóa sản phẩm và dịch vụ",
   };
-  const { staffList } : any= usePage().props;
-  const listStaff:any = staffList || []; // Kiểm tra nếu listStaff là null hoặc undefined
+  const { staffList }: any = usePage().props;
+  const listStaff: any = staffList || []; // Kiểm tra nếu listStaff là null hoặc undefined
   const [dataID, setDataID] = useState<number>();
 
   return (
@@ -78,7 +85,9 @@ export default function Staff() {
                   </BreadcrumbItem>
                   <BreadcrumbSeparator />
                   <BreadcrumbItem>
-                    <BreadcrumbPage className="text-white">Staff</BreadcrumbPage>
+                    <BreadcrumbPage className="text-white">
+                      Staff
+                    </BreadcrumbPage>
                   </BreadcrumbItem>
                 </BreadcrumbList>
               </Breadcrumb>
@@ -88,76 +97,122 @@ export default function Staff() {
                   <input
                     type="text"
                     placeholder="Tìm kiếm theo họ tên..."
-                    className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="border-gray-300 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </div>
                 <div className="flex space-x-2">
-                  <button className="bg-custom-button-success text-white px-4 py-2 rounded-lg shadow-md transition duration-200 ease-in-out transform hover:bg-custom-button-warning hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300">Thêm nhân viên</button>
+                  <button className="bg-custom-button-success hover:bg-custom-button-warning shadow-md px-4 py-2 rounded-lg focus:ring-2 focus:ring-blue-300 text-white transform transition duration-200 ease-in-out hover:scale-105 focus:outline-none">
+                    Thêm nhân viên
+                  </button>
                 </div>
               </div>
-              <div className="overflow-x-auto mt-5 rounded-lg shadow-lg bg-white">
+              <div className="bg-white shadow-lg mt-5 rounded-lg overflow-x-auto">
                 <Table>
-                  <TableCaption className="text-lg font-semibold text-gray-700">Danh sách nhân viên</TableCaption>
+                  <TableCaption className="font-semibold text-gray-700 text-lg">
+                    Danh sách nhân viên
+                  </TableCaption>
                   <TableHeader>
                     <TableRow className="bg-gray-200">
-                      <TableHead className="w-[100px] py-3 text-left text-gray-600">STT</TableHead>
-                      <TableHead className="py-3 text-gray-600">Họ tên</TableHead>
-                      <TableHead className="py-3 text-gray-600">Tài khoản</TableHead>
-                      <TableHead className="py-3 text-gray-600">Email</TableHead>
-                      <TableHead className="py-3 text-gray-600">Mật khẩu</TableHead>
-                      <TableHead className="py-3 text-gray-600">Vai trò</TableHead>
-                      <TableHead className="py-3 text-gray-600">Quyền</TableHead>
-                      <TableHead className="py-3 text-right text-gray-600">Phân quyền </TableHead>
+                      <TableHead className="py-3 w-[100px] text-gray-600 text-left">
+                        STT
+                      </TableHead>
+                      <TableHead className="py-3 text-gray-600">
+                        Họ tên
+                      </TableHead>
+                      <TableHead className="py-3 text-gray-600">
+                        Tài khoản
+                      </TableHead>
+                      <TableHead className="py-3 text-gray-600">
+                        Email
+                      </TableHead>
+                      <TableHead className="py-3 text-gray-600">
+                        Mật khẩu
+                      </TableHead>
+                      <TableHead className="py-3 text-gray-600">
+                        Vai trò
+                      </TableHead>
+                      <TableHead className="py-3 text-gray-600">
+                        Quyền
+                      </TableHead>
+                      <TableHead className="text-right py-3 text-gray-600">
+                        Phân quyền{" "}
+                      </TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {
-                      listStaff.map((item: any, index: number) => (
-                        <TableRow className="hover:bg-gray-100 transition duration-150" key={item.id}>
-                          <TableCell className="font-medium text-gray-800">{index + 1 || "0"}</TableCell>
-                          <TableCell className="text-gray-800">{item.fullname || "fullname"}</TableCell>
-                          <TableCell className="text-gray-800">{item.username || "account"}</TableCell>
-                          <TableCell className="text-gray-800">{item.email || 'email@example.com'}</TableCell>
-                          <TableCell className="text-gray-800">*******</TableCell>
-                          <TableCell className="text-gray-800">{item.roles[0]}</TableCell>
-                          <TableCell className="text-green-500">
-                            <Dialog>
-                              <DialogTrigger className="bg-custom-button-success text-text-Content rounded-md">
-                                <span className="p-3">Xem quyền</span>
-                              </DialogTrigger>
-                              <DialogContent>
-                                <DialogHeader>
-                                  <DialogTitle>Nhân viên {item.fullname}</DialogTitle>
-                                  <DialogDescription>
-                                    <ul>
-                                      {item.permissions.length > 0 ? (
-                                        item.permissions.map((permission: any) => (
-                                          <li key={permission}> - {permissionTranslations[permission] || permission}</li>
-                                        ))
-                                      ) : (
-                                        <li>Người dùng này chưa được phân quyền</li>
-                                      )}
-                                    </ul>
-                                  </DialogDescription>
-                                </DialogHeader>
-                              </DialogContent>
-                            </Dialog>
-                          </TableCell>
-                          <TableCell className="text-right text-gray-800 flex justify-end">
-                            <div onClick={() => setDataID(item.id)}>
-                              <AddRole permissionTranslations={permissionTranslations} nameStaff={item.fullname} StaffID={dataID || NaN}/>
-                            </div>
-                            <RemoveStaff />
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    }
+                    {listStaff.map((item: any, index: number) => (
+                      <TableRow
+                        className="hover:bg-gray-100 transition duration-150"
+                        key={item.id}
+                      >
+                        <TableCell className="font-medium text-gray-800">
+                          {index + 1 || "0"}
+                        </TableCell>
+                        <TableCell className="text-gray-800">
+                          {item.fullname || "fullname"}
+                        </TableCell>
+                        <TableCell className="text-gray-800">
+                          {item.username || "account"}
+                        </TableCell>
+                        <TableCell className="text-gray-800">
+                          {item.email || "email@example.com"}
+                        </TableCell>
+                        <TableCell className="text-gray-800">*******</TableCell>
+                        <TableCell className="text-gray-800">
+                          {item.roles[0]}
+                        </TableCell>
+                        <TableCell className="text-green-500">
+                          <Dialog>
+                            <DialogTrigger className="bg-custom-button-success rounded-md text-text-Content">
+                              <span className="p-3">Xem quyền</span>
+                            </DialogTrigger>
+                            <DialogContent>
+                              <DialogHeader>
+                                <DialogTitle>
+                                  Nhân viên {item.fullname}
+                                </DialogTitle>
+                                <DialogDescription>
+                                  <ul>
+                                    {item.permissions.length > 0 ? (
+                                      item.permissions.map(
+                                        (permission: any) => (
+                                          <li key={permission}>
+                                            {" "}
+                                            -{" "}
+                                            {permissionTranslations[
+                                              permission
+                                            ] || permission}
+                                          </li>
+                                        ),
+                                      )
+                                    ) : (
+                                      <li>
+                                        Người dùng này chưa được phân quyền
+                                      </li>
+                                    )}
+                                  </ul>
+                                </DialogDescription>
+                              </DialogHeader>
+                            </DialogContent>
+                          </Dialog>
+                        </TableCell>
+                        <TableCell className="text-right flex justify-end text-gray-800">
+                          <div onClick={() => setDataID(item.id)}>
+                            <AddRole
+                              permissionTranslations={permissionTranslations}
+                              nameStaff={item.fullname}
+                              StaffID={dataID || NaN}
+                            />
+                          </div>
+                          <RemoveStaff />
+                        </TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </div>
-
             </div>
           </div>
         </div>
