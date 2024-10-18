@@ -8,6 +8,7 @@ use App\Http\Controllers\HolderWebController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffWebController;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -20,11 +21,18 @@ Route::get('/', function () {
      ]);
 });
 
+
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    /** @var \App\Models\User|null $user */
+    $user = Auth::user(); 
+    $isSuperAdmin = $user && $user->hasRole('super-admin');
+    return Inertia::render('Dashboard', [
+        'isSuperAdmin' => $isSuperAdmin, 
+    ]);
 })
-->middleware([ 'auth', 'verified' ])
+->middleware(['auth', 'verified'])
 ->name('dashboard');
+
 
 
 
@@ -42,9 +50,9 @@ Route::middleware('auth')->group(function () {
     
 
     // staff và các trang liên quan đến Staff
-    Route::get('/staff',  [StaffWebController::class, 'index'])->name('staff.index'); 
     
-
+    Route::get('/staff',  [StaffWebController::class, 'index'])->name('staff.index'); 
+    Route::put('/staff/update-permissions/{StaffID}', [StaffWebController::class, 'updatePermissions'])->name('staff.updatePermissions');
 
     Route::get('/profile', [ ProfileController::class, 'edit' ])->name('profile.edit');
     Route::patch('/profile', [ ProfileController::class, 'update' ])->name('profile.update');

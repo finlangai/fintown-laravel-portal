@@ -8,7 +8,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/Components/UI/breadcrumb";
-export default function Dashboard() {
+export default function Dashboard({ isSuperAdmin }: any) {
   return (
     <AuthenticatedLayout header={true}>
       <Head title="Dashboard" />
@@ -28,6 +28,7 @@ export default function Dashboard() {
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
+
             <p>nội dung trang Dashboard</p>
           </div>
         </div>

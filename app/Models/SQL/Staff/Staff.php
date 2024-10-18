@@ -6,10 +6,12 @@ namespace App\Models\SQL\Staff;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use MongoDB\Laravel\Relations\BelongsToMany;
+use Spatie\Permission\Traits\HasRoles;
 
 class Staff extends Authenticatable
 {
     use HasFactory;
+    use HasRoles;
 
     protected $table = 'staffs';
 
@@ -47,9 +49,14 @@ class Staff extends Authenticatable
             'password' => 'hashed',
          ];
     }
-
-    // public function roles(): BelongsToMany
-    // {
-    //     return $this->belongsToMany(Role::class, 'staff_roles', 'staff_id', 'role_id');
-    // }
+    public function roles()
+    {
+        return $this->belongsToMany('Spatie\Permission\Models\Role', 'model_has_roles', 'model_id', 'role_id')
+                    ->where('model_type', 'App\\Models\\SQL\\Staff\\Staff');
+    }
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class, 'model_has_permissions', 'model_id', 'permission_id')
+                    ->where('model_type', 'App\\Models\\SQL\\Staff\\Staff');
+    }
 }

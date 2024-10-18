@@ -1,18 +1,167 @@
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/Components/UI/breadcrumb";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
-export default function Dashboard() {
-    return (
-        <AuthenticatedLayout header={true}>
-            <Head title="Dashboard" />
-            <div className="py-12">
-                <div className="mx-auto sm:px-6 lg:px-8 max-w-7xl">
-                    <div className="bg-white shadow-sm sm:rounded-lg overflow-hidden">
-                        <div className="p-6 text-gray-900">
-                            <p>nội dung trang Staff</p>
-                        </div>
-                    </div>
+import { Head, usePage } from "@inertiajs/react";
+import { useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/Components/UI/table"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/Components/UI/dialog"
+import AddRole from "./StaffFunction/addRole";
+import RemoveStaff from "./StaffFunction/RemoveStaff";
+
+export default function Staff() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const permissionTranslations:any = {
+    view_users: "Xem danh sách người dùng",
+    create_users: "Tạo người dùng mới",
+    edit_users: "Chỉnh sửa thông tin người dùng",
+    delete_users: "Xóa người dùng",
+    view_bill: "Xem hóa đơn",
+    create_bill: "Tạo hóa đơn mới",
+    edit_bill: "Chỉnh sửa hóa đơn",
+    delete_bill: "Xóa hóa đơn",
+    view_company: "Xem thông tin công ty",
+    create_company: "Tạo công ty mới",
+    edit_company: "Chỉnh sửa thông tin công ty",
+    delete_company: "Xóa công ty",
+    view_financial: "Xem thông tin tài chính",
+    create_financial: "Tạo thông tin tài chính mới",
+    edit_financial: "Chỉnh sửa thông tin tài chính",
+    delete_financial: "Xóa thông tin tài chính",
+    view_financial_index: "Xem chỉ số tài chính",
+    create_financial_index: "Tạo chỉ số tài chính mới",
+    edit_financial_index: "Chỉnh sửa chỉ số tài chính",
+    delete_financial_index: "Xóa chỉ số tài chính",
+    view_Projected_results: "Xem kết quả dự kiến",
+    create_Projected_results: "Tạo kết quả dự kiến mới",
+    edit_Projected_results: "Chỉnh sửa kết quả dự kiến",
+    delete_Projected_results: "Xóa kết quả dự kiến",
+    view_products_services: "Xem sản phẩm và dịch vụ",
+    create_products_services: "Tạo sản phẩm và dịch vụ mới",
+    edit_products_services: "Chỉnh sửa sản phẩm và dịch vụ",
+    delete_products_services: "Xóa sản phẩm và dịch vụ",
+  };
+  const { staffList } : any= usePage().props;
+  const listStaff:any = staffList || []; // Kiểm tra nếu listStaff là null hoặc undefined
+  const [dataID, setDataID] = useState<number>();
+
+  return (
+    <>
+      <AuthenticatedLayout header={true}>
+        <Head title="Quản lý nhân viên" />
+        <div className="py-5">
+          <div className="mx-auto sm:px-6 lg:px-8 max-w-7xl">
+            <div className="flex flex-col min-h-[86vh]">
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href="/">Welcome</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href="/Dashboard">Dashboard</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage className="text-white">Staff</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+
+              <div className="flex justify-between items-center mt-5">
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Tìm kiếm theo họ tên..."
+                    className="border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
                 </div>
+                <div className="flex space-x-2">
+                  <button className="bg-custom-button-success text-white px-4 py-2 rounded-lg shadow-md transition duration-200 ease-in-out transform hover:bg-custom-button-warning hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-300">Thêm nhân viên</button>
+                </div>
+              </div>
+              <div className="overflow-x-auto mt-5 rounded-lg shadow-lg bg-white">
+                <Table>
+                  <TableCaption className="text-lg font-semibold text-gray-700">Danh sách nhân viên</TableCaption>
+                  <TableHeader>
+                    <TableRow className="bg-gray-200">
+                      <TableHead className="w-[100px] py-3 text-left text-gray-600">STT</TableHead>
+                      <TableHead className="py-3 text-gray-600">Họ tên</TableHead>
+                      <TableHead className="py-3 text-gray-600">Tài khoản</TableHead>
+                      <TableHead className="py-3 text-gray-600">Email</TableHead>
+                      <TableHead className="py-3 text-gray-600">Mật khẩu</TableHead>
+                      <TableHead className="py-3 text-gray-600">Vai trò</TableHead>
+                      <TableHead className="py-3 text-gray-600">Quyền</TableHead>
+                      <TableHead className="py-3 text-right text-gray-600">Phân quyền </TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {
+                      listStaff.map((item: any, index: number) => (
+                        <TableRow className="hover:bg-gray-100 transition duration-150" key={item.id}>
+                          <TableCell className="font-medium text-gray-800">{index + 1 || "0"}</TableCell>
+                          <TableCell className="text-gray-800">{item.fullname || "fullname"}</TableCell>
+                          <TableCell className="text-gray-800">{item.username || "account"}</TableCell>
+                          <TableCell className="text-gray-800">{item.email || 'email@example.com'}</TableCell>
+                          <TableCell className="text-gray-800">*******</TableCell>
+                          <TableCell className="text-gray-800">{item.roles[0]}</TableCell>
+                          <TableCell className="text-green-500">
+                            <Dialog>
+                              <DialogTrigger className="bg-custom-button-success text-text-Content rounded-md">
+                                <span className="p-3">Xem quyền</span>
+                              </DialogTrigger>
+                              <DialogContent>
+                                <DialogHeader>
+                                  <DialogTitle>Nhân viên {item.fullname}</DialogTitle>
+                                  <DialogDescription>
+                                    <ul>
+                                      {item.permissions.length > 0 ? (
+                                        item.permissions.map((permission: any) => (
+                                          <li key={permission}> - {permissionTranslations[permission] || permission}</li>
+                                        ))
+                                      ) : (
+                                        <li>Người dùng này chưa được phân quyền</li>
+                                      )}
+                                    </ul>
+                                  </DialogDescription>
+                                </DialogHeader>
+                              </DialogContent>
+                            </Dialog>
+                          </TableCell>
+                          <TableCell className="text-right text-gray-800 flex justify-end">
+                            <div onClick={() => setDataID(item.id)}>
+                              <AddRole permissionTranslations={permissionTranslations} nameStaff={item.fullname} StaffID={dataID || NaN}/>
+                            </div>
+                            <RemoveStaff />
+                          </TableCell>
+                        </TableRow>
+                      ))
+                    }
+                  </TableBody>
+                </Table>
+              </div>
+
             </div>
-        </AuthenticatedLayout>
-    );
+          </div>
+        </div>
+      </AuthenticatedLayout>
+    </>
+  );
 }
