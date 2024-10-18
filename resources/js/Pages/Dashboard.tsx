@@ -7,8 +7,8 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
-  } from "@/components/ui/breadcrumb"
-export default function Dashboard() {
+  } from "@/Components/UI/breadcrumb";
+export default function Dashboard({isSuperAdmin } : any) {
     return (
         <AuthenticatedLayout header={true} >
             <Head title="Dashboard" />
@@ -30,7 +30,7 @@ export default function Dashboard() {
                             <p>nội dung trang Dashboard</p>
                         </div>
                     </div>
-                </div>
+            </div>
         </AuthenticatedLayout>
     );
 }

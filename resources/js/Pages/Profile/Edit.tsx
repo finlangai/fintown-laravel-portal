@@ -11,7 +11,7 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
-  } from "@/components/ui/breadcrumb"
+  } from "@/Components/UI/breadcrumb"
 export default function Edit({
   mustVerifyEmail,
   status,

@@ -11,18 +11,8 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
+} from "@/Components/UI/breadcrumb"
 export default function Financial () {
-    const activeNavLink = { 
-        color : "#25B770",
-    } 
-    const menuItem = [
-        "Bảng điều khiển" ,"Người dùng", "Hóa đơn" , "Sản phẩm và dịch vụ" ,
-    ]
-    const menuFiintown = [
-        "Hồ sơ công ty" , "Báo cáo tài chính" , "Chỉ số tài chính" , "Kết quả dự phóng"
-    ]
- 
 const { statements } = usePage().props;
 const dataStatements: any = statements;
 const itemsPerPage = 10;

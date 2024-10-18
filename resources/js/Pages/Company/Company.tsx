@@ -23,7 +23,7 @@ import {
     BreadcrumbList,
     BreadcrumbPage,
     BreadcrumbSeparator,
-  } from "@/components/ui/breadcrumb"
+  } from "@/Components/UI/breadcrumb"
 export default function FinancialReports({ companies }: { companies: CompanyInfo[] }) {
   // true là thủ công false là Tải từ nguồn cấp
   const [sourceType , setSourceType] = useState<boolean>(true);

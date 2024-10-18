@@ -14,7 +14,6 @@ export default function Authenticated({
     fullname: "ADMIN",
     email: "Email@example.com",
   };
-  
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const handleSetIsExpanded = (value: boolean) => {
     setIsExpanded(value);
@@ -42,6 +41,8 @@ export default function Authenticated({
                     <ApplicationLogo className="block w-auto h-9 text-white fill-current" />
                   </Link>
                 </div>
+             
+                
               </div>
               {/* Thông tin người dùng */}
               <div className="sm:flex sm:items-center hidden sm:ms-6">

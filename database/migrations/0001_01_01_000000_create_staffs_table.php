@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('username', 128);
             $table->string('fullname', 128);
             $table->string('email', 256)->unique();
+            // $table->foreignId('role_id')->constrained('roles');
             // $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             // $table->rememberToken();
