@@ -45,10 +45,13 @@ class InternalTransactionsRequest extends FormRequest
                 if ($start >= $end) {
                     $validator
                         ->errors()
-                        ->add("start", "The start must be less than the end.");
+                        ->add(
+                            "start",
+                            "Giá trị start phải nhỏ hơn giá trị end."
+                        );
                     $validator
                         ->errors()
-                        ->add("end", "The end must be greater than the start.");
+                        ->add("end", "Giá trị end phải lớn hơn giá trị start.");
                 }
             }
         });

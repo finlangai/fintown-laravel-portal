@@ -4,20 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('staffs', function (Blueprint $table) {
+        Schema::create("staffs", function (Blueprint $table) {
             $table->id();
-            $table->string('username', 128);
-            $table->string('fullname', 128);
-            $table->string('email', 256)->unique();
+            $table->string("username", 128);
+            $table->string("fullname", 128)->nullable();
+            $table->string("email", 256)->unique();
+            // $table->foreignId('role_id')->constrained('roles');
             // $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string("password");
             // $table->rememberToken();
             $table->timestamps();
         });
@@ -43,7 +43,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('staffs');
+        Schema::dropIfExists("staffs");
         // Schema::dropIfExists('password_reset_tokens');
         // Schema::dropIfExists('sessions');
     }

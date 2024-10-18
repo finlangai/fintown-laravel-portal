@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\SQL\Staff\Staff;
+
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,12 +14,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // User::factory(10)->create();
-
-        Staff::factory()->create([
-            'username' => 'ADMIN',
-            'fullname'  => 'Test User',
-            'email' => 'test@example.com',
-            'password'=> '12345678'
-         ]);
+        $this->call([
+            PermissionsSeeder::class,
+            Roles::class,
+            StaffSeeder::class,
+            RoleHasPermissionsSeeder::class,
+        ]);
     }
 }
