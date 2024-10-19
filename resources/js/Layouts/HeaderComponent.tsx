@@ -20,23 +20,21 @@ export default function HeaderComponent({ isExpanded, handleSetIsExpanded }: Hea
       <div> 
          <ul className="flex flex-col space-y-4 mt-5">
             {/* cả admin và supper ADMIN đều sử dụng được  */}
-            <li className="p-2 ml-2 text-white cursor-pointer" onClick={() => handleSetIsExpanded(true)} style={activeNavLink}>
+            <li className="p-2 ml-2 text-text-head cursor-pointer" onClick={() => handleSetIsExpanded(true)} style={activeNavLink}>
                <div className="flex items-center">
                   {isExpanded ? ( 
-                     <Link href="/">
-                        <p className="items-center font-semibold text-2xl">FiinTown</p>
+
+                     <Link href="/" className="flex justify-center items-center">
+                        <img src="https://fintown.software/imgs/logo.png" width={40} height={40} alt="MenuLogo" className="block rounded-full shadow-lg" style={{marginLeft : "-3px"}}/>
+                        <p className="items-center font-semibold text-2xl text-white ml-3">FinTown</p>
                      </Link>
                   ) : (
-                     <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-square-menu "> 
-                        <rect width={18} height={18} x={3} y={3} rx={2} /> 
-                        <path d="M7 8h10" /> 
-                        <path d="M7 12h10" /> 
-                        <path d="M7 16h10" /> 
-                     </svg>
+                     <img src="https://fintown.software/imgs/logo.png" width={30} height={30} alt="MenuLogo" className="block rounded-full shadow-lg" style={{marginLeft : "-3px"}}/>
+                     
                   )}
                </div>
             </li>
-            <li className="p-2 ml-2 text-white cursor-pointer">
+            <li className="p-2 ml-2 text-text-head cursor-pointer">
                <div className="flex items-center">
                   {isExpanded ? (
                      <Link href="/dashboard">
@@ -52,7 +50,7 @@ export default function HeaderComponent({ isExpanded, handleSetIsExpanded }: Hea
             {/* Mọi quyền cho super admin */}
             {superAdmin && (
                <>
-                  <li className="p-2 ml-2 text-white cursor-pointer">
+                  <li className="p-2 ml-2 text-text-head cursor-pointer">
                      <div className="flex items-center">
                         {isExpanded ? (
                            <Link href="/staff">
@@ -65,7 +63,7 @@ export default function HeaderComponent({ isExpanded, handleSetIsExpanded }: Hea
                         )}
                      </div>
                   </li>
-                  <li className="p-2 ml-2 text-white cursor-pointer">
+                  <li className="p-2 ml-2 text-text-head cursor-pointer">
                      <div className="flex items-center">
                         {isExpanded ? (
                            <Link href="/bill">
@@ -78,7 +76,7 @@ export default function HeaderComponent({ isExpanded, handleSetIsExpanded }: Hea
                         )}
                      </div>
                   </li>
-                  <li className="p-2 ml-2 text-white cursor-pointer">
+                  <li className="p-2 ml-2 text-text-head cursor-pointer">
                      <div className="flex items-center">
                         {isExpanded ? (
                            <span className="whitespace-nowrap ml-4 text-xs">Sản phẩm và dịch vụ</span>
@@ -96,7 +94,7 @@ export default function HeaderComponent({ isExpanded, handleSetIsExpanded }: Hea
             {/* Quyền dành cho admin Nhưng phải được phân */}
             {
                admin && hasPermission('view_bill') && (
-                   <li className="p-2 ml-2 text-white cursor-pointer">
+                   <li className="p-2 ml-2 text-text-head cursor-pointer">
                      <div className="flex items-center">
                         {isExpanded ? (
                            <Link href="/bill">
@@ -113,7 +111,7 @@ export default function HeaderComponent({ isExpanded, handleSetIsExpanded }: Hea
             }
             {
                admin && hasPermission('view_products_services') && (
-                  <li className="p-2 ml-2 text-white cursor-pointer">
+                  <li className="p-2 ml-2 text-text-head cursor-pointer">
                   <div className="flex items-center">
                      {isExpanded ? (
                         <Link href="/service">
@@ -130,14 +128,13 @@ export default function HeaderComponent({ isExpanded, handleSetIsExpanded }: Hea
             }
          </ul>
          {isExpanded && <div className="border-t border-transparent" style={{ borderColor: 'rgba(255, 255, 255, 0.3)', height: '1px' }} />}
-         {/* Công ty được dành cho SuperADMIN  */}
          <ul className="flex flex-col space-y-4 mt-5">
          {superAdmin && (
             <>
-               <li className="p-2 ml-2 text-white cursor-pointer" onClick={() => handleSetIsExpanded(true)}>
+               <li className="p-2 ml-2 text-text-head cursor-pointer" onClick={() => handleSetIsExpanded(true)}>
                   <div className="flex items-center">
                      {isExpanded ? ( 
-                        <p className="items-center font-semibold text-2xl whitespace-nowrap text-text-Content">Công ty</p>
+                        <p className="items-center font-semibold text-2xl whitespace-nowrap text-text-head">Công ty</p>
                      ) : (
                         <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-building-2"> 
                            <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" /> 
@@ -151,7 +148,7 @@ export default function HeaderComponent({ isExpanded, handleSetIsExpanded }: Hea
                      )}
                   </div>
                </li>
-               <li className="p-2 ml-2 text-white cursor-pointer">
+               <li className="p-2 ml-2 text-text-head cursor-pointer">
                   <div className="flex items-center">
                      {isExpanded ? (
                         <Link href="/company">
@@ -164,7 +161,7 @@ export default function HeaderComponent({ isExpanded, handleSetIsExpanded }: Hea
                      )}
                   </div>
                </li>
-               <li className="p-2 ml-2 text-white cursor-pointer">
+               <li className="p-2 ml-2 text-text-head cursor-pointer">
                   <div className="flex items-center">
                      {isExpanded ? (
                         <Link href="/financial">
@@ -177,7 +174,7 @@ export default function HeaderComponent({ isExpanded, handleSetIsExpanded }: Hea
                      )}
                   </div>
                </li>
-               <li className="p-2 ml-2 text-white cursor-pointer">
+               <li className="p-2 ml-2 text-text-head cursor-pointer">
                   <div className="flex items-center">
                      {isExpanded ? (
                         <Link href="/financial-indices">
@@ -190,7 +187,7 @@ export default function HeaderComponent({ isExpanded, handleSetIsExpanded }: Hea
                      )}
                   </div>
                </li>
-               <li className="p-2 ml-2 text-white cursor-pointer">
+               <li className="p-2 ml-2 text-text-head cursor-pointer">
                   <div className="flex items-center">
                      {isExpanded ? (
                         <Link href="/forecast">
@@ -208,7 +205,7 @@ export default function HeaderComponent({ isExpanded, handleSetIsExpanded }: Hea
 
          {
             admin && hasPermission('view_company') && (
-               <li className="p-2 ml-2 text-white cursor-pointer">
+               <li className="p-2 ml-2 text-text-head cursor-pointer">
                   <div className="flex items-center">
                      {isExpanded ? (
                         <Link href="/company">
@@ -225,7 +222,7 @@ export default function HeaderComponent({ isExpanded, handleSetIsExpanded }: Hea
          }
          {
             admin && hasPermission('view_financial') &&(
-               <li className="p-2 ml-2 text-white cursor-pointer">
+               <li className="p-2 ml-2 text-text-head cursor-pointer">
                <div className="flex items-center">
                   {isExpanded ? (
                      <Link href="/financial">
@@ -242,7 +239,7 @@ export default function HeaderComponent({ isExpanded, handleSetIsExpanded }: Hea
          }
          {
             admin && hasPermission('view_financial_index') && (
-               <li className="p-2 ml-2 text-white cursor-pointer">
+               <li className="p-2 ml-2 text-text-head cursor-pointer">
                <div className="flex items-center">
                   {isExpanded ? (
                      <Link href="/financial-indices">
@@ -268,7 +265,7 @@ export default function HeaderComponent({ isExpanded, handleSetIsExpanded }: Hea
          }
          {
             admin && hasPermission('view_Projected_results') && (
-               <li className="p-2 ml-2 text-white cursor-pointer">
+               <li className="p-2 ml-2 text-text-head cursor-pointer">
                   <div className="flex items-center">
                      {isExpanded ? (
                         <Link href="/forecast">

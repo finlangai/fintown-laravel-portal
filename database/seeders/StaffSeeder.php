@@ -15,8 +15,8 @@ class StaffSeeder extends Seeder
         $superAdminRole = Role::firstOrCreate(['name' => 'super-admin']);
 
         $superAdmin = Staff::factory()->create([
-            'username' => 'Nguyễn Kim Hùng',
-            'fullname'  => 'Super Admin User',
+            'username' => 'Super Admin',
+            'fullname'  => 'Nguyễn Kim Hùng',
             'email' => 'superadmin@example.com',
             'password'=> ('12345678')  
         ]);
@@ -26,8 +26,8 @@ class StaffSeeder extends Seeder
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
 
         $admin = Staff::factory()->create([
-            'username' => 'Trần gia bảo',
-            'fullname'  => 'Admin User',
+            'username' => 'admin',
+            'fullname'  => 'Trần gia bảo',
             'email' => 'admin@example.com',
             'password'=> ('12345678') 
         ]);

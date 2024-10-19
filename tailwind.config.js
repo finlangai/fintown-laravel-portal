@@ -21,16 +21,20 @@ export default {
                 sm: "calc(var(--radius) - 4px)",
             },
             colors: {
-                'text-Content': '#fff',
-                'text-Content-sub': '#E8E8E8',
+                'text-Content': '#333333',
+                'text-Content-sub': '#555555',
+                'text-head-main': '#ffffff',
+                'text-head': '#8391a2',
                 'text-link' : '#FF8743',
                 'text-active' : "#25B770"
             },
             backgroundColor: {
-                'background-theme': '#1B2E31',
-                'background-active': '#274242',
+                'background-theme': '#EDF2F9',
+                'background-active': '#FAFBFE',
+                'background-sibar': '#313A46',
+                'background-head': 'gainsboro',
                 'custom-button-success': '#25B770',
-                'custom-button-warning': '#FF8743',
+                'custom-button-warning': '#3682E7',
                 'custom-button-error': '#F93C65',
                 'custom-button-pending': '#FFFFF',
                 // Thêm nhiều màu nền hơn nếu cần

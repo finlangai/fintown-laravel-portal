@@ -26,7 +26,7 @@ const DataFinancial = ({ dataStatements } : any) => {
                               <td className="w-1/6 text-xs font-normal text-left py-6">Quý {statement.quarter} Năm {statement.year}</td>
                               <td className="w-1/6 text-xs font-normal text-left py-6">
                                   <div className="w-[114px] h-[27px] relative">
-                                    <div className="w-[114px] h-[27px] left-0 top-0 absolute bg-[#6225ee] rounded" />
+                                    <div className="w-[114px] h-[27px] left-0 top-0 absolute bg-custom-button-warning rounded" />
                                     <div className="left-[15px] top-[6px] absolute text-center text-white text-xs font-normal font-['Inter']">Đang cập nhật</div>
                                  </div>
                               </td>

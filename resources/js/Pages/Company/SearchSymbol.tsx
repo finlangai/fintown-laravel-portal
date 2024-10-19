@@ -23,7 +23,7 @@ const InputComponent: React.FC<InputComponentProps> = ({ companies, onSymbolsFil
 
   return (
    <>
-      <input type="text" value={inputValue} onChange={handleInputChange} placeholder="Mã cổ phiếu..." className="pl-10 pr-4 py-2 border border-gray-300 rounded-3xl bg-transparent placeholder-gray-500 w-full text-sm text-white" />
+      <input type="text" value={inputValue} onChange={handleInputChange} placeholder="Mã cổ phiếu..." className="pl-10 pr-4 py-2 border border-gray-300 rounded-3xl bg-transparent placeholder-gray-500 w-full text-sm text-text-Content" />
    </>
   );
 };

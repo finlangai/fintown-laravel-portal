@@ -44,7 +44,6 @@ const AddRole = ({ permissionTranslations, nameStaff, StaffID }: any) => {
       e.preventDefault();
       put(`/staff/update-permissions/${StaffID}`);
    };
-
    return (
       <>
          <Dialog>

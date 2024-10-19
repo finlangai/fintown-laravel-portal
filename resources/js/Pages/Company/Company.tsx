@@ -65,7 +65,7 @@ export default function FinancialReports({ companies }: { companies: CompanyInfo
                             </BreadcrumbItem>
                             <BreadcrumbSeparator />
                             <BreadcrumbItem>
-                                <BreadcrumbPage className="text-white">Company</BreadcrumbPage>
+                                <BreadcrumbPage className="text-text-Content">Company</BreadcrumbPage>
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
@@ -76,7 +76,7 @@ export default function FinancialReports({ companies }: { companies: CompanyInfo
                    <div className="flex justify-between items-center">
                         <div id="tool" className="flex border-0 bg-background-active p-4 rounded-[8px] w-[600px]">
                                 <div className="relative flex flex-1 items-center mx-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="left-3 absolute text-white"> 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="left-3 absolute text-text-Content"> 
                                         <circle cx="11" cy="11" r="8" /> 
                                         <path d="m21 21-4.3-4.3" /> 
                                     </svg>
