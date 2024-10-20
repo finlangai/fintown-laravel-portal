@@ -1,12 +1,14 @@
 import { useState, PropsWithChildren, ReactNode } from "react";
-import ApplicationLogo from "@/Components/ApplicationLogo";
-import Dropdown from "@/Components/Dropdown";
-import { Link, usePage } from "@inertiajs/react";
+import { usePage } from "@inertiajs/react";
 import HeaderComponent from "./HeaderComponent";
 import HeaderTopComponent from "./HeaderTopComponent";
+import { TerminalProvider } from "@/Providers/TerminalProvider";
+import Terminal from "@/Components/Terminal/Terminal";
+
 type AuthenticatedProps = PropsWithChildren<{
   header: boolean;
 }>;
+
 export default function Authenticated({
   header,
   children,
@@ -15,6 +17,7 @@ export default function Authenticated({
     fullname: "ADMIN",
     email: "Email@example.com",
   };
+
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const handleSetIsExpanded = (value: boolean) => {
     setIsExpanded(value);
@@ -45,6 +48,7 @@ export default function Authenticated({
         {/* Phần content */}
         <main className="bg-background-theme">{children}</main>
       </div>
+      <Terminal />
     </div>
   );
 }
