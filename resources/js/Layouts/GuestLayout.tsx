@@ -1,17 +1,15 @@
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import { Link } from "@inertiajs/react";
 import { PropsWithChildren } from "react";
+
 export default function Guest({ children }: PropsWithChildren) {
     return (
-        <div className="flex flex-col sm:justify-center items-center bg-gray-100 pt-6 sm:pt-0 min-h-screen">
-            <div>
-                <Link href="/">
-                    <ApplicationLogo className="w-20 h-20 text-gray-500 fill-current" />
-                </Link>
-            </div>
-            <div className="bg-white shadow-md mt-6 px-6 py-4 sm:rounded-lg w-full sm:max-w-md overflow-hidden">
-                {children}
-            </div>
-        </div>
+        
+    <div className="flex flex-col sm:justify-center items-center bg-gray-100 pt-6 sm:pt-0 min-h-screen relative" 
+        style={{ backgroundImage: `url('https://i.pinimg.com/1200x/87/47/14/874714d67edebf95833ad972cf410f67.jpg')`, backgroundSize: 'cover' }}>
+        <div className="absolute inset-0 bg-black opacity-85"></div>
+        {children}
+    </div>
+    
     );
 }
