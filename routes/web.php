@@ -10,6 +10,7 @@ use App\Http\Controllers\StaffWebController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web;
 use Inertia\Inertia;
 
 Route::get("/", function () {
@@ -77,7 +78,11 @@ Route::middleware("auth")->group(function () {
         "profile.destroy"
     );
 
-    Route::inertia("assessment", "Assessment/Assessment");
+    Route::resource("assessments", Web\AssessmentController::class)->only([
+        "index",
+        "show",
+        "destroy",
+    ]);
 });
 
 require __DIR__ . "/auth.php";

@@ -12,4 +12,9 @@ class Assessment extends Model
 
     public $timestamps = ["updated_at"];
     const CREATED_AT = null;
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, "symbol", "symbol");
+    }
 }

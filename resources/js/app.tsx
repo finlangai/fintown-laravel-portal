@@ -5,6 +5,7 @@ import { createRoot } from "react-dom/client";
 import { createInertiaApp, Head } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import { TerminalProvider } from "./Providers/TerminalProvider";
+import { TooltipProvider } from "@radix-ui/react-tooltip";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
@@ -19,9 +20,11 @@ createInertiaApp({
     const root = createRoot(el);
 
     root.render(
-      <TerminalProvider>
-        <App {...props} />
-      </TerminalProvider>,
+      <TooltipProvider>
+        <TerminalProvider>
+          <App {...props} />
+        </TerminalProvider>
+      </TooltipProvider>,
     );
   },
   progress: {

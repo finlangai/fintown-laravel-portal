@@ -24,7 +24,7 @@ export default function Authenticated({
   };
 
   return (
-    <div className="flex bg-gray-100 min-h-screen transition-all duration-300">
+    <div className="flex min-h-screen transition-all duration-300">
       {/* đây là sidebar bên trái*/}
       {header ? (
         <header
