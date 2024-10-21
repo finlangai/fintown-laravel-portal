@@ -34,7 +34,7 @@ export const TerminalProvider: React.FC<TerminalProviderProps> = ({
 }) => {
   const [messages, setMessages] = useState<TerminalMessage[]>([]);
   const [isMinimized, setIsMinimized] = useState(true);
-  const [isClosed, setIsClosed] = useState(false);
+  const [isClosed, setIsClosed] = useState(true);
 
   const writeMessage = (message: string) => {
     const newMessage = {

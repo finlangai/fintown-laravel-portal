@@ -27,7 +27,7 @@ const AssessmentCard = ({
         </div>
 
         {/* CARD TITLE */}
-        <div className="flex flex-col flex-1 gap-1">
+        <div className="flex flex-col flex-1 gap-1 text-start">
           <div className="flex justify-between font-bold text-lg text-slate-900">
             <span>{company.symbol}</span>
             <span className="flex">

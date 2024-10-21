@@ -38,7 +38,7 @@ export default function Assessment({ paginationData }: AssessmentProps) {
           {paginationData.data.map((cardData) => (
             <Tooltip>
               <TooltipTrigger>
-                <AssessmentCard {...cardData} />
+                <AssessmentCard {...cardData} key={cardData.symbol} />
               </TooltipTrigger>
               <TooltipContent>
                 Xem chi tiết nhận định mã {cardData.symbol}

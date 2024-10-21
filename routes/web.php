@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\API\CompanyController;
-use App\Http\Controllers\CompanyEditController;
 use App\Http\Controllers\CompanyWebController;
 use App\Http\Controllers\FinancialController;
 use App\Http\Controllers\HolderWebController;
@@ -13,14 +11,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web;
 use Inertia\Inertia;
 
-Route::get("/", function () {
-    return Inertia::render("Welcome", [
-        "canLogin" => Route::has("Login"),
-        "canRegister" => Route::has("Register"),
-        "laravelVersion" => Application::VERSION,
-        "phpVersion" => PHP_VERSION,
-    ]);
-});
+// Route::get("/", function () {
+//     return Inertia::render("Welcome", [
+//         "canLogin" => Route::has("Login"),
+//         "canRegister" => Route::has("Register"),
+//         "laravelVersion" => Application::VERSION,
+//         "phpVersion" => PHP_VERSION,
+//     ]);
+// });
 
 Route::get("/dashboard", function () {
     /** @var \App\Models\User|null $user */
