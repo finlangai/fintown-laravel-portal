@@ -4,7 +4,7 @@ interface CompanyInfo {
   icb_code: string;
   company_name: string;
   industry: string;
-  logo : string;
+  logo: string;
   profile: {
     short_name: string;
     international_name: string;
@@ -15,7 +15,7 @@ interface CompanyInfo {
     web_address: string;
     employees: number;
     business_license_number: string;
-    date_of_issue: string; 
+    date_of_issue: string;
     tax_id_number: string;
     charter_capital: number;
     date_of_listing: string;
@@ -28,9 +28,45 @@ interface CompanyInfo {
 }
 type InputComponentProps = {
   companies: CompanyInfo[];
-  onSymbolsFiltered: (symbols: string[]) => void; 
+  onSymbolsFiltered: (symbols: string[]) => void;
 };
 interface ProfileCompanyProps {
-  profile: any; 
-  message?: string; 
+  profile: any;
+  message?: string;
 }
+
+type Company = {
+  symbol: string;
+  icb_code: string;
+  company_name: string;
+  industry: string;
+  logo: string;
+  profile: {
+    short_name: string;
+    international_name: string;
+    head_quarters: string;
+    phone: string;
+    fax: string;
+    email: string;
+    web_address: string;
+    employees: number;
+    business_license_number: string;
+    date_of_issue: string;
+    tax_id_number: string;
+    charter_capital: number;
+    date_of_listing: string;
+    exchange: string;
+    initial_listing_price: number;
+    listing_volume: number;
+    market_cap: number;
+    is_using_cf_direct: boolean;
+  };
+  summary: {
+    overview: string;
+    history_dev: string;
+    company_promise: string;
+    business_risk: string;
+    key_developments: string;
+    business_strategies: string;
+  };
+};
