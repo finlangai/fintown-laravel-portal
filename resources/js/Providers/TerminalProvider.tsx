@@ -33,7 +33,7 @@ export const TerminalProvider: React.FC<TerminalProviderProps> = ({
   children,
 }) => {
   const [messages, setMessages] = useState<TerminalMessage[]>([]);
-  const [isMinimized, setIsMinimized] = useState(true);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [isClosed, setIsClosed] = useState(true);
 
   const writeMessage = (message: string) => {

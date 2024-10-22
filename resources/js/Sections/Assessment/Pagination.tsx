@@ -22,15 +22,17 @@ export function AssessmentPagination({ paginationData }: AssessmentProps) {
             href={prevLink?.url ?? paginationData.last_page_url}
           />
         </PaginationItem>
-        {paginationLinks.map(({ active, label, url }: PaginationLink) => (
-          <PaginationItem>
-            <PaginationLink
-              href={url ?? ""}
-              isActive={active}
-              dangerouslySetInnerHTML={{ __html: label }}
-            />
-          </PaginationItem>
-        ))}
+        {paginationLinks.map(
+          ({ active, label, url }: PaginationLink, index) => (
+            <PaginationItem key={index}>
+              <PaginationLink
+                href={url ?? ""}
+                isActive={active}
+                dangerouslySetInnerHTML={{ __html: label }}
+              />
+            </PaginationItem>
+          ),
+        )}
         {/* PREVIOUS BUTTON */}
         <PaginationItem>
           <PaginationNext

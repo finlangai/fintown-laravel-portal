@@ -11,15 +11,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web;
 use Inertia\Inertia;
 
-// Route::get("/", function () {
-//     return Inertia::render("Welcome", [
-//         "canLogin" => Route::has("Login"),
-//         "canRegister" => Route::has("Register"),
-//         "laravelVersion" => Application::VERSION,
-//         "phpVersion" => PHP_VERSION,
-//     ]);
-// });
-
 Route::get("/dashboard", function () {
     /** @var \App\Models\User|null $user */
     $user = Auth::user();
@@ -76,11 +67,7 @@ Route::middleware("auth")->group(function () {
         "profile.destroy"
     );
 
-    Route::resource("assessments", Web\AssessmentController::class)->only([
-        "index",
-        "show",
-        "destroy",
-    ]);
+    require __DIR__ . "/web/assessments.php";
 });
 
 require __DIR__ . "/auth.php";

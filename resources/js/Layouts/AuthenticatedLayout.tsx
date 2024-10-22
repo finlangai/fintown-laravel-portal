@@ -2,15 +2,18 @@ import { useState, PropsWithChildren, ReactNode } from "react";
 import { usePage } from "@inertiajs/react";
 import HeaderComponent from "./HeaderComponent";
 import HeaderTopComponent from "./HeaderTopComponent";
-import { TerminalProvider } from "@/Providers/TerminalProvider";
 import Terminal from "@/Components/Terminal/Terminal";
+import { cn } from "@/Lib/utils";
+import { ChevronLeft, ChevronsLeft, ChevronsRight } from "lucide-react";
 
 type AuthenticatedProps = PropsWithChildren<{
   header: boolean;
+  className?: string;
 }>;
 
 export default function Authenticated({
   header,
+  className,
   children,
 }: AuthenticatedProps) {
   const user = usePage().props.auth?.user || {
@@ -18,7 +21,7 @@ export default function Authenticated({
     email: "Email@example.com",
   };
 
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [isExpanded, setIsExpanded] = useState<boolean>(true);
   const handleSetIsExpanded = (value: boolean) => {
     setIsExpanded(value);
   };
@@ -28,14 +31,30 @@ export default function Authenticated({
       {/* đây là sidebar bên trái*/}
       {header ? (
         <header
-          className={`bg-background-sibar shadow ${isExpanded ? "w-60" : "w-20"} transition-all duration-300 ease-in-out`}
-          onMouseLeave={() => setIsExpanded(false)}
+          className={`bg-background-sibar sticky top-0 shadow max-h-screen ${isExpanded ? "w-60" : "w-20"} transition-all duration-300 ease-in-out`}
+          // onMouseLeave={() => setIsExpanded(false)}
         >
-          <div className="fixed ml-3 h-full">
+          <div className="relative px-3 w-full h-full max-h-screen">
             <HeaderComponent
               isExpanded={isExpanded}
               handleSetIsExpanded={handleSetIsExpanded}
             />
+            {/* === START - OPEN AND CLOSE MENU BUTTON */}
+            <div className="top-1/2 -right-3 absolute">
+              <button
+                onClick={() => {
+                  handleSetIsExpanded(!isExpanded);
+                }}
+                className="bg-background-sibar py-3 rounded-2xl"
+              >
+                {isExpanded ? (
+                  <ChevronsLeft className="stroke-text-active" />
+                ) : (
+                  <ChevronsRight className="stroke-text-active" />
+                )}
+              </button>
+            </div>
+            {/* END - OPEN AND CLOSE MENU BUTTON === */}
           </div>
         </header>
       ) : (
@@ -46,7 +65,7 @@ export default function Authenticated({
         <HeaderTopComponent user={user} />
 
         {/* Phần content */}
-        <main className="bg-background-theme">{children}</main>
+        <main className={cn("bg-transparent", className)}>{children}</main>
       </div>
       <Terminal />
     </div>
