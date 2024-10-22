@@ -40,7 +40,7 @@ const chartConfig = {
 
 export const LineChartLabel = () => {
   return (
-    <Card>
+    <Card className="shadow-none border-none">
       <CardHeader>
         <CardTitle>Line Chart - Label</CardTitle>
         <CardDescription>January - June 2024</CardDescription>

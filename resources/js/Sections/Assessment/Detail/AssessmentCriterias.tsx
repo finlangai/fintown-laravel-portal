@@ -3,23 +3,24 @@ import { TbCapsuleFilled } from "react-icons/tb";
 import CriteriaCard from "./CriteriaCard";
 import { Badge } from "lucide-react";
 
-interface AssessmentCriteriasProps {
+type AssessmentCriteriasProps = {
   criterias: Criteria[];
   insights: AssessmentInsights;
   currentCriteria: string;
   setCurrentCriteria: (slug: string) => void;
-}
+} & classNameInterface;
 
 const AssessmentCriterias = ({
   criterias,
   insights,
   currentCriteria,
   setCurrentCriteria,
+  className,
 }: AssessmentCriteriasProps) => {
   const overallSlug = "overall";
   const overallTitle = "Nhận Định Tổng Quan";
   return (
-    <section className="px-3 rounded-lg w-1/4">
+    <section className={cn("px-3 rounded-lg w-1/4", className)}>
       {/* === START - CRITERIAS LIST */}
       <div className="flex flex-col gap-3">
         {/* OVERALL CARD */}
@@ -37,7 +38,7 @@ const AssessmentCriterias = ({
               }
             />
           }
-          className="mb-3"
+          className="mb-4"
         />
         {/* CRITERIAS CARDS */}
         {criterias.map((criteriaInfo, index) => (

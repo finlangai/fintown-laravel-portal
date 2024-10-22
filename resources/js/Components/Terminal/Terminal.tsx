@@ -34,28 +34,31 @@ const Terminal: React.FC = () => {
         ></div>
 
         {/* === TERMINAL BUTTONS */}
-        <div className="flex justify-end items-center gap-3 border-gray-700 p-2 border-b pe-8">
-          <button
-            onClick={toggleMinimize}
-            className="hover:bg-gray-500 p-1 text-gray-300 text-xs"
-            title={isMinimized ? "Thu gọn" : "Phóng to"}
-          >
-            {isMinimized ? <Maximize width={21} /> : <Minus width={21} />}
-          </button>
-          <button
-            onClick={flush}
-            className="hover:bg-gray-500 p-1 text-gray-300 text-xs"
-            title="Đặt lại Terminal"
-          >
-            <ListRestart width={21} />
-          </button>
-          <button
-            onClick={toggleTerminal}
-            className="hover:bg-gray-500 p-1 text-gray-300 text-xs"
-            title="Đóng Terminal"
-          >
-            <X width={21} />
-          </button>
+        <div className="flex justify-between items-center border-gray-700 px-8 p-2 border-b">
+          <span>Terminal</span>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={toggleMinimize}
+              className="hover:bg-gray-500 p-1 text-gray-300 text-xs"
+              title={isMinimized ? "Thu gọn" : "Phóng to"}
+            >
+              {isMinimized ? <Maximize width={21} /> : <Minus width={21} />}
+            </button>
+            <button
+              onClick={flush}
+              className="hover:bg-gray-500 p-1 text-gray-300 text-xs"
+              title="Đặt lại Terminal"
+            >
+              <ListRestart width={21} />
+            </button>
+            <button
+              onClick={toggleTerminal}
+              className="hover:bg-gray-500 p-1 text-gray-300 text-xs"
+              title="Đóng Terminal"
+            >
+              <X width={21} />
+            </button>
+          </div>
         </div>
 
         {/* === TERMINAL BODY */}

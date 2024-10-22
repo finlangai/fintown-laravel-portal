@@ -6,7 +6,9 @@ import {
 } from "@/Components/UI/typography";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { cn } from "@/Lib/utils";
+import AssessmentBody from "@/Sections/Assessment/Detail/AssessmentBody";
 import AssessmentCriterias from "@/Sections/Assessment/Detail/AssessmentCriterias";
+import CriteriaClusters from "@/Sections/Assessment/Detail/CriteriaClusters";
 import InfoTopbar from "@/Sections/Assessment/Detail/InfoTopbar";
 import { Head, Link } from "@inertiajs/react";
 import { Badge, Circle, Currency, RotateCcw, Undo2 } from "lucide-react";
@@ -47,17 +49,27 @@ export default function AssessmentDetail({
         </TypographyH1>
       </header>
       {/* MAIN CONTAINER */}
-      <main className="flex gap-12">
+      <main className="relative flex gap-4">
         <AssessmentCriterias
+          className="top-24 sticky h-fit"
           insights={assessment.insights}
           criterias={criterias}
           currentCriteria={currentCriteria}
           setCurrentCriteria={setCurrentCriteria}
         />
-        <section className="flex-1">
+
+        <section className="flex flex-col flex-1 gap-7">
           <InfoTopbar assessment={assessment} />
 
           {/* METRICS CHART AND CLUSTER */}
+          <div className="flex gap-7">
+            <AssessmentBody className="flex-1" />
+            <CriteriaClusters
+              className="top-24 sticky w-1/4"
+              criterias={criterias}
+              insights={assessment.insights}
+            />
+          </div>
         </section>
       </main>
     </Authenticated>

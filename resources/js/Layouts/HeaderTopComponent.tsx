@@ -5,7 +5,7 @@ import { FunctionSearch } from "./Partials/Header/FunctionSearch";
 
 const HeaderTopComponent = ({ user }: any) => {
   return (
-    <nav className="top-0 sticky border-slate-200 bg-background-theme shadow-md py-1 border-b">
+    <nav className="top-0 z-50 sticky border-slate-200 bg-background-theme shadow-md py-1 border-b">
       <div className="flex justify-between items-center mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div>
           <FunctionSearch />
