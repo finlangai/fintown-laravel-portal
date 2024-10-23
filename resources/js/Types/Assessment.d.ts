@@ -24,5 +24,5 @@ type AssessmentCluster = {
 
 type Forecasted = {
   year: number;
-  metrics: { [key: string]: number }[];
+  metrics: { [key: string]: number };
 };

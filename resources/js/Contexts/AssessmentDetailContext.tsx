@@ -13,6 +13,7 @@ type AssessmentDetailContextProps = {
   getCriteriaInfo: (slug: string) => Criteria;
   positiveCriteriaCount: number;
   criteriasCount: number;
+  metricInfos: MetricFormular[];
 } & AssessmentDetailProps;
 
 const AssessmentDetailContext = createContext<
@@ -24,6 +25,7 @@ export const AssessmentDetailProvider = ({
   children,
   assessment,
   criterias,
+  metricInfos,
 }: {
   children: ReactNode;
 } & AssessmentDetailProps) => {
@@ -61,6 +63,7 @@ export const AssessmentDetailProvider = ({
         forecasts: assessment.forecast,
         criteriasCount: criteriaInsights.length,
         getCriteriaInfo,
+        metricInfos,
       }}
     >
       {children}

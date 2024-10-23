@@ -11,6 +11,7 @@ import { Undo2 } from "lucide-react";
 export interface AssessmentDetailProps {
   assessment: Assessment & { company: Company };
   criterias: Criteria[];
+  metricInfos: MetricFormular[];
 }
 
 export default function AssessmentDetail(props: AssessmentDetailProps) {

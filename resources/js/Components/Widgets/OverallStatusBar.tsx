@@ -32,6 +32,7 @@ export const getOverallStatus = (
 
 const OverallStatusBar = ({ level, className }: OverallStatusBarInterface) => {
   const needleRef = useRef(null);
+  // for the needle slide in effect
   useEffect(() => {
     if (needleRef.current) {
       const needleEl: HTMLSpanElement = needleRef.current;

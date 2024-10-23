@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Mongo\Company\Assessment;
+use App\Models\Mongo\Formular;
 use App\Models\Mongo\System\Criteria;
 use App\Utils\ApiResponse;
 use Inertia\Inertia;
@@ -38,11 +39,22 @@ class AssessmentController extends Controller
             ->with("company")
             ->first();
 
-        $criterias = Criteria::all();
+        if (!$assessment) {
+            return Inertia::render("Errors/404");
+        }
+
+        $criterias = Criteria::all()->toArray();
+        $requiredMetricIdentifiers = array_keys(
+            $assessment["forecast"][0]["metrics"]
+        );
+        $metricInfos = fn() => Formular::whereIn(
+            "identifier",
+            $requiredMetricIdentifiers
+        )->get();
 
         return Inertia::render(
             "Assessment/AssessmentDetail",
-            compact("assessment", "criterias")
+            compact("assessment", "criterias", "metricInfos")
         );
     }
 

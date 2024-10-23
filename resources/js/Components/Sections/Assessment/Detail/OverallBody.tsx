@@ -22,7 +22,8 @@ const OverallBody = ({}: OverallBodyInterface) => {
       <TypographyH5 className="mb-4">
         Đánh giá tổng quan:{" "}
         <span
-          className={`bg-[${statusColor}] px-2 py-1 rounded-md text-base text-white`}
+          className={"px-2 py-1 rounded-md text-base text-white"}
+          style={{ backgroundColor: statusColor }}
         >
           {statusName}
         </span>

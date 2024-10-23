@@ -10,7 +10,7 @@ const AssessmentBody = ({ className }: AssessmentBodyInterface) => {
     useAssessmentDetail();
 
   return (
-    <div className={cn("shadow-md p-5 rounded-lg", className)}>
+    <div className={cn("shadow-md h-fit p-5 rounded-lg", className)}>
       <section className="pb-3">
         {currentCriteria == overallSlug ? <OverallBody /> : <CriteriaBody />}
       </section>
