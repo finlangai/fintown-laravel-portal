@@ -1,10 +1,12 @@
 import { Badge } from "@/Components/UI/badge";
 import { TypographyMuted, TypographyP } from "@/Components/UI/typography";
 import { useAssessmentDetail } from "@/Contexts/AssessmentDetailContext";
+import { cn } from "@/Lib/utils";
 import { RotateCcw } from "lucide-react";
 
 const InfoTopbar = () => {
-  const { assessment } = useAssessmentDetail();
+  const { assessment, isUpdatingAssessment, setIsUpdatingAssessment } =
+    useAssessmentDetail();
 
   let metricCount = 0;
   const clusterCount: number = Object.values(assessment.insights).reduce(
@@ -25,12 +27,30 @@ const InfoTopbar = () => {
     0,
   );
 
+  const handleRegenerateAssessment = async () => {
+    setIsUpdatingAssessment(!isUpdatingAssessment);
+  };
+
+  const regenerateButtonClasses =
+    "border-slate-400 border-e-[2px] bg-slate-400 text-white border-b-2";
   return (
     <div className="flex justify-between shadow-md p-5 rounded-lg w-full">
       <div className="flex flex-col justify-between gap-2">
         {/* regenerate button */}
-        <button className="flex items-center gap-3 border-[2px] border-orange-300 px-2 py-1 rounded-md !ring-0 w-fit h-fit font-bold text-center text-orange-400 text-sm outline-none">
-          <RotateCcw className="size-5" />
+        <button
+          className={cn(
+            "flex items-center gap-3 border-[2px] border-e-[5px] border-orange-300 px-2 py-1 border-b-[5px] rounded-md !ring-0 w-fit h-fit font-bold text-center text-orange-400 text-sm outline-none",
+            isUpdatingAssessment && regenerateButtonClasses,
+          )}
+          disabled={isUpdatingAssessment}
+          onClick={handleRegenerateAssessment}
+        >
+          <RotateCcw
+            className={cn(
+              "size-5",
+              isUpdatingAssessment && "animate-reverse-spin",
+            )}
+          />
           Cập nhật nhận định
         </button>
 

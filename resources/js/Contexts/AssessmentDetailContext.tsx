@@ -6,6 +6,8 @@ type AssessmentDetailContextProps = {
   setCurrentCriteria: (criteria: string) => void;
   clusterIndex: number | null;
   setClusterIndex: (index: number | null) => void;
+  isUpdatingAssessment: boolean;
+  setIsUpdatingAssessment: (flag: boolean) => void;
   overallSlug: string;
   overallTitle: string;
   insights: AssessmentInsights;
@@ -32,6 +34,8 @@ export const AssessmentDetailProvider = ({
   // === STATES
   const [currentCriteria, setCurrentCriteria] = useState<string>("overall");
   const [clusterIndex, setClusterIndex] = useState<null | number>(null);
+  const [isUpdatingAssessment, setIsUpdatingAssessment] =
+    useState<boolean>(false);
 
   // === CUSTOM
   const overallSlug = "overall";
@@ -55,6 +59,8 @@ export const AssessmentDetailProvider = ({
         positiveCriteriaCount,
         clusterIndex,
         setClusterIndex,
+        isUpdatingAssessment,
+        setIsUpdatingAssessment,
         overallSlug,
         overallTitle,
         assessment,
