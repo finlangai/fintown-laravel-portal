@@ -41,7 +41,7 @@ const OverallStatusBar = ({ level, className }: OverallStatusBarInterface) => {
         needleEl.style.left = `${level}%`;
       }, 50);
     }
-  });
+  }, []);
 
   return (
     <div className={cn("relative mb-6", className)}>

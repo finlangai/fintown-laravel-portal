@@ -1,10 +1,10 @@
-import { useState, PropsWithChildren, ReactNode } from "react";
-import { usePage } from "@inertiajs/react";
-import HeaderComponent from "./HeaderComponent";
-import HeaderTopComponent from "./HeaderTopComponent";
 import Terminal from "@/Components/Terminal/Terminal";
 import { cn } from "@/Lib/utils";
-import { ChevronLeft, ChevronsLeft, ChevronsRight } from "lucide-react";
+import { usePage } from "@inertiajs/react";
+import { ChevronsLeft, ChevronsRight } from "lucide-react";
+import { PropsWithChildren, useState } from "react";
+import HeaderComponent from "./HeaderComponent";
+import HeaderTopComponent from "./HeaderTopComponent";
 
 type AuthenticatedProps = PropsWithChildren<{
   header: boolean;
