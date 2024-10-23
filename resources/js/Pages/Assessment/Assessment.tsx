@@ -1,12 +1,12 @@
+import AssessmentCard from "@/Components/Sections/Assessment/AssessmentCard";
+import { AssessmentPagination } from "@/Components/Sections/Assessment/Pagination";
+import TooltipWrapper from "@/Components/TooltipWrapper";
 import { Input } from "@/Components/UI/input";
+import { TypographyH1 } from "@/Components/UI/typography";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 import { Search } from "lucide-react";
-import AssessmentCard from "@/Sections/Assessment/AssessmentCard";
-import { AssessmentPagination } from "@/Sections/Assessment/Pagination";
 import { FormEvent } from "react";
-import TooltipWrapper from "@/Components/TooltipWrapper";
-import { TypographyH1, TypographyH2 } from "@/Components/UI/typography";
 
 export interface AssessmentProps {
   paginationData: Pagination<Assessment & { company: Company }>;

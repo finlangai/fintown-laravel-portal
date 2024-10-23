@@ -1,16 +1,11 @@
 import { Badge } from "@/Components/UI/badge";
-import {
-  TypographyInlineCode,
-  TypographyMuted,
-  TypographyP,
-} from "@/Components/UI/typography";
+import { TypographyMuted, TypographyP } from "@/Components/UI/typography";
+import { useAssessmentDetail } from "@/Contexts/AssessmentDetailContext";
 import { RotateCcw } from "lucide-react";
 
-const InfoTopbar = ({
-  assessment,
-}: {
-  assessment: Assessment & { company: Company };
-}) => {
+const InfoTopbar = () => {
+  const { assessment } = useAssessmentDetail();
+
   let metricCount = 0;
   const clusterCount: number = Object.values(assessment.insights).reduce(
     (acc, item: AssessmentCriteria | string) => {

@@ -1,3 +1,4 @@
+import { useAssessmentDetail } from "@/Contexts/AssessmentDetailContext";
 import { cn } from "@/Lib/utils";
 import { ReactNode } from "react";
 
@@ -18,6 +19,8 @@ const CriteriaCard = ({
   setCurrentCriteria,
   className,
 }: CriteriaCardInterface) => {
+  const { setClusterIndex } = useAssessmentDetail();
+
   return (
     <button
       className={cn(
@@ -29,6 +32,7 @@ const CriteriaCard = ({
       )}
       onClick={() => {
         setCurrentCriteria(slug);
+        setClusterIndex(null);
       }}
     >
       {icon}

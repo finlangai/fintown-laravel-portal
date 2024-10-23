@@ -5,15 +5,23 @@ import {
 } from "@/Components/UI/tooltip";
 import { ReactNode } from "react";
 
-interface TooltipWrapperProps {
+type TooltipWrapperProps = {
   children: ReactNode;
   tooltip: ReactNode | string | number;
-}
+} & classNameInterface &
+  styleInterface;
 
-const TooltipWrapper = ({ children, tooltip }: TooltipWrapperProps) => {
+const TooltipWrapper = ({
+  children,
+  tooltip,
+  className,
+  style,
+}: TooltipWrapperProps) => {
   return (
     <Tooltip>
-      <TooltipTrigger>{children}</TooltipTrigger>
+      <TooltipTrigger style={style} className={className}>
+        {children}
+      </TooltipTrigger>
       {tooltip && <TooltipContent>{tooltip}</TooltipContent>}
     </Tooltip>
   );

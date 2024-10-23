@@ -1,24 +1,26 @@
+import { getOverallStatus } from "@/Components/Widgets/OverallStatusBar";
+import { useAssessmentDetail } from "@/Contexts/AssessmentDetailContext";
 import { cn } from "@/Lib/utils";
+import { Badge } from "lucide-react";
 import { TbCapsuleFilled } from "react-icons/tb";
 import CriteriaCard from "./CriteriaCard";
-import { Badge } from "lucide-react";
 
-type AssessmentCriteriasProps = {
-  criterias: Criteria[];
-  insights: AssessmentInsights;
-  currentCriteria: string;
-  setCurrentCriteria: (slug: string) => void;
-} & classNameInterface;
+type AssessmentCriteriasProps = {} & classNameInterface;
 
-const AssessmentCriterias = ({
-  criterias,
-  insights,
-  currentCriteria,
-  setCurrentCriteria,
-  className,
-}: AssessmentCriteriasProps) => {
-  const overallSlug = "overall";
-  const overallTitle = "Nhận Định Tổng Quan";
+const AssessmentCriterias = ({ className }: AssessmentCriteriasProps) => {
+  const {
+    currentCriteria,
+    setCurrentCriteria,
+    overallSlug,
+    overallTitle,
+    criterias,
+    insights,
+    positiveCriteriaCount,
+    criteriasCount,
+  } = useAssessmentDetail();
+
+  const { color } = getOverallStatus(positiveCriteriaCount, criteriasCount);
+
   return (
     <section className={cn("px-3 rounded-lg w-1/4", className)}>
       {/* === START - CRITERIAS LIST */}
@@ -31,15 +33,16 @@ const AssessmentCriterias = ({
           setCurrentCriteria={setCurrentCriteria}
           icon={
             <Badge
-              className={
+              style={
                 currentCriteria == overallSlug
-                  ? "fill-white stroke-white"
-                  : "fill-purple-400 stroke-purple-400"
+                  ? { fill: "white", stroke: "white" }
+                  : { fill: color, stroke: color }
               }
             />
           }
           className="mb-4"
         />
+
         {/* CRITERIAS CARDS */}
         {criterias.map((criteriaInfo, index) => (
           <CriteriaCard

@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const TerminalBody = styled.div`
   &::-webkit-scrollbar {
+    display: block !important;
     width: 4px;
     opacity: 0.1;
   }
