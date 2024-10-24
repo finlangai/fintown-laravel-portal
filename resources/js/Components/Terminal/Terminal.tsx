@@ -38,7 +38,7 @@ const Terminal: React.FC = () => {
     !isClosed && (
       <div
         ref={terminalRef}
-        className={`z-[100] fixed bottom-0 left-0 w-full bg-black bg-opacity-80 text-white font-mono ${isMinimized ? "h-8" : ""}`}
+        className={`z-[100] fixed bottom-0 left-0 w-full bg-black transition-all duration-300 ease-out bg-opacity-80 text-white font-mono ${isMinimized ? "h-8" : ""}`}
         style={{ height: isMinimized ? "48px" : `${height}px` }}
       >
         {/* === RESIZE BAR */}
@@ -64,6 +64,11 @@ const Terminal: React.FC = () => {
             <button
               onClick={() => {
                 if (isFullScreen) {
+                  if (isMinimized) {
+                    toggleMinimize();
+                    return;
+                  }
+
                   setHeight(defaultHeight);
                   return;
                 }
@@ -76,17 +81,14 @@ const Terminal: React.FC = () => {
               className="hover:bg-gray-500 p-1 text-gray-300 text-xs"
               title="Phóng to"
             >
-              {isFullScreen ? (
+              {isFullScreen && !isMinimized ? (
                 <Minimize2 width={21} />
               ) : (
                 <Maximize2 width={21} />
               )}
             </button>
             <button
-              onClick={() => {
-                flush();
-                setHeight(300);
-              }}
+              onClick={flush}
               className="hover:bg-gray-500 p-1 text-gray-300 text-xs"
               title="Đặt lại Terminal"
             >

@@ -68,6 +68,7 @@ Route::middleware("auth")->group(function () {
     );
 
     require __DIR__ . "/web/assessments.php";
+    require __DIR__ . "/web/system.php";
 });
 
 require __DIR__ . "/auth.php";
