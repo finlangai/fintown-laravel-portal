@@ -1,13 +1,13 @@
+import { cn } from "@/Lib/utils";
 import { Link, usePage } from "@inertiajs/react";
-import DashboardLi from "./Partials/Doashboad";
-import StaffLi from "./Partials/Staff";
-import BillLi from "./Partials/Bill";
-import Postforecast from "./Partials/PostForecast";
-import CompanyLi from "./Partials/Company";
-import FinancialLi from "./Partials/Financial";
-import AssessmentMenuItems from "./Partials/AssessmentMenuItems";
-import IndexFinancial from "./Partials/Index-Financial";
 import { CirclePower } from "lucide-react";
+import AssessmentMenuItems from "./Partials/AssessmentMenuItems";
+import BillLi from "./Partials/Bill";
+import CompanyLi from "./Partials/Company";
+import DashboardLi from "./Partials/Doashboad";
+import FinancialLi from "./Partials/Financial";
+import StaffLi from "./Partials/Staff";
+import SystemMenuItems from "./Partials/SystemMenuItems";
 interface HeaderComponentProps {
   isExpanded: boolean;
   handleSetIsExpanded: (value: boolean) => void;
@@ -44,37 +44,27 @@ export default function HeaderComponent({
           {/* cả admin và supper ADMIN đều sử dụng được  */}
           <li
             className="ml-2 p-2 text-text-head cursor-pointer"
-            onClick={() => handleSetIsExpanded(true)}
             style={activeNavLink}
           >
             <div className="flex items-center h-10">
-              {isExpanded ? (
-                <Link
-                  href={route("dashboard")}
-                  className="flex justify-center items-center"
-                >
-                  <img
-                    src="https://fintown.software/imgs/logo.png"
-                    width={50}
-                    height={50}
-                    alt="MenuLogo"
-                    className="block shadow-lg rounded-full"
-                    style={{ marginLeft: "-3px" }}
-                  />
-                  <p className="items-center ml-3 font-semibold text-2xl text-white">
-                    Fintown
-                  </p>
-                </Link>
-              ) : (
+              <Link
+                href={route("dashboard")}
+                className="flex justify-center items-center"
+              >
                 <img
                   src="https://fintown.software/imgs/logo.png"
-                  width={30}
-                  height={30}
+                  width={isExpanded ? 50 : 30}
+                  height={isExpanded ? 50 : 30}
                   alt="MenuLogo"
                   className="block shadow-lg rounded-full"
                   style={{ marginLeft: "-3px" }}
                 />
-              )}
+                {isExpanded && (
+                  <p className="items-center ml-3 font-semibold text-2xl text-white">
+                    Fintown
+                  </p>
+                )}
+              </Link>
             </div>
           </li>
           <DashboardLi isExpanded={isExpanded} />
@@ -84,7 +74,7 @@ export default function HeaderComponent({
             <>
               <StaffLi isExpanded={isExpanded} />
               <BillLi isExpanded={isExpanded} />
-              <Postforecast isExpanded={isExpanded} />
+              {/* <Postforecast isExpanded={isExpanded} /> */}
             </>
           )}
         </ul>
@@ -93,8 +83,9 @@ export default function HeaderComponent({
             <>
               <CompanyLi isExpanded={isExpanded} />
               <FinancialLi isExpanded={isExpanded} />
-              <IndexFinancial isExpanded={isExpanded} />
+              {/* <IndexFinancial isExpanded={isExpanded} /> */}
               <AssessmentMenuItems isExpanded={isExpanded} />
+              <SystemMenuItems isExpanded={isExpanded} />
             </>
           )}
         </ul>
@@ -103,29 +94,22 @@ export default function HeaderComponent({
       {/* POWER BUTTON */}
       <ul className="mt-4 mb-12 w-full">
         <li className="bg-red-400 hover:bg-red-500 mx-1 mt-4 p-2 rounded-xl text-white transition duration-300 cursor-pointer">
-          <div className="flex items-center">
-            {isExpanded ? (
-              <Link
-                href={route("logout")}
-                method="post"
-                as="button"
-                className="flex justify-center items-center"
-              >
-                <CirclePower />
+          <div
+            className={cn("flex items-center", !isExpanded && "justify-center")}
+          >
+            <Link
+              href={route("logout")}
+              method="post"
+              as="button"
+              className="flex justify-center items-center"
+            >
+              <CirclePower />
+              {isExpanded && (
                 <span className="ml-4 text-xs whitespace-nowrap">
                   Đăng xuất
                 </span>
-              </Link>
-            ) : (
-              <Link
-                href={route("logout")}
-                className="mx-auto"
-                method="post"
-                as="button"
-              >
-                <CirclePower className="me-[1px]" />
-              </Link>
-            )}
+              )}
+            </Link>
           </div>
         </li>
       </ul>

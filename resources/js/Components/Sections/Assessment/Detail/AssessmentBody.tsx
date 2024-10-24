@@ -1,19 +1,22 @@
 import { useAssessmentDetail } from "@/Contexts/AssessmentDetailContext";
 import { cn } from "@/Lib/utils";
+import { useEffect } from "react";
 import CriteriaBody from "./CriteriaBody";
 import OverallBody from "./OverallBody";
 
 type AssessmentBodyInterface = {} & classNameInterface;
 
 const AssessmentBody = ({ className }: AssessmentBodyInterface) => {
-  const { currentCriteria, overallSlug, insights, forecasts } =
-    useAssessmentDetail();
+  const { currentCriteria, overallSlug, clusterIndex } = useAssessmentDetail();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    console.log("damn");
+  }, [currentCriteria, clusterIndex]);
 
   return (
-    <div className={cn("shadow-md h-fit p-5 rounded-lg", className)}>
-      <section className="pb-3">
-        {currentCriteria == overallSlug ? <OverallBody /> : <CriteriaBody />}
-      </section>
+    <div className={cn("shadow-md h-fit p-5 rounded-lg pb-3", className)}>
+      {currentCriteria == overallSlug ? <OverallBody /> : <CriteriaBody />}
     </div>
   );
 };

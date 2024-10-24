@@ -25,7 +25,7 @@ const BillLi = ({ isExpanded }: BillLiProps) => {
               value="item-2"
               className="border-none transition-none"
             >
-              <AccordionTrigger>
+              <AccordionTrigger className="flex items-center">
                 <div className="flex justify-center items-center">
                   <ShoppingBag />
 

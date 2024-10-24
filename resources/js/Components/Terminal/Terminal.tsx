@@ -1,6 +1,13 @@
 import { useResize } from "@/Hooks/useResize";
 import { useTerminal } from "@/Hooks/useTerminal";
-import { ListRestart, Maximize, Maximize2, Minus, X } from "lucide-react";
+import {
+  ListRestart,
+  Maximize,
+  Maximize2,
+  Minimize2,
+  Minus,
+  X,
+} from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { TerminalBody } from "./TerminalBodyStyled";
 
@@ -13,7 +20,8 @@ const Terminal: React.FC = () => {
     isClosed,
     toggleTerminal,
   } = useTerminal();
-  const [height, setHeight] = useState(300);
+  const defaultHeight = 300;
+  const [height, setHeight] = useState(defaultHeight);
   const terminalRef = useRef<HTMLDivElement>(null);
   const terminalBodyRef = useRef<HTMLDivElement>(null);
   const { startResize } = useResize(setHeight);
@@ -23,6 +31,8 @@ const Terminal: React.FC = () => {
       terminalBodyRef.current.scrollTop = terminalBodyRef.current.scrollHeight;
     }
   }, [messages]);
+
+  const isFullScreen: boolean = window.innerHeight == height;
 
   return (
     !isClosed && (
@@ -53,6 +63,11 @@ const Terminal: React.FC = () => {
             </button>
             <button
               onClick={() => {
+                if (isFullScreen) {
+                  setHeight(defaultHeight);
+                  return;
+                }
+
                 setHeight(window.innerHeight);
                 if (isMinimized) {
                   toggleMinimize();
@@ -61,7 +76,11 @@ const Terminal: React.FC = () => {
               className="hover:bg-gray-500 p-1 text-gray-300 text-xs"
               title="Phóng to"
             >
-              {<Maximize2 width={21} />}
+              {isFullScreen ? (
+                <Minimize2 width={21} />
+              ) : (
+                <Maximize2 width={21} />
+              )}
             </button>
             <button
               onClick={() => {

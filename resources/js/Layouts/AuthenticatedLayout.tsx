@@ -1,8 +1,9 @@
 import Terminal from "@/Components/Terminal/Terminal";
+import { useAuthenticated } from "@/Contexts/AuthenticatedContext";
 import { cn } from "@/Lib/utils";
 import { usePage } from "@inertiajs/react";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren } from "react";
 import HeaderComponent from "./HeaderComponent";
 import HeaderTopComponent from "./HeaderTopComponent";
 
@@ -21,13 +22,13 @@ export default function Authenticated({
     email: "Email@example.com",
   };
 
-  const [isExpanded, setIsExpanded] = useState<boolean>(true);
+  const { isExpanded, setIsExpanded } = useAuthenticated();
   const handleSetIsExpanded = (value: boolean) => {
     setIsExpanded(value);
   };
 
   return (
-    <div className="flex min-h-screen transition-all duration-300">
+    <div className="top-0 sticky flex min-h-screen transition-all duration-300">
       {/* đây là sidebar bên trái*/}
       {header ? (
         <header

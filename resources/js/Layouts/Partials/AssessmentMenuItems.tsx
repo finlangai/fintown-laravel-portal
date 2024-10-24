@@ -1,4 +1,5 @@
 import TooltipWrapper from "@/Components/TooltipWrapper";
+import { cn } from "@/Lib/utils";
 import { Link } from "@inertiajs/react";
 import { SquareDashedKanban } from "lucide-react";
 
@@ -8,12 +9,18 @@ interface AssessmentMenuItemsProps {
 
 const AssessmentMenuItems = ({ isExpanded }: AssessmentMenuItemsProps) => {
   return (
-    <li className="hover:bg-accent-color ml-2 p-2 rounded-xl text-text-head hover:text-white transition duration-300 cursor-pointer">
+    <li
+      className={cn(
+        "hover:bg-accent-color ml-2 p-2 rounded-xl text-text-head hover:text-white transition duration-300 cursor-pointer",
+        !isExpanded && "w-fit",
+      )}
+    >
       <div className="flex items-center">
         <TooltipWrapper tooltip={!isExpanded ? "Kết quả nhận định" : null}>
           <Link
             href={route("assessments.index")}
             className="flex justify-center items-center"
+            preserveState={true}
           >
             <SquareDashedKanban />
             {isExpanded && (

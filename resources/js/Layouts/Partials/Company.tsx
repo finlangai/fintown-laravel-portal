@@ -10,6 +10,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@radix-ui/react-hover-card";
+import { Factory } from "lucide-react";
 interface CompanyLiProps {
   isExpanded: boolean;
 }
@@ -24,25 +25,9 @@ const CompanyLi = ({ isExpanded }: CompanyLiProps) => {
               value="item-2"
               className="border-none transition-none"
             >
-              <AccordionTrigger>
+              <AccordionTrigger className="flex items-center">
                 <div className="flex justify-center items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={20}
-                    height={20}
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-factory"
-                  >
-                    {" "}
-                    <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z" />{" "}
-                    <path d="M17 18h1" /> <path d="M12 18h1" />{" "}
-                    <path d="M7 18h1" />{" "}
-                  </svg>
+                  <Factory />
                   <span className="ml-4 text-xs whitespace-nowrap">
                     Hồ sơ công ty
                   </span>
