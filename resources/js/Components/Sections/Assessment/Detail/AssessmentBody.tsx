@@ -11,7 +11,6 @@ const AssessmentBody = ({ className }: AssessmentBodyInterface) => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-    console.log("damn");
   }, [currentCriteria, clusterIndex]);
 
   return (

@@ -1,4 +1,4 @@
-import TooltipWrapper from "@/Components/TooltipWrapper";
+import TooltipWrapper from "@/Components/Specialized/tooltip-wrapper";
 import { cn } from "@/Lib/utils";
 import { Link } from "@inertiajs/react";
 import { SquareDashedKanban } from "lucide-react";

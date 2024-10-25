@@ -1,4 +1,4 @@
-import { TerminalBody as StyledScrollbarDiv } from "@/Components/Terminal/TerminalBodyStyled";
+import { TerminalBody as StyledScrollbarDiv } from "@/Components/Widgets/Terminal/TerminalBodyStyled";
 import { useAssessmentDetail } from "@/Contexts/AssessmentDetailContext";
 import { cn } from "@/Lib/utils";
 

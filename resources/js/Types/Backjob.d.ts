@@ -3,7 +3,7 @@ type Backjob = {
   name: string;
   description: string | null;
   is_active: boolean;
-  parameters: { [key: string]: string } | null;
+  parameters: string;
   job_class: string;
   interval: number;
   interval_type: "minutely" | "hourly" | "daily" | "weekly" | "monthly";

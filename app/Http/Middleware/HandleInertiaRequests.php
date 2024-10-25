@@ -35,6 +35,7 @@ class HandleInertiaRequests extends Middleware
                 "user" => $request->user(),
             ],
             "pythonServiceUrl" => env("PYTHON_SERVICE_URL"),
+            "toastMessage" => $request->session()->get("toastMessage"),
         ];
     }
 }

@@ -8,7 +8,6 @@ const BackjobsPageContext = createContext<BackjobsPageContextProps | undefined>(
   undefined,
 );
 
-// PROVIDER
 export const BackjobsPageProvider = ({
   children,
   backjobs,

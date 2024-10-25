@@ -1,6 +1,6 @@
 import AssessmentCard from "@/Components/Sections/Assessment/AssessmentCard";
 import { AssessmentPagination } from "@/Components/Sections/Assessment/Pagination";
-import TooltipWrapper from "@/Components/TooltipWrapper";
+import TooltipWrapper from "@/Components/Specialized/tooltip-wrapper";
 import { Input } from "@/Components/UI/input";
 import { TypographyH1 } from "@/Components/UI/typography";
 import Authenticated from "@/Layouts/AuthenticatedLayout";

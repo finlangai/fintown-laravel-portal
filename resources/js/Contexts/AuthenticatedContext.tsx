@@ -1,3 +1,4 @@
+import { Toaster } from "@/Components/UI/sonner";
 import React, { createContext, useContext, useState } from "react";
 
 interface AuthenticatedContextProps {
@@ -20,6 +21,7 @@ export const AuthenticatedProvider: React.FC<AuthenticatedProviderProps> = ({
   return (
     <AuthenticatedContext.Provider value={{ isExpanded, setIsExpanded }}>
       {children}
+      <Toaster richColors theme="light" />
     </AuthenticatedContext.Provider>
   );
 };

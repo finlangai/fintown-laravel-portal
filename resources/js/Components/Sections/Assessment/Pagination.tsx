@@ -1,12 +1,11 @@
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/Components/UI/pagination-inertia";
+} from "@/Components/Specialized/pagination-inertia";
 import { AssessmentProps } from "@/Pages/Assessment/Assessment";
 
 export function AssessmentPagination({ paginationData }: AssessmentProps) {

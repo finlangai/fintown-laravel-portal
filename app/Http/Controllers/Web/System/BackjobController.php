@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Web\System;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Web\System\UpdateBackjobRequest;
 use App\Models\SQL\System\Backjob;
+use App\Utils\ApiResponse;
+use App\Utils\Toasting;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -29,9 +32,12 @@ class BackjobController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Backjob $backjob)
+    public function update(UpdateBackjobRequest $request, Backjob $backjob)
     {
-        //
+        $validated = $request->validated();
+        $backjob->fill($validated);
+        $backjob->save();
+        Toasting::success("Cập nhật Backjob thành công.");
     }
 
     /**

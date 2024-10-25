@@ -1,7 +1,7 @@
 import { cn } from "@/Lib/utils";
 import { Play } from "lucide-react";
 import { useEffect, useRef } from "react";
-import TooltipWrapper from "../TooltipWrapper";
+import TooltipWrapper from "../Specialized/tooltip-wrapper";
 
 type OverallStatusBarInterface = {
   level: number;

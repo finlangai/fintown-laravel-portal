@@ -1,9 +1,10 @@
-import Terminal from "@/Components/Terminal/Terminal";
+import Terminal from "@/Components/Widgets/Terminal/Terminal";
 import { useAuthenticated } from "@/Contexts/AuthenticatedContext";
+import { toastHandler } from "@/Lib/toastHandler";
 import { cn } from "@/Lib/utils";
 import { usePage } from "@inertiajs/react";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect } from "react";
 import HeaderComponent from "./HeaderComponent";
 import HeaderTopComponent from "./HeaderTopComponent";
 
@@ -26,6 +27,14 @@ export default function Authenticated({
   const handleSetIsExpanded = (value: boolean) => {
     setIsExpanded(value);
   };
+
+  const { toastMessage }: any = usePage().props;
+
+  useEffect(() => {
+    if (toastMessage) {
+      toastHandler(toastMessage);
+    }
+  }, [toastMessage]);
 
   return (
     <div className="top-0 sticky flex min-h-screen transition-all duration-300">
