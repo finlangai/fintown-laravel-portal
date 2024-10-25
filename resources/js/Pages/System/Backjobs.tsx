@@ -1,5 +1,5 @@
 import BackjobCard from "@/Components/Sections/System/Backjobs/BackjobCard";
-import { AddButton } from "@/Components/Specialized/crud-button";
+import CreateBackjob from "@/Components/Sections/System/Backjobs/CreateBackjob";
 import { TypographyH1 } from "@/Components/UI/typography";
 import { BackjobsPageProvider } from "@/Contexts/BackjobsPageContext";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
@@ -22,7 +22,7 @@ export default function BackjobsPage(props: BackjobsPageProps) {
       <BackjobsPageProvider {...props}>
         {/* PAGE HEADER */}
         <div className="flex items-center gap-6">
-          <TypographyH1>Quản lý Backjobs</TypographyH1> <AddButton />
+          <TypographyH1>Quản lý Backjobs</TypographyH1> <CreateBackjob />
         </div>
 
         {/* BACKJOBS CARD CONTAINER */}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\System;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Web\System\BackjobRequest;
 use App\Http\Requests\Web\System\UpdateBackjobRequest;
 use App\Models\SQL\System\Backjob;
 use App\Utils\ApiResponse;
@@ -24,15 +25,17 @@ class BackjobController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(BackjobRequest $request)
     {
-        //
+        $validated = $request->validated();
+        Backjob::create($validated);
+        Toasting::success("Đã tạo Backjob mới.");
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBackjobRequest $request, Backjob $backjob)
+    public function update(BackjobRequest $request, Backjob $backjob)
     {
         $validated = $request->validated();
         $backjob->fill($validated);
@@ -45,6 +48,7 @@ class BackjobController extends Controller
      */
     public function destroy(Backjob $backjob)
     {
-        //
+        $backjob->delete();
+        Toasting::success("Đã xóa backjob.");
     }
 }

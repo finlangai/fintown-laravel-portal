@@ -1,4 +1,4 @@
-import { DeleteButton } from "@/Components/Specialized/crud-button";
+import ConfirmDelete from "@/Components/Specialized/confirm-delete";
 import {
   Card,
   CardContent,
@@ -12,6 +12,7 @@ import EditBackjob from "./EditBackjob";
 
 const BackjobCard = (backjob: Backjob) => {
   const {
+    id,
     name,
     is_active,
     description,
@@ -65,7 +66,7 @@ const BackjobCard = (backjob: Backjob) => {
       </CardContent>
       <CardFooter className="flex justify-end items-center gap-3">
         <EditBackjob {...backjob} />
-        <DeleteButton />
+        <ConfirmDelete destroyUrl={route("system.backjobs.destroy", id)} />
       </CardFooter>
     </Card>
   );

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Web\System;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateBackjobRequest extends FormRequest
+class BackjobRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
