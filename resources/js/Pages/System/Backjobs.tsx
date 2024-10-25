@@ -11,7 +11,6 @@ type BackjobsPageProps = {
 
 export default function BackjobsPage(props: BackjobsPageProps) {
   const { backjobs } = props;
-  console.log(backjobs);
 
   return (
     <Authenticated
