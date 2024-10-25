@@ -80,7 +80,9 @@ export const AssessmentDetailProvider = ({
 export const useAssessmentDetail = () => {
   const context = useContext(AssessmentDetailContext);
   if (!context) {
-    throw new Error("useCriteria must be used within a CriteriaProvider");
+    throw new Error(
+      "useCriteria must be used within a AssessmentDetailProvider",
+    );
   }
   return context;
 };

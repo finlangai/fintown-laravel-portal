@@ -37,4 +37,8 @@ RUN composer install --optimize-autoloader --no-dev \
 
 # Expose the port and start the application
 EXPOSE 8000
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+# CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+
+# Custom entrypoint script
+CMD nohup php artisan serve --host=0.0.0.0 --port=8000 & \
+    php artisan schedule:work

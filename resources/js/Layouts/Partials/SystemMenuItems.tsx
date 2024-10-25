@@ -48,7 +48,7 @@ const SystemMenuItems = ({ isExpanded }: SystemMenuItemsProps) => {
                   </Link>
                 </li>
                 <li className="mt-5 hover:underline">
-                  <Link href="/staff-list">
+                  <Link href={route("system.backjobs.index")}>
                     <div className="flex justify-start items-center">
                       <CalendarCog className="size-6" />
                       {isExpanded && (
