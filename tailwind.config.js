@@ -1,4 +1,3 @@
-import defaultTheme from "tailwindcss/defaultTheme";
 import forms from "@tailwindcss/forms";
 
 /** @type {import('tailwindcss').Config} */
@@ -24,7 +23,7 @@ export default {
         "text-Content": "#333333",
         "text-Content-sub": "#555555",
         "text-head-main": "#ffffff",
-        "text-head": "#8391a2",
+        "text-head": "#cbd5e1",
         "text-link": "#FF8743",
         "text-active": "#25B770",
         sidebar: {
@@ -36,6 +35,8 @@ export default {
           "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
+          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
         },
       },
       backgroundColor: {
@@ -67,16 +68,21 @@ export default {
             height: "0",
           },
         },
+        "reverse-spin": {
+          from: {
+            transform: "rotate(360deg)",
+          },
+          to: {
+            transform: "rotate(0deg)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "reverse-spin": "reverse-spin 1s linear infinite",
       },
     },
   },
-  plugins: [
-    forms,
-    require("tailwindcss-animate"),
-    require("tailwind-scrollbar"),
-  ],
+  plugins: [forms, require("tailwindcss-animate")],
 };

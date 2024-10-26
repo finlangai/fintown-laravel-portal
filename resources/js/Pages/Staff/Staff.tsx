@@ -30,6 +30,7 @@ import {
 } from "@/Components/UI/dialog";
 import AddRole from "./StaffFunction/AddRole";
 import RemoveStaff from "./StaffFunction/RemoveStaff";
+import { BadgePlus } from "lucide-react";
 
 export default function Staff() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -161,7 +162,18 @@ export default function Staff() {
                         </TableCell>
                         <TableCell className="text-gray-800">*******</TableCell>
                         <TableCell className="text-gray-800">
-                          {item.roles[0]}
+                          {
+                            item.roles[0] ? (
+                              <span>
+                                {item.roles[0]}
+                              </span>
+                            ) : (
+                               <button>
+                                  <BadgePlus />
+                               </button>
+                            )
+                          }
+
                         </TableCell>
                         <TableCell className="text-green-500">
                           <Dialog>

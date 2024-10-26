@@ -32,14 +32,17 @@ const AssessmentCard = ({
             <span>{company.symbol}</span>
             <span className="flex">
               {/* STATUS LIGHTS */}
-              {Object.values(insights).map((item) => {
+              {Object.values(insights).map((item, index) => {
                 if (typeof item === "object") {
                   const colorClassname =
                     item.status == "Tích cực"
                       ? "fill-green-400"
                       : "fill-red-400";
                   return (
-                    <TbCapsuleFilled className={`${colorClassname} w-fit`} />
+                    <TbCapsuleFilled
+                      key={index}
+                      className={`${colorClassname} w-fit`}
+                    />
                   );
                 }
               })}

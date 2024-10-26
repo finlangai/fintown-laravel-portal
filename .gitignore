@@ -22,5 +22,6 @@ yarn-error.log
 package-lock.json
 storage/api-docs/api-docs.json
 # ignore misbehavious shadcn folders
-components/ui
-lib
+./components/ui
+./lib
+./hooks

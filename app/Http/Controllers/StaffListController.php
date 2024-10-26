@@ -42,7 +42,6 @@ class StaffListController extends Controller
             'email' => 'required|email|unique:staffs,email', 
             'password' => 'required|string|min:8',
         ]);
-    
         $staff = StaffList::create([
             'username' => $validatedData['username'],
             'fullname' => $validatedData['fullname'],

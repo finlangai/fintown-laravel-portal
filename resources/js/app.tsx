@@ -1,11 +1,10 @@
-import "./bootstrap";
 import "../css/app.css";
+import "./bootstrap";
 
-import { createRoot } from "react-dom/client";
-import { createInertiaApp, Head } from "@inertiajs/react";
+import { createInertiaApp } from "@inertiajs/react";
 import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
-import { TerminalProvider } from "./Providers/TerminalProvider";
-import { TooltipProvider } from "@radix-ui/react-tooltip";
+import { createRoot } from "react-dom/client";
+import AppProviders from "./Providers/AppProviders";
 
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 
@@ -20,11 +19,9 @@ createInertiaApp({
     const root = createRoot(el);
 
     root.render(
-      <TooltipProvider>
-        <TerminalProvider>
-          <App {...props} />
-        </TerminalProvider>
-      </TooltipProvider>,
+      <AppProviders>
+        <App {...props} />
+      </AppProviders>,
     );
   },
   progress: {

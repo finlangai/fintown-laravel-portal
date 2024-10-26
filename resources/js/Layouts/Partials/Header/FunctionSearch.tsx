@@ -1,6 +1,4 @@
-import { Button } from "@/Components/UI/Button";
 import { Input } from "@/Components/UI/input";
-import { Label } from "@/Components/UI/label";
 import {
   Popover,
   PopoverContent,
