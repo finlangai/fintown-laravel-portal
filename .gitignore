@@ -21,7 +21,3 @@ yarn-error.log
 /.zed
 package-lock.json
 storage/api-docs/api-docs.json
-# ignore misbehavious shadcn folders
-./components/ui
-./lib
-./hooks
