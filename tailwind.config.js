@@ -1,52 +1,87 @@
 import forms from "@tailwindcss/forms";
+import tailwindScrollbar from "tailwind-scrollbar";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 /** @type {import('tailwindcss').Config} */
 export default {
-    darkMode: ["class"],
-    content: [
-        "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
-        "./storage/framework/views/*.php",
-        "./resources/views/**/*.blade.php",
-        "./resources/js/**/*.tsx",
-    ],
-    theme: {
-        extend: {
-            fontFamily: {
-                sans: ["Inter", "sans-serif"],
-            },
-            borderRadius: {
-                full: '999px',
-                lg: "var(--radius)",
-                md: "calc(var(--radius) - 2px)",
-                sm: "calc(var(--radius) - 4px)",
-            },
-            colors: {
-                'text-Content': '#fff',
-                'text-Content-sub': '#E8E8E8',
-                'text-link': '#FF8743',
-                'text-active': "#25B770",
-            },
-            backgroundColor: {
-                'background-theme': '#1B2E31',
-                'background-active': '#274242',
-                'custom-button-success': '#25B770',
-                'custom-button-warning': '#FF8743',
-                'custom-button-error': '#F93C65',
-                'custom-button-pending': '#FFFFF',
-                'outline-variant': "rgba(192, 201, 192, 0.16)",
-                // Thêm nhiều màu nền hơn nếu cần
-            },
-            spacing: {
-                // increment of 4px, 1px = 0.0625em (16px = 1em on default)
-                'section-gap': '24px',
-                'content-gap': '16px',
-                'medium-content-gap': '8px',
-                'small-content-gap': '4px',
-                'horizontal-padding-container': '40px',
-                'vertical-padding-container': '20px',
-            }
-        },
-    },
+  darkMode: ["class"],
+  content: [
+    "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
+    "./storage/framework/views/*.php",
+    "./resources/views/**/*.blade.php",
+    "./resources/js/**/*.tsx",
+  ],
+  theme: {
+  	extend: {
+  		fontFamily: {
+  			sans: ["Inter", "sans-serif"]
+  		},
+  		borderRadius: {
+  			lg: 'var(--radius)',
+  			md: 'calc(var(--radius) - 2px)',
+  			sm: 'calc(var(--radius) - 4px)'
+  		},
+  		colors: {
+  			'text-Content': '#333333',
+  			'text-Content-sub': '#555555',
+  			'text-head-main': '#ffffff',
+  			'text-head': '#8391a2',
+  			'text-link': '#FF8743',
+  			'text-active': '#25B770',
+  			sidebar: {
+  				DEFAULT: 'hsl(var(--sidebar-background))',
+  				foreground: 'hsl(var(--sidebar-foreground))',
+  				primary: 'hsl(var(--sidebar-primary))',
+  				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
+  				accent: 'hsl(var(--sidebar-accent))',
+  				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
+  				border: 'hsl(var(--sidebar-border))',
+  				ring: 'hsl(var(--sidebar-ring))'
+  			}
+  		},
+  		backgroundColor: {
+  			'background-theme': '#fff',
+  			'background-active': '#FAFBFE',
+  			'background-sibar': '#313A46',
+  			'background-head': 'gainsboro',
+  			'custom-button-success': '#25B770',
+  			'custom-button-warning': '#3682E7',
+  			'custom-button-error': '#F93C65',
+  			'custom-button-pending': '#FFFFF',
+  			'accent-color': '#25B770',
+  			'accent-color-sub': '#178D4A',
+			'surface-container-lowest': '#FFFFFF',
+			'surface-container-low': '#F0F5EE',
+			'surface-container': '#EAEFE8',
+  		},
+  		keyframes: {
+  			'accordion-down': {
+  				from: {
+  					height: '0'
+  				},
+  				to: {
+  					height: 'var(--radix-accordion-content-height)'
+  				}
+  			},
+  			'accordion-up': {
+  				from: {
+  					height: 'var(--radix-accordion-content-height)'
+  				},
+  				to: {
+  					height: '0'
+  				}
+  			}
+  		},
+  		animation: {
+  			'accordion-down': 'accordion-down 0.2s ease-out',
+  			'accordion-up': 'accordion-up 0.2s ease-out'
+  		}
+  	}
+  },
 
-    plugins: [forms, require("tailwindcss-animate")],
+  plugins: [
+    forms,
+	tailwindcssAnimate,
+    tailwindScrollbar,
+  ],
 };

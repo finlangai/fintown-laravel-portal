@@ -22,6 +22,7 @@ return new class extends Migration
             $table->enum('duration_type', [ 'day', 'month', 'year' ]);
             $table->boolean('is_renewable')->default(true);
             $table->timestamps();
+            $table->foreign('incharge_id')->references('id')->on('user_types')->onDelete('cascade');
         });
     }
 

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-export default function Vn30Stocks({ data }) {
+export default function Vn30Stocks({ data } : any) { // type công ty nó số liệu lúc nhiều lúc ít lúc có lúc không nên hùng để là any
   const [loading, setLoading] = useState(true);
-  const svgRef = useRef(null);
+  const svgRef = useRef<SVGSVGElement | null>(null);
 
   useEffect(() => {
     if (data && Array.isArray(data)) {
@@ -18,7 +18,7 @@ export default function Vn30Stocks({ data }) {
   }, [data]);
   useEffect(() => {
     let rotation = 0;
-    let intervalId;
+    let intervalId : any;
 
     if (loading) {
       intervalId = setInterval(() => {
@@ -107,7 +107,6 @@ export default function Vn30Stocks({ data }) {
                       </span>
                     </span>
                   </div>
-
             </div>
         </div>
         ))}
