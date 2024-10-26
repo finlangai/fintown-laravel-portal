@@ -1,6 +1,7 @@
 <?php
 
 use App\Utils\Redis;
+use Illuminate\Support\Str;
 use App\Models\SQL\System\Backjob;
 use App\Utils\Logger;
 use Illuminate\Support\Facades\App;
@@ -14,59 +15,75 @@ Artisan::command("inspire", function () {
     ->purpose("Display an inspiring quote")
     ->hourly();
 
-// // === BACKJOBS SECTION
-// $backjobs = Redis::get("backjobs");
-// if (!$backjobs) {
-//     // get backjob data if is not cached
-//     $backjobs = Backjob::where("is_active", true)->get()->toArray();
-//     Redis::set("backjobs", json_encode($backjobs));
-// } else {
-//     // decode if backjobs is cached
-//     $backjobs = json_decode($backjobs, true);
-// }
+use Predis\Client;
 
-// // == LOOP THROUGH EACH BACKJOBS
-// foreach ($backjobs as $job) {
-//     $jobClass = $job["job_class"];
-//     $jobId = $job["id"];
+$client = new Client([
+    "scheme" => "tcp",
+    "host" => env("REDIS_HOST"),
+    "port" => env("REDIS_PORT"),
+    "password" => env("REDIS_PASSWORD"),
+    "database" => 1,
+]);
+$redisPrefix = env(
+    "REDIS_PREFIX",
+    Str::slug(env("APP_NAME", "laravel"), "_") . "_database_"
+);
+$backjobsCacheName = $redisPrefix . "backjobs";
 
-//     $parameters = $job["parameters"];
+try {
+    $backjobs = $client->get($backjobsCacheName);
 
-//     $params = compact("parameters", "jobId");
+    if (!$backjobs) {
+        // get backjob data if not cached
+        $backjobs = Backjob::where("is_active", true)->get()->toArray();
+        $client->set($backjobsCacheName, json_encode($backjobs));
+    } else {
+        // decode if backjobs is cached
+        $backjobs = json_decode($backjobs, true);
+    }
 
-//     // DEFINE CLOSURE FUNCTION
-//     $closure = fn() => App::make($jobClass, $params)->handle();
+    foreach ($backjobs as $job) {
+        $jobClass = $job["job_class"];
+        $jobId = $job["id"];
+        $parameters = $job["parameters"];
+        $params = compact("parameters", "jobId");
 
-//     // get app timezone
-//     $appTimezone = env("APP_TIMEZONE");
+        $closure = fn() => App::make($jobClass, $params)->handle();
 
-//     if (!empty($job["cron_expression"])) {
-//         Schedule::call($closure)
-//             ->cron($job["cron_expression"])
-//             ->timezone($appTimezone);
-//         continue;
-//     }
+        $appTimezone = env("APP_TIMEZONE");
 
-//     $time = $job["time"];
-//     switch ($job["interval"]) {
-//         case "minutely":
-//             Schedule::call($closure)->everyMinute();
-//             break;
-//         case "hourly":
-//             Schedule::call($closure)->hourly();
-//             break;
-//         case "daily":
-//             Schedule::call($closure)->dailyAt($time)->timezone($appTimezone);
-//             break;
-//         case "weekly":
-//             Schedule::call($closure)
-//                 ->weeklyOn(1, $time)
-//                 ->timezone($appTimezone); // Default to Monday
-//             break;
-//         case "monthly":
-//             Schedule::call($closure)
-//                 ->monthlyOn(1, $time)
-//                 ->timezone($appTimezone); // Default to first day of the month
-//             break;
-//     }
-// }
+        if (!empty($job["cron_expression"])) {
+            Schedule::call($closure)
+                ->cron($job["cron_expression"])
+                ->timezone($appTimezone);
+            continue;
+        }
+
+        $time = $job["time"];
+        switch ($job["interval"]) {
+            case "minutely":
+                Schedule::call($closure)->everyMinute();
+                break;
+            case "hourly":
+                Schedule::call($closure)->hourly();
+                break;
+            case "daily":
+                Schedule::call($closure)
+                    ->dailyAt($time)
+                    ->timezone($appTimezone);
+                break;
+            case "weekly":
+                Schedule::call($closure)
+                    ->weeklyOn(1, $time)
+                    ->timezone($appTimezone);
+                break;
+            case "monthly":
+                Schedule::call($closure)
+                    ->monthlyOn(1, $time)
+                    ->timezone($appTimezone);
+                break;
+        }
+    }
+} catch (\Exception $e) {
+    logger()->error("Redis connection failed: " . $e->getMessage());
+}
