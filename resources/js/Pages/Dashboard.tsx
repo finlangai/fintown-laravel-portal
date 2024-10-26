@@ -137,6 +137,7 @@ export default function Dashboard() {
             </p>
           </CardContent>
         </Card>
+
       </div>
       <div className="gap-6 grid lg:grid-cols-3">
         {/* COLUMNS CHART */}

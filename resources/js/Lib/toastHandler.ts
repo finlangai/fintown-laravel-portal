@@ -7,7 +7,6 @@ interface ToastData {
 }
 export function toastHandler(toastData: ToastData) {
   const { content, type } = toastData;
-
   switch (type) {
     case "success":
       toast.success(content);
@@ -21,7 +20,6 @@ export function toastHandler(toastData: ToastData) {
     case "warning":
       toast.warning(content);
       break;
-
     default:
       toast(content);
       break;

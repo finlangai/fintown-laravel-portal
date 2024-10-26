@@ -37,7 +37,6 @@ export default function FinancialReports({
 }: {
   companies: CompanyInfo[];
 }) {
-  // true là thủ công false là Tải từ nguồn cấp
   const [sourceType, setSourceType] = useState<boolean>(true);
   const handleHandmade = () => {
     setSourceType(true);
@@ -45,7 +44,6 @@ export default function FinancialReports({
   const handleSource = () => {
     setSourceType(false);
   };
-  // mã hồ sơ công ty
   const [stockCode, setStockCode] = useState("");
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setStockCode(event.target.value);
@@ -83,7 +81,6 @@ export default function FinancialReports({
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
-
             <div className="py-3">
               <h2 className="font-bold text-2xl text-text-Content">
                 Danh sách Công ty
