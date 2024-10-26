@@ -5,8 +5,8 @@ type Backjob = {
   is_active: boolean;
   parameters: string;
   job_class: string;
-  interval: number;
-  interval_type: "minutely" | "hourly" | "daily" | "weekly" | "monthly";
+  interval: "minutely" | "hourly" | "daily" | "weekly" | "monthly";
+  cron_expression: string | null;
   time: string;
   last_run: string | null;
   next_run: string | null;

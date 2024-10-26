@@ -18,13 +18,12 @@ class BackjobSeeder extends Seeder
             "description" =>
                 "Chạy vào lúc 3 giờ sáng mỗi ngày để cập nhật giá và chỉ số mới nhất dựa trên giá đóng cửa cửa hôm trước",
             "is_active" => true,
-            "job_class" => "App\Jobs\UpdateDailyStats",
+            "job_class" => "App\Jobs\CallPythonService",
             "parameters" => json_encode(["endpoint" => "refresh/stash_stats"]),
-            "interval" => "1",
-            "interval_type" => "daily",
+            "interval" => "daily",
             "time" => "03:00:00",
-            "last_run" => Carbon::now(),
-            "next_run" => Carbon::now(),
+            "last_run" => null,
+            "next_run" => null,
         ];
         $getNewStatements = [
             "name" => "Lấy Báo Cáo Tài Chính mới cho mỗi quý",
@@ -32,11 +31,11 @@ class BackjobSeeder extends Seeder
             "is_active" => false,
             "job_class" => "App\Jobs\PopulateNewFinancialStatement",
             // "parameters" => json_encode(["endpoint" => "refresh/stash_stats"]),
-            "interval" => "3",
-            "interval_type" => "monthly",
+            "interval" => "monthly",
+            "cron_expression" => "* * * * *",
             "time" => "00:00:00",
-            "last_run" => Carbon::now(),
-            "next_run" => Carbon::now(),
+            "last_run" => null,
+            "next_run" => null,
         ];
         Backjob::create($updateDailyStats);
         Backjob::create($getNewStatements);

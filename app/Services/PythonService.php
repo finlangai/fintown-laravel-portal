@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Utils\Logger;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
@@ -36,6 +37,15 @@ class PythonService
         try {
             $response = Http::timeout(1)->post($this->craftUrl($endpoint));
             return $response;
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+
+    public function POST(string $endpoint)
+    {
+        try {
+            return Http::post($this->craftUrl($endpoint));
         } catch (\Throwable $th) {
             //throw $th;
         }

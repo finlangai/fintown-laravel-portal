@@ -27,9 +27,8 @@ class BackjobRequest extends FormRequest
             "job_class" => "required|string|max:256",
             "is_active" => "required|boolean",
             "parameters" => "nullable|string",
-            "interval" => "required|integer",
-            "interval_type" =>
-                "required|in:minutely,hourly,daily,weekly,monthly",
+            "interval" => "required|in:minutely,hourly,daily,weekly,monthly",
+            "cron_expression" => "nullable| string",
             "time" => [
                 "required",
                 "regex:/^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/",

@@ -7,6 +7,7 @@ use App\Http\Requests\Web\System\BackjobRequest;
 use App\Http\Requests\Web\System\UpdateBackjobRequest;
 use App\Models\SQL\System\Backjob;
 use App\Utils\ApiResponse;
+use App\Utils\Redis;
 use App\Utils\Toasting;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -30,6 +31,7 @@ class BackjobController extends Controller
         $validated = $request->validated();
         Backjob::create($validated);
         Toasting::success("Đã tạo Backjob mới.");
+        Redis::del("backjobs");
     }
 
     /**
@@ -41,6 +43,8 @@ class BackjobController extends Controller
         $backjob->fill($validated);
         $backjob->save();
         Toasting::success("Cập nhật Backjob thành công.");
+        // flust the backjobs cache
+        Redis::del("backjobs");
     }
 
     /**

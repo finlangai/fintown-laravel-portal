@@ -20,8 +20,10 @@ class Backjob extends Model
         "is_active",
         "parameters",
         "interval",
-        "interval_type",
+        "cron_expression",
         "time",
+        "last_run",
+        "next_run",
     ];
 
     /**

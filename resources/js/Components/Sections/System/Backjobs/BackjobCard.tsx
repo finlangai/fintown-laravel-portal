@@ -17,8 +17,8 @@ const BackjobCard = (backjob: Backjob) => {
     is_active,
     description,
     interval,
-    interval_type,
     time,
+    cron_expression,
     last_run,
     next_run,
   } = backjob;
@@ -47,9 +47,14 @@ const BackjobCard = (backjob: Backjob) => {
       <CardContent className="flex flex-col gap-3">
         {/* Interval Info */}
         <div className="flex gap-4">
-          <InfoField name="Interval" value={interval} />
-          <InfoField name="Interval Type" value={interval_type} />
-          <InfoField name="Time" value={time} />
+          {cron_expression ? (
+            <InfoField name="Cron Expression" value={cron_expression} />
+          ) : (
+            <>
+              <InfoField name="Interval" value={interval} />
+              <InfoField name="Time" value={time} />
+            </>
+          )}
         </div>
         {/* RUN TIMESTAMPS */}
         <div className="flex gap-4">
