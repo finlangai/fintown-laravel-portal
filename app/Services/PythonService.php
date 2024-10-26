@@ -41,4 +41,13 @@ class PythonService
             //throw $th;
         }
     }
+
+    public function POST(string $endpoint)
+    {
+        try {
+            return Http::post($this->craftUrl($endpoint));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
 }

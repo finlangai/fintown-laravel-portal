@@ -22,6 +22,8 @@ class Backjob extends Model
         "interval",
         "cron_expression",
         "time",
+        "last_run",
+        "next_run",
     ];
 
     /**
