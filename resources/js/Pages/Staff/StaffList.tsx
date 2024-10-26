@@ -1,5 +1,3 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, usePage } from "@inertiajs/react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,8 +6,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/Components/UI/breadcrumb";
-import { TableBody, TableCell, TableHead, TableHeader, TableRow, Table } from "@/Components/UI/table";
-import { EllipsisVertical, Eye, ListRestart, TimerReset, Trash2, UserPlus, UserRoundPen } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -18,11 +14,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/Components/UI/dialog";
-import { Button } from "@/Components/UI/Button";
-import { useForm } from "@inertiajs/react";
-import { useEffect } from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/Components/UI/table";
 import { Toaster } from "@/Components/UI/toaster";
 import { useToast } from "@/Hooks/use-toast";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, useForm, usePage } from "@inertiajs/react";
+import { Trash2 } from "lucide-react";
 import EditStaff from "./StaffFunction/EditStaff";
 import ResetPasss from "./StaffFunction/ResetPassword";
 
@@ -50,10 +54,10 @@ export default function StaffListCRUD() {
   };
 
   const { data, setData, post, processing, errors } = useForm<any>({
-    username: '',
-    fullname: '',
-    email: '',
-    password: '',
+    username: "",
+    fullname: "",
+    email: "",
+    password: "",
   });
 
   const isValidEmail = (email: string) => {
@@ -71,7 +75,7 @@ export default function StaffListCRUD() {
       return;
     }
 
-    post('/staffAdd', {
+    post("/staffAdd", {
       onSuccess: () => {
         console.log("Nhân viên đã được thêm thành công!");
         toast({
@@ -101,7 +105,9 @@ export default function StaffListCRUD() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage className="text-white">Staff List</BreadcrumbPage>
+                  <BreadcrumbPage className="text-white">
+                    Staff List
+                  </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -116,7 +122,7 @@ export default function StaffListCRUD() {
                     className="border-gray-300 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
-                
+
                 <div className="flex space-x-2">
                   <Dialog>
                     <DialogTrigger className="bg-custom-button-success hover:bg-custom-button-warning shadow-md px-2 py-1 rounded-lg focus:ring-2 focus:ring-blue-300 text-white transform transition duration-200 ease-in-out hover:scale-105 focus:outline-none">
@@ -132,118 +138,173 @@ export default function StaffListCRUD() {
 
                       <form onSubmit={onSubmit}>
                         <div className="mb-4">
-                          <label className="block text-gray-700" htmlFor="username">
+                          <label
+                            className="block text-gray-700"
+                            htmlFor="username"
+                          >
                             Tên đăng nhập:
                           </label>
                           <input
                             type="text"
                             id="username"
                             value={data.username}
-                            onChange={(e) => setData('username', e.target.value)}
-                            className={`mt-1 block w-full p-2 border rounded-md ${errors.username ? 'border-red-500' : 'border-gray-300'}`}
+                            onChange={(e) =>
+                              setData("username", e.target.value)
+                            }
+                            className={`mt-1 block w-full p-2 border rounded-md ${errors.username ? "border-red-500" : "border-gray-300"}`}
                             placeholder="Nhập tên đăng nhập"
                           />
-                          {errors.username && <span className="text-red-500 text-sm">{errors.username}</span>}
+                          {errors.username && (
+                            <span className="text-red-500 text-sm">
+                              {errors.username}
+                            </span>
+                          )}
                         </div>
 
                         <div className="mb-4">
-                          <label className="block text-gray-700" htmlFor="fullname">
+                          <label
+                            className="block text-gray-700"
+                            htmlFor="fullname"
+                          >
                             Họ và tên:
                           </label>
                           <input
                             type="text"
                             id="fullname"
                             value={data.fullname}
-                            onChange={(e) => setData('fullname', e.target.value)}
-                            className={`mt-1 block w-full p-2 border rounded-md ${errors.fullname ? 'border-red-500' : 'border-gray-300'}`}
+                            onChange={(e) =>
+                              setData("fullname", e.target.value)
+                            }
+                            className={`mt-1 block w-full p-2 border rounded-md ${errors.fullname ? "border-red-500" : "border-gray-300"}`}
                             placeholder="Nhập họ và tên"
                           />
-                          {errors.fullname && <span className="text-red-500 text-sm">{errors.fullname}</span>}
+                          {errors.fullname && (
+                            <span className="text-red-500 text-sm">
+                              {errors.fullname}
+                            </span>
+                          )}
                         </div>
 
                         <div className="mb-4">
-                          <label className="block text-gray-700" htmlFor="email">
+                          <label
+                            className="block text-gray-700"
+                            htmlFor="email"
+                          >
                             Email:
                           </label>
                           <input
                             type="email"
                             id="email"
                             value={data.email}
-                            onChange={(e) => setData('email', e.target.value)}
-                            className={`mt-1 block w-full p-2 border rounded-md ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
+                            onChange={(e) => setData("email", e.target.value)}
+                            className={`mt-1 block w-full p-2 border rounded-md ${errors.email ? "border-red-500" : "border-gray-300"}`}
                             placeholder="Nhập email"
                           />
-                          {errors.email && <span className="text-red-500 text-sm">{errors.email}</span>}
+                          {errors.email && (
+                            <span className="text-red-500 text-sm">
+                              {errors.email}
+                            </span>
+                          )}
                         </div>
 
                         <div className="mb-4">
-                          <label className="block text-gray-700" htmlFor="password">
+                          <label
+                            className="block text-gray-700"
+                            htmlFor="password"
+                          >
                             Mật khẩu:
                           </label>
                           <input
                             type="password"
                             id="password"
                             value={data.password}
-                            onChange={(e) => setData('password', e.target.value)}
-                            className={`mt-1 block w-full p-2 border rounded-md ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
+                            onChange={(e) =>
+                              setData("password", e.target.value)
+                            }
+                            className={`mt-1 block w-full p-2 border rounded-md ${errors.password ? "border-red-500" : "border-gray-300"}`}
                             placeholder="Nhập mật khẩu"
                           />
-                          {errors.password && <span className="text-red-500 text-sm">{errors.password}</span>}
+                          {errors.password && (
+                            <span className="text-red-500 text-sm">
+                              {errors.password}
+                            </span>
+                          )}
                         </div>
 
                         <button
                           type="submit"
                           disabled={processing}
-                          className={`bg-blue-500 text-white px-4 py-2 rounded ${processing ? 'opacity-50 cursor-not-allowed' : ''}`}
+                          className={`bg-blue-500 text-white px-4 py-2 rounded ${processing ? "opacity-50 cursor-not-allowed" : ""}`}
                         >
-                          {processing ? 'Đang thêm...' : 'Thêm nhân viên'}
+                          {processing ? "Đang thêm..." : "Thêm nhân viên"}
                         </button>
                       </form>
                     </DialogContent>
                   </Dialog>
                 </div>
               </div>
-              <Table className="min-w-full bg-white border border-gray-200">
+              <Table className="border-gray-200 bg-white border min-w-full">
                 <TableHeader>
-                  <TableRow className="bg-gray-100 text-gray-700 uppercase text-sm leading-normal">
-                    <TableHead className="py-3 px-6 text-left">ID</TableHead>
-                    <TableHead className="py-3 px-6 text-left">Username</TableHead>
-                    <TableHead className="py-3 px-6 text-left">Full Name</TableHead>
-                    <TableHead className="py-3 px-6 text-left">Email</TableHead>
-                    <TableHead className="py-3 px-6 text-left">Tools</TableHead>
+                  <TableRow className="bg-gray-100 text-gray-700 text-sm uppercase leading-normal">
+                    <TableHead className="px-6 py-3 text-left">ID</TableHead>
+                    <TableHead className="px-6 py-3 text-left">
+                      Username
+                    </TableHead>
+                    <TableHead className="px-6 py-3 text-left">
+                      Full Name
+                    </TableHead>
+                    <TableHead className="px-6 py-3 text-left">Email</TableHead>
+                    <TableHead className="px-6 py-3 text-left">Tools</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {ViewstaffList.map((staff: any) => (
-                    <TableRow key={staff.id} className="border-b hover:bg-gray-100">
-                      <TableCell className="py-3 px-6">{staff.id}</TableCell>
-                      <TableCell className="py-3 px-6">{staff.username}</TableCell>
-                      <TableCell className="py-3 px-6">{staff.fullname}</TableCell>
-                      <TableCell className="py-3 px-6">{staff.email}</TableCell>
-                      <TableCell className="py-3 px-6">
+                    <TableRow
+                      key={staff.id}
+                      className="hover:bg-gray-100 border-b"
+                    >
+                      <TableCell className="px-6 py-3">{staff.id}</TableCell>
+                      <TableCell className="px-6 py-3">
+                        {staff.username}
+                      </TableCell>
+                      <TableCell className="px-6 py-3">
+                        {staff.fullname}
+                      </TableCell>
+                      <TableCell className="px-6 py-3">{staff.email}</TableCell>
+                      <TableCell className="px-6 py-3">
                         <div className="flex space-x-2">
-                        {/* đây là edit  */}
-                        <EditStaff staff={staff} />
+                          {/* đây là edit  */}
+                          <EditStaff staff={staff} />
 
-                        <Dialog>
-                          <DialogTrigger> <Trash2 className="w-5 h-5 text-[red]" /></DialogTrigger>
-                          <DialogContent>
-                            <DialogHeader>
-                              <DialogTitle>Bạn có chăc chắn</DialogTitle>
-                              <DialogDescription className="flex justify-center flex-col">
-                               <p className="py-6">Khi xóa dữ liệu nhân viên sẽ bị xóa khỏi hệ thống</p>
-                              <button
-                                  className="bg-red-600 text-white font-bold w-32 ml-32  py-2 px-4 rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
-                                  onClick={() => handleDelete(staff.id)}
-                              >
-                                  Xác nhận
-                              </button>
-                              </DialogDescription>
-                            </DialogHeader>
-                          </DialogContent>
-                        </Dialog>
-                         
-                          <ResetPasss staffId={staff.id}  new_password={flash.new_password} id_nhanvienResetSuccess={flash.idNhanVienreset}/>
+                          <Dialog>
+                            <DialogTrigger>
+                              {" "}
+                              <Trash2 className="w-5 h-5 text-[red]" />
+                            </DialogTrigger>
+                            <DialogContent>
+                              <DialogHeader>
+                                <DialogTitle>Bạn có chăc chắn</DialogTitle>
+                                <DialogDescription className="flex flex-col justify-center">
+                                  <p className="py-6">
+                                    Khi xóa dữ liệu nhân viên sẽ bị xóa khỏi hệ
+                                    thống
+                                  </p>
+                                  <button
+                                    className="bg-red-600 hover:bg-red-700 focus:ring-opacity-50 ml-32 px-4 py-2 rounded focus:ring-2 focus:ring-red-500 w-32 font-bold text-white focus:outline-none"
+                                    onClick={() => handleDelete(staff.id)}
+                                  >
+                                    Xác nhận
+                                  </button>
+                                </DialogDescription>
+                              </DialogHeader>
+                            </DialogContent>
+                          </Dialog>
+
+                          <ResetPasss
+                            staffId={staff.id}
+                            new_password={flash.new_password}
+                            id_nhanvienResetSuccess={flash.idNhanVienreset}
+                          />
                         </div>
                       </TableCell>
                     </TableRow>
