@@ -4,6 +4,7 @@ use App\Http\Controllers\CompanyWebController;
 use App\Http\Controllers\FinancialController;
 use App\Http\Controllers\HolderWebController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StaffListController;
 use App\Http\Controllers\StaffWebController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
@@ -61,6 +62,24 @@ Route::middleware("auth")->group(function () {
     Route::get("/staff", [StaffWebController::class, "index"])->name(
         "staff.index"
     );
+
+
+    Route::get("/staff-list", [StaffListController::class, "index"])->name(
+        "staffList.index"
+    );
+    Route::delete("/staffRemove/{id}", [StaffListController::class, "destroy"])->name("staffRemove");
+    
+    
+    Route::post("/staffAdd", [StaffListController::class, "store"])->name("staffAdd");
+
+
+    Route::put('/staffedit/{id}', [StaffListController::class, 'update'])->name('staff.update');
+
+    Route::post('/staff/reset-password/{id}', [StaffListController::class, 'resetPassword'])->name('staff.reset-password');
+
+    
+
+
     Route::put("/staff/update-permissions/{StaffID}", [
         StaffWebController::class,
         "updatePermissions",

@@ -64,7 +64,7 @@ export default function Staff() {
     delete_products_services: "Xóa sản phẩm và dịch vụ",
   };
   const { staffList }: any = usePage().props;
-  const listStaff: any = staffList || []; // Kiểm tra nếu listStaff là null hoặc undefined
+  const listStaff: any = staffList || []; 
   const [dataID, setDataID] = useState<number>();
 
   return (

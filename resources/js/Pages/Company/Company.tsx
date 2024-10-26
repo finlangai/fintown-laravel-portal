@@ -89,7 +89,7 @@ export default function FinancialReports({ companies }: { companies: CompanyInfo
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectGroup>
-                                            <SelectLabel>Chọn ngày cập nhập</SelectLabel>
+                                            <SelectLabel >Chọn ngày cập nhập</SelectLabel>
                                             <SelectItem value="apple">Mới nhất</SelectItem>
                                             <SelectItem value="banana">1 năm trước</SelectItem>
                                             <SelectItem value="blueberry"> 5 năm trước</SelectItem>

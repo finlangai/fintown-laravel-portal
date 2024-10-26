@@ -28,7 +28,6 @@ export default function Dashboard({ isSuperAdmin }: any) {
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
-
             <p>nội dung trang Dashboard</p>
           </div>
         </div>

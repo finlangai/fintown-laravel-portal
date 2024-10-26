@@ -30,14 +30,6 @@ const StaffLi = ({ isExpanded }: StaffLiProps) => {
                                           </Link>
                                        </li>
                                        <li className="mt-5 hover:underline">
-                                          <Link href="/add-staff">
-                                             <div className="flex justify-start items-center">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user-round-plus" > <path d="M2 21a8 8 0 0 1 13.292-6" /> <circle cx={10} cy={8} r={5} /> <path d="M19 16v6" /> <path d="M22 19h-6" /> </svg>
-                                                <span className="whitespace-nowrap ml-2 text-xs">Thêm nhân viên</span>
-                                             </div>
-                                          </Link>
-                                       </li>
-                                       <li className="mt-5 hover:underline">
                                           <Link href="/staff">
                                              <div className="flex justify-start items-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user-round-plus" > <path d="M2 21a8 8 0 0 1 13.292-6" /> <circle cx={10} cy={8} r={5} /> <path d="M19 16v6" /> <path d="M22 19h-6" /> </svg>
@@ -71,18 +63,7 @@ const StaffLi = ({ isExpanded }: StaffLiProps) => {
                                                 </HoverCardContent>
                                              </HoverCard>
                                           </li>
-                                          <li className="mt-5">
-                                             <HoverCard>
-                                                <HoverCardTrigger>
-                                                   <Link href="/add-staff">
-                                                      <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user-round-plus" > <path d="M2 21a8 8 0 0 1 13.292-6" /> <circle cx={10} cy={8} r={5} /> <path d="M19 16v6" /> <path d="M22 19h-6" /> </svg>
-                                                   </Link>
-                                                </HoverCardTrigger>
-                                                <HoverCardContent  side="right"  align="start">
-                                                   Thêm nhân viên
-                                                </HoverCardContent>
-                                             </HoverCard>
-                                          </li>
+                                        
                                           <li className="mt-5">
                                              <HoverCard>
                                                 <HoverCardTrigger>
