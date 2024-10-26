@@ -7,14 +7,14 @@ import { FormEvent, useRef } from "react";
 import BackjobFormInner from "./BackjobFormInner";
 
 const CreateBackjob = () => {
-  const { data, setData, post, errors, wasSuccessful, hasErrors } = useForm({
+  const { data, setData, post, errors, wasSuccessful } = useForm({
     name: "",
     description: null,
     job_class: "",
     is_active: false,
     parameters: "",
-    interval: 1,
-    interval_type: "daily",
+    interval: "daily",
+    cron_expression: null,
     time: "00:00:00",
   });
 

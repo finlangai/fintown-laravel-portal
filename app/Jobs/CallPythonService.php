@@ -6,18 +6,17 @@ use App\Services\PythonService;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
-class UpdateDailyStats implements ShouldQueue
+class CallPythonService implements ShouldQueue
 {
     use Queueable;
     private PythonService $pythonService;
-
     protected $parameters;
     /**
      * Create a new job instance.
      */
     public function __construct($parameters)
     {
-        $this->parameters = $parameters;
+        $this->parameters = json_decode($parameters, true);
         $this->pythonService = new PythonService();
     }
 
@@ -26,6 +25,7 @@ class UpdateDailyStats implements ShouldQueue
      */
     public function handle(): void
     {
-        $this->pythonService->instantPOST("refresh/stash_stats");
+        $this->pythonService->instantPOST($this->parameters["endpoint"]);
+        return;
     }
 }

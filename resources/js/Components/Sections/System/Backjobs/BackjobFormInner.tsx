@@ -71,17 +71,17 @@ const BackjobFormInner = ({
 
         {/* INTERVAL TYPE */}
         <div className="flex flex-col flex-1 gap-2">
-          <Label className="text-slate-700" htmlFor="backjob-interval_type">
-            Interval Type
+          <Label className="text-slate-700" htmlFor="backjob-interval">
+            Interval
           </Label>
           <Select
-            value={data.interval_type}
+            value={data.interval}
             onValueChange={(value: any) => {
-              setData("interval_type", value);
+              setData("interval", value);
             }}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Select a fruit" />
+              <SelectValue placeholder="Select an interval type" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
@@ -93,13 +93,13 @@ const BackjobFormInner = ({
               </SelectGroup>
             </SelectContent>
           </Select>
-          {errors.interval_type && (
-            <p className="text-red-400 text-xs">*{errors.interval_type}</p>
+          {errors.interval && (
+            <p className="text-red-400 text-xs">*{errors.interval}</p>
           )}
         </div>
       </div>
 
-      {/* NESTING TIME & INTERVAL */}
+      {/* NESTING TIME & CRON EXPRESSION */}
       <div className="flex justify-between gap-6">
         {/* TIME */}
         <div className="flex flex-col flex-1 gap-1">
@@ -121,20 +121,20 @@ const BackjobFormInner = ({
 
         {/* INTERVAL */}
         <div className="flex flex-col flex-1 gap-1">
-          <Label className="text-slate-700" htmlFor="backjob-interval">
-            Interval
+          <Label className="text-slate-700" htmlFor="backjob-cron_expression">
+            Cron Expression
           </Label>
           <Input
-            id="backjob-interval"
+            id="backjob-cron_expression"
             className="py-2 h-fit"
-            type="number"
-            value={data.interval}
+            type="text"
+            value={data.cron_expression}
             onChange={({ target: { value } }) => {
-              setData("interval", Number(value));
+              setData("cron_expression", value);
             }}
           />
-          {errors.interval && (
-            <p className="text-red-400 text-xs">*{errors.interval}</p>
+          {errors.cron_expression && (
+            <p className="text-red-400 text-xs">*{errors.cron_expression}</p>
           )}
         </div>
       </div>

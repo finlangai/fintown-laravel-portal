@@ -17,9 +17,8 @@ return new class extends Migration {
             $table->boolean("is_active")->default(false);
             $table->json("parameters")->nullable();
             $table->string("job_class");
-            $table->unsignedInteger("interval")->default(1);
             $table
-                ->enum("interval_type", [
+                ->enum("interval", [
                     "minutely",
                     "hourly",
                     "daily",
@@ -27,6 +26,7 @@ return new class extends Migration {
                     "monthly",
                 ])
                 ->default("daily");
+            $table->string("cron_expression")->nullable();
             $table->time("time")->default("00:00");
             $table->dateTime("last_run")->nullable();
             $table->dateTime("next_run")->nullable();

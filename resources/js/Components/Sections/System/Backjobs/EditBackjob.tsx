@@ -3,7 +3,7 @@ import DialogWrapper, {
   DialogWrapperHandler,
 } from "@/Components/Specialized/dialog-wrapper";
 import { useForm } from "@inertiajs/react";
-import { FormEvent, useRef } from "react";
+import { FormEvent, useEffect, useRef } from "react";
 import BackjobFormInner from "./BackjobFormInner";
 
 const EditBackjob = ({
@@ -14,7 +14,7 @@ const EditBackjob = ({
   is_active,
   parameters,
   interval,
-  interval_type,
+  cron_expression,
   time,
 }: Backjob) => {
   const { data, setData, put, errors, wasSuccessful } = useForm({
@@ -24,16 +24,19 @@ const EditBackjob = ({
     is_active,
     parameters,
     interval,
-    interval_type,
+    cron_expression,
     time,
   });
 
   const editDialogRef = useRef<DialogWrapperHandler>(null);
 
+  useEffect(() => {
+    if (wasSuccessful) editDialogRef.current?.toggle();
+  }, [wasSuccessful]);
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     put(route("system.backjobs.update", id));
-    if (wasSuccessful) editDialogRef.current?.toggle();
   };
   const intervalList = ["minutely", "hourly", "daily", "weekly", "monthly"];
 
