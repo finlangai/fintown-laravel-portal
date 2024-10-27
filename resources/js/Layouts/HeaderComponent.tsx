@@ -2,11 +2,11 @@ import { cn } from "@/Lib/utils";
 import { Link, usePage } from "@inertiajs/react";
 import { CirclePower } from "lucide-react";
 import AssessmentMenuItems from "./Partials/AssessmentMenuItems";
-import BillLi from "./Partials/Bill";
 import CompanyLi from "./Partials/Company";
 import DashboardLi from "./Partials/Doashboad";
 import FinancialLi from "./Partials/Financial";
 import StaffLi from "./Partials/Staff";
+import SubscriptionMenuItems from "./Partials/SubscriptionMenuItems";
 import SystemMenuItems from "./Partials/SystemMenuItems";
 interface HeaderComponentProps {
   isExpanded: boolean;
@@ -43,25 +43,27 @@ export default function HeaderComponent({
         <ul className="flex flex-col space-y-4 mt-5">
           {/* cả admin và supper ADMIN đều sử dụng được  */}
           <li
-            className="ml-2 p-2 text-text-head cursor-pointer"
+            className={cn(
+              "flex p-2 text-text-head cursor-pointer",
+              !isExpanded && "justify-center",
+            )}
             style={activeNavLink}
           >
             <div className="flex items-center h-10">
               <Link
                 href={route("dashboard")}
-                className="flex justify-center items-center"
+                className="flex items-center gap-2"
               >
                 <img
-                  src="https://fintown.software/imgs/logo.png"
-                  width={isExpanded ? 50 : 30}
-                  height={isExpanded ? 50 : 30}
+                  src="https://firebasestorage.googleapis.com/v0/b/fintown-4ddd6.appspot.com/o/logo%2Ffintown-logo.png?alt=media"
+                  width={isExpanded ? 45 : 30}
+                  height={isExpanded ? 45 : 30}
                   alt="MenuLogo"
-                  className="block shadow-lg rounded-full"
-                  style={{ marginLeft: "-3px" }}
+                  className="rounded-full"
                 />
                 {isExpanded && (
-                  <p className="items-center ml-3 font-semibold text-2xl text-white">
-                    Fintown
+                  <p className="items-center font-bold text-2xl text-white">
+                    fintown
                   </p>
                 )}
               </Link>
@@ -73,7 +75,7 @@ export default function HeaderComponent({
           {superAdmin && (
             <>
               <StaffLi isExpanded={isExpanded} />
-              <BillLi isExpanded={isExpanded} />
+              {/* <BillLi isExpanded={isExpanded} /> */}
               {/* <Postforecast isExpanded={isExpanded} /> */}
             </>
           )}
@@ -84,6 +86,7 @@ export default function HeaderComponent({
               <CompanyLi isExpanded={isExpanded} />
               <FinancialLi isExpanded={isExpanded} />
               {/* <IndexFinancial isExpanded={isExpanded} /> */}
+              <SubscriptionMenuItems isExpanded={isExpanded} />
               <AssessmentMenuItems isExpanded={isExpanded} />
               <SystemMenuItems isExpanded={isExpanded} />
             </>

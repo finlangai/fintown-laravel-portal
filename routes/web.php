@@ -95,31 +95,7 @@ Route::middleware("auth")->group(function () {
 
     require __DIR__ . "/web/assessments.php";
     require __DIR__ . "/web/system.php";
-
-    Route::get("/SubscriptionProgram", [
-        SubscriptionProgramController::class,
-        "index",
-    ])->name("SubscriptionProgram.index");
-    Route::get("/SubscriptionProgram/add", [
-        SubscriptionProgramController::class,
-        "add",
-    ])->name("SubscriptionProgram.add");
-    Route::post("/SubscriptionProgram/store", [
-        SubscriptionProgramController::class,
-        "store",
-    ])->name("SubscriptionProgram.store");
-    Route::get("/SubscriptionProgram/edit/{id}", [
-        SubscriptionProgramController::class,
-        "edit",
-    ])->name("SubscriptionProgram.edit");
-    Route::put("/SubscriptionProgram/update/{id}", [
-        SubscriptionProgramController::class,
-        "update",
-    ])->name("SubscriptionProgram.update");
-    Route::delete("/SubscriptionProgram/delete/{id}", [
-        SubscriptionProgramController::class,
-        "destroy",
-    ])->name("SubscriptionProgram.destroy");
+    require __DIR__ . "/web/subscription.php";
 });
 
 require __DIR__ . "/auth.php";

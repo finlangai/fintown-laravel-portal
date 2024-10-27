@@ -1,9 +1,0 @@
-export const ID = "id"
-export const INCHARGE_ID = "incharge_id";
-export const NAME = "name";
-export const DESCRIPTION = "description";
-export const PRICE = "price";
-export const DISCOUNT = "discount";
-export const DURATION = "duration";
-export const DURATION_TYPE = "duration_type";
-export const IS_RENEWABLE = "is_renewable";

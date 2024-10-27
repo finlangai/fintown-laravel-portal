@@ -12,23 +12,26 @@ class Program extends Model
 {
     use HasFactory;
 
-    protected $table = 'subcription_programs';
+    protected $table = "subcription_programs";
     public $incrementing = false;
     protected $fillable = [
-        'id',
-        'incharge_id',
-        'name',
-        'description',
-        'price',
-        'discount',
-        'duration',
-        'duration_type',
-        'is_renewable'
+        "id",
+        "incharge_id",
+        "name",
+        "description",
+        "price",
+        "discount",
+        "duration",
+        "duration_type",
+        "is_renewable",
     ];
-    protected static function boot() {
+
+    protected static function boot()
+    {
         parent::boot();
         static::creating(function ($program) {
-            if (empty($program->id)) { // Nếu ID chưa có, thì tự động tạo
+            if (empty($program->id)) {
+                // Nếu ID chưa có, thì tự động tạo
                 $program->id = self::generateUniqueId();
             }
         });
@@ -38,14 +41,14 @@ class Program extends Model
     {
         do {
             $id = Str::upper(Str::random(5)); // Tạo chuỗi 5 ký tự in hoa
-        } while (self::where('id', $id)->exists());
+        } while (self::where("id", $id)->exists());
 
         return $id;
     }
 
     public function incharge(): BelongsTo
     {
-        return $this->belongsTo(Type::class, 'incharge_id', 'id');
+        return $this->belongsTo(Type::class, "incharge_id", "id");
     }
 
     public function subcriptions(): HasMany
@@ -55,6 +58,6 @@ class Program extends Model
 
     public function promotionCodes(): HasMany
     {
-        return $this->hasMany(PromotionCode::class, 'program_id');
+        return $this->hasMany(PromotionCode::class, "program_id");
     }
 }

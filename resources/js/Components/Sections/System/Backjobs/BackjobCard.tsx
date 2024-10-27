@@ -1,4 +1,5 @@
 import ConfirmDelete from "@/Components/Specialized/confirm-delete";
+import { InfoField } from "@/Components/Specialized/info-field";
 import {
   Card,
   CardContent,
@@ -22,13 +23,6 @@ const BackjobCard = (backjob: Backjob) => {
     last_run,
     next_run,
   } = backjob;
-
-  const InfoField = ({ name, value }: { name: string; value: any }) => (
-    <p className="font-bold text-base text-slate-600">
-      <span className="font-medium text-slate-500 text-sm">{name}: </span>
-      {value}
-    </p>
-  );
 
   return (
     <Card className="flex flex-col justify-between shadow-md">
