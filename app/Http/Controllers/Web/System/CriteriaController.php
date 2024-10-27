@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Web\System;
 
 use App\Http\Controllers\Controller;
+use App\Models\Mongo\Formular;
+use App\Models\Mongo\System\Criteria;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CriteriaController extends Controller
 {
@@ -12,7 +15,14 @@ class CriteriaController extends Controller
      */
     public function index()
     {
-        //
+        $criterias = Criteria::all();
+        $indicators = Formular::project(["name" => 1, "identifier" => 1])
+            ->get()
+            ->toArray();
+        return Inertia::render(
+            "System/Criterias",
+            compact("criterias", "indicators")
+        );
     }
 
     /**

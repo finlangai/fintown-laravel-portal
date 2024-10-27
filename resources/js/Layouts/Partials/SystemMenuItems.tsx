@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@radix-ui/react-accordion";
-import { CalendarCog, Cog, SquareRadical } from "lucide-react";
+import { BrainCircuit, CalendarCog, Cog, SquareRadical } from "lucide-react";
 
 interface SystemMenuItemsProps {
   isExpanded: boolean;
@@ -35,6 +35,7 @@ const SystemMenuItems = ({ isExpanded }: SystemMenuItemsProps) => {
             </AccordionTrigger>
             <AccordionContent className="ml-2">
               <ul>
+                {/* Công thức */}
                 <li className="mt-5 hover:underline">
                   <Link href="/add-staff">
                     <div className="flex justify-start items-center">
@@ -47,6 +48,7 @@ const SystemMenuItems = ({ isExpanded }: SystemMenuItemsProps) => {
                     </div>
                   </Link>
                 </li>
+                {/* Backjobs */}
                 <li className="mt-5 hover:underline">
                   <Link href={route("system.backjobs.index")}>
                     <div className="flex justify-start items-center">
@@ -54,6 +56,19 @@ const SystemMenuItems = ({ isExpanded }: SystemMenuItemsProps) => {
                       {isExpanded && (
                         <span className="ml-2 text-xs whitespace-nowrap">
                           Backjobs
+                        </span>
+                      )}
+                    </div>
+                  </Link>
+                </li>
+                {/* Criterias */}
+                <li className="mt-5 hover:underline">
+                  <Link href={route("system.criterias.index")}>
+                    <div className="flex justify-start items-center">
+                      <BrainCircuit className="size-6" />
+                      {isExpanded && (
+                        <span className="ml-2 text-xs whitespace-nowrap">
+                          Tiêu chí
                         </span>
                       )}
                     </div>
