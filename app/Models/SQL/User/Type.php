@@ -13,7 +13,8 @@ class Type extends Model
     use HasFactory;
 
     protected $table = 'user_types';
-
+    public $incrementing = false;
+    protected $fillable = ['id', 'name'];
     public function features(): BelongsToMany
     {
         return $this->belongsToMany(Feature::class, 'user_type_features', 'type_id', 'feature_id');

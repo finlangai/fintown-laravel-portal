@@ -1,4 +1,6 @@
 import forms from "@tailwindcss/forms";
+import tailwindScrollbar from "tailwind-scrollbar";
+import tailwindcssAnimate from "tailwindcss-animate";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -50,6 +52,9 @@ export default {
         "custom-button-pending": "#FFFFF",
         "accent-color": "#25B770",
         "accent-color-sub": "#178D4A",
+        "surface-container-lowest": "#FFFFFF",
+        "surface-container-low": "#F0F5EE",
+        "surface-container": "#EAEFE8",
       },
       keyframes: {
         "accordion-down": {
@@ -84,5 +89,6 @@ export default {
       },
     },
   },
-  plugins: [forms, require("tailwindcss-animate")],
+
+  plugins: [forms, tailwindcssAnimate, tailwindScrollbar],
 };
