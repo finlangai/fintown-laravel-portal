@@ -1,11 +1,8 @@
-import { FormEventHandler } from "react";
-import Checkbox from "@/Components/Checkbox";
-import GuestLayout from "@/Layouts/GuestLayout";
 import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
-import { Head, Link, useForm } from "@inertiajs/react";
+import GuestLayout from "@/Layouts/GuestLayout";
+import { Head, useForm } from "@inertiajs/react";
+import { FormEventHandler } from "react";
 
 export default function Login({
   status,
@@ -36,15 +33,15 @@ export default function Login({
         className="relative flex justify-end items-center h-screen"
         style={{ marginLeft: "700px" }}
       >
-        <div className="absolute h-[520px] w-[430px]">
-          <div className="absolute h-[200px] w-[200px] rounded-full bg-gradient-to-r from-[#1845ad] to-[#23a2f6] -top-[80px] -left-[80px]"></div>
-          <div className="absolute h-[200px] w-[200px] rounded-full bg-gradient-to-r from-[#ff512f] to-[#f09819] -bottom-[80px] -right-[30px]"></div>
+        <div className="absolute w-[430px] h-[520px]">
+          <div className="-top-[80px] -left-[80px] absolute bg-gradient-to-r from-[#1845ad] to-[#23a2f6] rounded-full w-[200px] h-[200px]"></div>
+          <div className="-right-[30px] -bottom-[80px] absolute bg-gradient-to-r from-[#ff512f] to-[#f09819] rounded-full w-[200px] h-[200px]"></div>
         </div>
         <form
-          className="relative w-[400px] h-[520px] rounded-lg backdrop-blur-[10px] border-2 border-[rgba(255,255,255,0.1)] shadow-[0_0_40px_rgba(8,7,16,0.6)] p-[50px_35px]"
+          className="relative border-[rgba(255,255,255,0.1)] border-2 shadow-[0_0_40px_rgba(8,7,16,0.6)] backdrop-blur-[10px] p-[50px_35px] rounded-lg w-[400px] h-[520px]"
           onSubmit={submit}
         >
-          <h3 className="text-2xl font-medium text-white text-center flex justify-center items-center">
+          <h3 className="flex justify-center items-center font-medium text-2xl text-center text-white">
             <img
               src="https://fintown.software/imgs/logo.png"
               alt=""
@@ -55,7 +52,7 @@ export default function Login({
             <span> FinTown</span>
           </h3>
           <label
-            className="block mt-6 text-white text-lg font-medium"
+            className="block mt-6 font-medium text-lg text-white"
             htmlFor="username"
           >
             Username
@@ -66,11 +63,11 @@ export default function Login({
             name="email"
             onChange={(e) => setData("email", e.target.value)}
             placeholder="Email or Phone"
-            className="w-full h-[50px] bg-[rgba(255,255,255,0.07)] rounded-md p-2 mt-2 text-white text-sm"
+            className="bg-[rgba(255,255,255,0.07)] mt-2 p-2 rounded-md w-full h-[50px] text-sm text-white"
           />
-          <InputError message={errors.email} className="mt-2  font-bold" />
+          <InputError message={errors.email} className="mt-2 font-bold" />
           <label
-            className="block mt-6 text-white text-lg font-medium"
+            className="block mt-6 font-medium text-lg text-white"
             htmlFor="password"
           >
             Password
@@ -82,14 +79,17 @@ export default function Login({
             placeholder="Password"
             value={data.password}
             onChange={(e) => setData("password", e.target.value)}
-            className="w-full h-[50px] bg-[rgba(255,255,255,0.07)] rounded-md p-2 mt-2 text-white text-sm"
+            className="bg-[rgba(255,255,255,0.07)] mt-2 p-2 rounded-md w-full h-[50px] text-sm text-white"
           />
           <InputError message={errors.password} className="mt-2 font-bold" />
           <div className="mt-3">
-          <Checkbox name="remember"  checked={data.remember} onChange={(e) => setData("remember", e.target.checked)} />{" "}
-          <span className="text-white text-sm ms-2">Remember me</span>
+            {/* <Checkbox name="remember"  checked={data.remember} onChange={(e) => setData("remember", e.target.checked)} />{" "} */}
+            <span className="text-sm text-white ms-2">Remember me</span>
           </div>
-          <PrimaryButton className="mt-12 w-30 bg-[rgba(255,255,255,0.07)] py-3 text-lg font-semibold rounded-md cursor-pointer" disabled={processing} >
+          <PrimaryButton
+            className="bg-[rgba(255,255,255,0.07)] mt-12 py-3 rounded-md w-30 font-semibold text-lg cursor-pointer"
+            disabled={processing}
+          >
             Log in
           </PrimaryButton>
         </form>

@@ -1,7 +1,7 @@
-import HeaderTopDowndown from "./Partials/Header/HeaderTopDropdown";
 import { Separator } from "@/Components/UI/separator";
-import TerminalToggleButton from "./Partials/Header/TerminalToggleButton";
 import { FunctionSearch } from "./Partials/Header/FunctionSearch";
+import HeaderTopDowndown from "./Partials/Header/HeaderTopDropdown";
+import TerminalToggleButton from "./Partials/Header/TerminalToggleButton";
 
 const HeaderTopComponent = ({ user }: any) => {
   return (

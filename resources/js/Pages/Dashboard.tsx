@@ -7,6 +7,7 @@ import {
 } from "@/Components/UI/card";
 import { TypographyH1 } from "@/Components/UI/typography";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
+import { Head } from "@inertiajs/react";
 import { DollarSign, TrendingUp, UserPlus, Users } from "lucide-react";
 import {
   Bar,
@@ -73,6 +74,7 @@ export default function Dashboard() {
 
   return (
     <Authenticated header={true} className="flex flex-col gap-6 px-12 pt-10">
+      <Head title="Dashboard" />
       <TypographyH1>Tổng quan</TypographyH1>
       <div className="gap-6 grid md:grid-cols-2 lg:grid-cols-4">
         <Card>
@@ -137,7 +139,6 @@ export default function Dashboard() {
             </p>
           </CardContent>
         </Card>
-
       </div>
       <div className="gap-6 grid lg:grid-cols-3">
         {/* COLUMNS CHART */}

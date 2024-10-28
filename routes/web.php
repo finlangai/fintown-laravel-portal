@@ -3,6 +3,7 @@
 use App\Http\Controllers\CompanyWebController;
 use App\Http\Controllers\FinancialController;
 use App\Http\Controllers\HolderWebController;
+use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffListController;
 use App\Http\Controllers\StaffWebController;
@@ -96,6 +97,7 @@ Route::middleware("auth")->group(function () {
     require __DIR__ . "/web/assessments.php";
     require __DIR__ . "/web/system.php";
     require __DIR__ . "/web/subscription.php";
+    require __DIR__ . "/web/payment.php";
 });
 
 require __DIR__ . "/auth.php";
