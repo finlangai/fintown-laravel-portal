@@ -48,19 +48,6 @@ const SystemMenuItems = ({ isExpanded }: SystemMenuItemsProps) => {
                     </div>
                   </Link>
                 </li>
-                {/* Backjobs */}
-                <li className="mt-5 hover:underline">
-                  <Link href={route("system.backjobs.index")}>
-                    <div className="flex justify-start items-center">
-                      <CalendarCog className="size-6" />
-                      {isExpanded && (
-                        <span className="ml-2 text-xs whitespace-nowrap">
-                          Backjobs
-                        </span>
-                      )}
-                    </div>
-                  </Link>
-                </li>
                 {/* Criterias */}
                 <li className="mt-5 hover:underline">
                   <Link href={route("system.criterias.index")}>
@@ -69,6 +56,19 @@ const SystemMenuItems = ({ isExpanded }: SystemMenuItemsProps) => {
                       {isExpanded && (
                         <span className="ml-2 text-xs whitespace-nowrap">
                           Tiêu chí
+                        </span>
+                      )}
+                    </div>
+                  </Link>
+                </li>
+                {/* Backjobs */}
+                <li className="mt-5 hover:underline">
+                  <Link href={route("system.backjobs.index")}>
+                    <div className="flex justify-start items-center">
+                      <CalendarCog className="size-6" />
+                      {isExpanded && (
+                        <span className="ml-2 text-xs whitespace-nowrap">
+                          Backjobs
                         </span>
                       )}
                     </div>

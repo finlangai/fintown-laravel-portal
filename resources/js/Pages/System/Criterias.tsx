@@ -1,4 +1,6 @@
 import CreateCriteria from "@/Components/Sections/System/Criterias/CreateCriteria";
+import CriteriaCard from "@/Components/Sections/System/Criterias/CriteriaCard";
+import { Accordion } from "@/Components/UI/accordion";
 import { TypographyH1 } from "@/Components/UI/typography";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
@@ -26,7 +28,17 @@ export default function CriteriasPage({
         <TypographyH1>Quản lý tiêu chí</TypographyH1> <CreateCriteria />
       </div>
       {/* CRITERIAS CARD CONTAINER */}
-      <section className=""></section>
+      <section className="">
+        <Accordion
+          type="single"
+          collapsible
+          className="flex flex-col gap-4 group/criterias"
+        >
+          {criterias.map((criteriaInfo) => (
+            <CriteriaCard {...criteriaInfo} />
+          ))}
+        </Accordion>
+      </section>
     </Authenticated>
   );
 }

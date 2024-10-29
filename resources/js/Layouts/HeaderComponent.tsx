@@ -59,7 +59,7 @@ export default function HeaderComponent({
                   width={isExpanded ? 45 : 30}
                   height={isExpanded ? 45 : 30}
                   alt="MenuLogo"
-                  className="rounded-full"
+                  className="rounded-full transition-all duration-300 ease-out"
                 />
                 {isExpanded && (
                   <p className="items-center font-bold text-2xl text-white">
@@ -80,7 +80,7 @@ export default function HeaderComponent({
             </>
           )}
         </ul>
-        <ul className="flex flex-col space-y-4 mt-5">
+        <ul className="flex flex-col space-y-4">
           {superAdmin && (
             <>
               <CompanyLi isExpanded={isExpanded} />
