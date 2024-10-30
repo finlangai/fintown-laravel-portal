@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Web\System;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Web\System\UpdateCriteriaInfoRequest;
 use App\Models\Mongo\Formular;
 use App\Models\Mongo\System\Criteria;
+use App\Utils\Toasting;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -36,9 +38,23 @@ class CriteriaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateCriteriaInfoRequest $request, int $criteriaId)
     {
-        //
+        $validated = $request->validated();
+
+        $criteria = Criteria::where("id", $criteriaId)->first();
+        $criteria->update($validated);
+
+        Toasting::success("Cập nhật thông tin tiêu chí thành công");
+    }
+
+    public function updateClustersOrder(Request $request, int $criteriaId)
+    {
+        $clustersData = $request->input("group");
+        $criteria = Criteria::where("id", $criteriaId)->first();
+        $criteria->update(["group" => $clustersData]);
+
+        Toasting::success("Cập nhật thứ tự nhóm chỉ số thành công");
     }
 
     /**

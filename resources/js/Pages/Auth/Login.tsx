@@ -82,10 +82,10 @@ export default function Login({
             className="bg-[rgba(255,255,255,0.07)] mt-2 p-2 rounded-md w-full h-[50px] text-sm text-white"
           />
           <InputError message={errors.password} className="mt-2 font-bold" />
-          <div className="mt-3">
-            {/* <Checkbox name="remember"  checked={data.remember} onChange={(e) => setData("remember", e.target.checked)} />{" "} */}
+          {/* <div className="mt-3">
+            <Checkbox name="remember"  checked={data.remember} onChange={(e) => setData("remember", e.target.checked)} />{" "}
             <span className="text-sm text-white ms-2">Remember me</span>
-          </div>
+          </div> */}
           <PrimaryButton
             className="bg-[rgba(255,255,255,0.07)] mt-12 py-3 rounded-md w-30 font-semibold text-lg cursor-pointer"
             disabled={processing}

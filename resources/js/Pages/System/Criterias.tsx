@@ -1,7 +1,8 @@
+import CriteriaCard from "@/Components/Sections/System/Criterias/Card/CriteriaCard";
 import CreateCriteria from "@/Components/Sections/System/Criterias/CreateCriteria";
-import CriteriaCard from "@/Components/Sections/System/Criterias/CriteriaCard";
 import { Accordion } from "@/Components/UI/accordion";
 import { TypographyH1 } from "@/Components/UI/typography";
+import { CriteriaCardProvider } from "@/Contexts/CriteriaCardContext";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 
@@ -32,10 +33,12 @@ export default function CriteriasPage({
         <Accordion
           type="single"
           collapsible
-          className="flex flex-col gap-4 group/criterias"
+          className="flex flex-col gap-5 group/criterias"
         >
-          {criterias.map((criteriaInfo) => (
-            <CriteriaCard {...criteriaInfo} />
+          {criterias.map((criteriaInfo, index) => (
+            <CriteriaCardProvider criteriaInfo={criteriaInfo} key={index}>
+              <CriteriaCard />
+            </CriteriaCardProvider>
           ))}
         </Accordion>
       </section>

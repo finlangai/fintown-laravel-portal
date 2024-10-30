@@ -12,10 +12,19 @@ Route::prefix("system")
             "edit",
             "create"
         );
+        // CRITERIA RELATED ROUTES
         Route::resource("criterias", CriteriaController::class)->except(
             "show",
             "edit",
             "create"
         );
+        Route::prefix("criterias")
+            ->name("criterias.")
+            ->group(function () {
+                Route::patch("update-clusters/{criteriaId}", [
+                    CriteriaController::class,
+                    "updateClustersOrder",
+                ])->name("update-clusters");
+            });
         // Route::get("formulars", [SystemController::class, "formulars"]);
     });

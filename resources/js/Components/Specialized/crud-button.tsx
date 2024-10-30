@@ -47,7 +47,7 @@ export const SaveButton = ({
 }: ButtonProps) => (
   <button
     className={cn(
-      "flex items-center gap-1 bg-sky-400 shadow-sm px-3 py-2 rounded-md font-bold text-sm text-white",
+      "flex items-center gap-1 bg-purple-400 shadow-sm px-3 py-2 rounded-md font-bold text-sm text-white",
       className,
     )}
     {...props}

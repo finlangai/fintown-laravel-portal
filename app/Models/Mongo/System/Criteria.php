@@ -9,8 +9,9 @@ class Criteria extends Model
     protected $connection = "mongodb";
     protected $table = "criterias";
 
-    protected $fillable = ["id", "name", "slug", "group"];
+    protected $fillable = ["name", "slug", "group"];
 
+    protected $cast = ["id" => "int"];
     public $timestamps = ["updated_at"];
     const CREATED_AT = null;
 }
