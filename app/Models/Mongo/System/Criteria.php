@@ -6,8 +6,9 @@ use MongoDB\Laravel\Eloquent\Model;
 
 class Criteria extends Model
 {
+    const COLLECTION_NAME = "criterias";
     protected $connection = "mongodb";
-    protected $table = "criterias";
+    protected $table = self::COLLECTION_NAME;
 
     protected $fillable = ["name", "slug", "group"];
 

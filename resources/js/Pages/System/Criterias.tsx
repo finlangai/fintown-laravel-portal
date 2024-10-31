@@ -6,7 +6,7 @@ import { CriteriaCardProvider } from "@/Contexts/CriteriaCardContext";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 
-type CriteriasPageProps = {
+export type CriteriasPageProps = {
   criterias: Criteria[];
   indicators: { name: string; identifier: string }[];
 };
@@ -15,9 +15,7 @@ export default function CriteriasPage({
   criterias,
   indicators,
 }: CriteriasPageProps) {
-  console.log(criterias);
-  console.log(indicators);
-
+  console.log("criterias: ", criterias);
   return (
     <Authenticated
       header={true}
@@ -36,7 +34,11 @@ export default function CriteriasPage({
           className="flex flex-col gap-5 group/criterias"
         >
           {criterias.map((criteriaInfo, index) => (
-            <CriteriaCardProvider criteriaInfo={criteriaInfo} key={index}>
+            <CriteriaCardProvider
+              indicators={indicators}
+              criteriaInfo={{ ...criteriaInfo }}
+              key={index}
+            >
               <CriteriaCard />
             </CriteriaCardProvider>
           ))}

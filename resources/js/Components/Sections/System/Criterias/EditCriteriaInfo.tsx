@@ -32,7 +32,7 @@ const EditCriteriaInfo = () => {
     <span onClick={(e) => e.stopPropagation()}>
       <SheetWrapper
         title={<span>Chỉnh sửa thông tin tiêu chí</span>}
-        trigger={<EditButton className="h-fit" />}
+        trigger={<EditButton asDiv={true} className="h-fit" />}
         footer={<SaveButton onClick={handleSubmit} />}
         ref={sheetRef}
       >

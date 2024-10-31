@@ -8,6 +8,7 @@ use App\Models\Mongo\Formular;
 use App\Models\Mongo\System\Criteria;
 use App\Utils\Toasting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class CriteriaController extends Controller
@@ -55,6 +56,25 @@ class CriteriaController extends Controller
         $criteria->update(["group" => $clustersData]);
 
         Toasting::success("Cập nhật thứ tự nhóm chỉ số thành công");
+    }
+
+    public function updateClusterInfo(Request $request, int $criteriaId)
+    {
+        $validated = $request->validate([
+            "clusterIndex" => "required|integer",
+            "name" => "required|string",
+            "metrics" => "required|array",
+        ]);
+        $clusterIndex = $validated["clusterIndex"];
+        unset($validated["clusterIndex"]);
+
+        $match = ["_id" => $criteriaId];
+        $update = ['$set' => ["group.$clusterIndex" => $validated]];
+        DB::connection("mongodb")
+            ->getCollection(Criteria::COLLECTION_NAME)
+            ->updateOne($match, $update);
+
+        Toasting::success("Cập nhật thông tin nhóm chỉ số thành công");
     }
 
     /**

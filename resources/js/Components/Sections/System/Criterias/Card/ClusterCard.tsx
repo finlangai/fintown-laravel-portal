@@ -9,7 +9,7 @@ const ClusterCard = ({
   className,
   ...props
 }: CriteriaCluster & HTMLAttributes<HTMLDivElement> & classNameInterface) => {
-  const metricsCount = metrics.length;
+  const metricsCount = metrics?.length;
 
   return (
     <div
@@ -29,9 +29,9 @@ const ClusterCard = ({
         </div>
       </div>
 
-      <button className="group-hover/cluster:px-3 group-hover/cluster:py-2 group-hover/cluster:bg-teal-300 flex items-center gap-2 bg-slate-300 px-2 py-1 rounded-md font-bold text-white text-xs">
+      <div className="group-hover/cluster:px-3 group-hover/cluster:py-2 group-hover/cluster:bg-teal-300 flex items-center gap-2 bg-slate-300 px-2 py-1 rounded-md font-bold text-white text-xs">
         <ListTree className="size-4" /> Chi tiết
-      </button>
+      </div>
     </div>
   );
 };

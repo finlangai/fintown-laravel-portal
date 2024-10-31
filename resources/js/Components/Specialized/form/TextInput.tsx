@@ -1,8 +1,9 @@
 import { Input } from "@/Components/UI/input";
 import { Label } from "@/Components/UI/label";
+import { ReactNode } from "react";
 
 interface TextInputProps {
-  label: string;
+  label: ReactNode;
   name: string;
   currentValue: any;
   setData: (name: string, value: any) => void;

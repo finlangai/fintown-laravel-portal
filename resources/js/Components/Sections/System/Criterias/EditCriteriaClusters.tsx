@@ -7,10 +7,9 @@ const EditCriteriaClusters = () => {
   const {
     criteriaInfo: { id },
     clusters,
-    setIsClustersDirty,
   } = useCriteriaCard();
 
-  const { patch, wasSuccessful } = useForm({
+  const { patch } = useForm({
     group: clusters,
   });
 
@@ -25,7 +24,9 @@ const EditCriteriaClusters = () => {
 
   return (
     <form onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()}>
-      <SaveButton type="submit">Lưu thay đổi</SaveButton>
+      <SaveButton asDiv={true} onClick={handleSubmit}>
+        Lưu thay đổi
+      </SaveButton>
     </form>
   );
 };

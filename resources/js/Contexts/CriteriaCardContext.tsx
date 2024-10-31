@@ -8,6 +8,7 @@ import {
 
 type CriteriaCardContextProps = {
   criteriaInfo: Criteria;
+  indicators: CompactIndicator[];
   clusters: CriteriaCluster[];
   setClusters: (newCluster: CriteriaCluster[]) => void;
   activeClusterId: number | null;
@@ -22,11 +23,18 @@ const CriteriaCardContext = createContext<CriteriaCardContextProps | undefined>(
   undefined,
 );
 
+type CriteriaCardProviderProps = {
+  criteriaInfo: Criteria;
+  indicators: CompactIndicator[];
+};
+
 export const CriteriaCardProvider = ({
   children,
   criteriaInfo,
-}: { children: ReactNode } & CriteriaCardContextProps) => {
-  // active state for cluster card
+  indicators,
+}: { children: ReactNode } & CriteriaCardProviderProps) => {
+  console.log("criterias info: ", criteriaInfo);
+  // states for drag and drop clusters
   const [clusters, setClusters] = useState<CriteriaCluster[]>(
     criteriaInfo.group,
   );
@@ -39,12 +47,15 @@ export const CriteriaCardProvider = ({
     const isNotDirty =
       JSON.stringify(criteriaInfo.group) === JSON.stringify(clusters);
     if (isNotDirty != isClustersDirty) setIsClustersDirty(isNotDirty);
+
+    setClusters(criteriaInfo.group);
   }, [criteriaInfo, clusters]);
 
   return (
     <CriteriaCardContext.Provider
       value={{
         criteriaInfo,
+        indicators,
         clusters,
         isClustersDirty,
         setIsClustersDirty,

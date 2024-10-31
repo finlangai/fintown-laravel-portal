@@ -25,6 +25,10 @@ Route::prefix("system")
                     CriteriaController::class,
                     "updateClustersOrder",
                 ])->name("update-clusters");
+                Route::patch("update-cluster-info/{criteriaId}", [
+                    CriteriaController::class,
+                    "updateClusterInfo",
+                ])->name("update-cluster-info");
             });
         // Route::get("formulars", [SystemController::class, "formulars"]);
     });

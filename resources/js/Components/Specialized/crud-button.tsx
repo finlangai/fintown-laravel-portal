@@ -1,75 +1,108 @@
 import { cn } from "@/Lib/utils";
 import { BadgePlus, PencilLine, Save, Trash2 } from "lucide-react";
-import { ButtonHTMLAttributes, ReactNode } from "react";
+import { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from "react";
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  asDiv?: boolean;
   children?: ReactNode;
-} & classNameInterface;
+  className?: string;
+}
+
+const ButtonComponent = ({
+  asDiv = false,
+  children,
+  className,
+  ...props
+}: ButtonProps & HTMLAttributes<HTMLDivElement>) => {
+  const Component = asDiv ? "div" : "button";
+  return (
+    <Component
+      className={cn(
+        "flex items-center gap-1 px-3 py-2 rounded-md font-medium text-white",
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </Component>
+  );
+};
+
+const buttonStyles =
+  "flex items-center gap-1 px-3 py-2 rounded-md font-medium text-white";
 
 export const AddButton = ({
+  asDiv,
   children = "Thêm",
   className,
   ...props
-}: ButtonProps) => (
-  <button
-    className={cn(
-      "flex items-center gap-1 bg-green-400 px-3 py-2 rounded-md font-medium text-white",
-      className,
-    )}
+}: ButtonProps & HTMLAttributes<HTMLDivElement>) => (
+  <ButtonComponent
+    asDiv={asDiv}
+    className={cn("bg-green-400", buttonStyles, className)}
     {...props}
   >
     <BadgePlus className="size-5" />
     {children}
-  </button>
+  </ButtonComponent>
 );
 
 export const EditButton = ({
+  asDiv,
   children = "Chỉnh sửa",
   className,
   ...props
-}: ButtonProps) => (
-  <button
+}: ButtonProps & HTMLAttributes<HTMLDivElement>) => (
+  <ButtonComponent
+    asDiv={asDiv}
     className={cn(
-      "flex items-center gap-1 bg-blue-400 shadow-sm px-3 py-2 rounded-md font-bold text-sm text-white",
+      "bg-blue-400 shadow-sm font-bold text-sm",
+      buttonStyles,
       className,
     )}
     {...props}
   >
     <PencilLine className="size-4" />
     {children}
-  </button>
+  </ButtonComponent>
 );
 
 export const SaveButton = ({
+  asDiv,
   children = "Lưu",
   className,
   ...props
-}: ButtonProps) => (
-  <button
+}: ButtonProps & HTMLAttributes<HTMLDivElement>) => (
+  <ButtonComponent
+    asDiv={asDiv}
     className={cn(
-      "flex items-center gap-1 bg-purple-400 shadow-sm px-3 py-2 rounded-md font-bold text-sm text-white",
+      "bg-purple-400 shadow-sm font-bold text-sm",
+      buttonStyles,
       className,
     )}
     {...props}
   >
     <Save className="size-4" />
     {children}
-  </button>
+  </ButtonComponent>
 );
 
 export const DeleteButton = ({
+  asDiv,
   children = "Xóa",
   className,
   ...props
-}: ButtonProps) => (
-  <button
+}: ButtonProps & HTMLAttributes<HTMLDivElement>) => (
+  <ButtonComponent
+    asDiv={asDiv}
     className={cn(
-      "flex items-center gap-1 bg-red-400 shadow-sm px-3 py-2 rounded-md font-bold text-sm text-white",
+      "bg-red-400 shadow-sm font-bold text-sm",
+      buttonStyles,
       className,
     )}
     {...props}
   >
     <Trash2 className="size-4" />
     {children}
-  </button>
+  </ButtonComponent>
 );

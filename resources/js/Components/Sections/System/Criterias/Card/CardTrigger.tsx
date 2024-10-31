@@ -38,7 +38,7 @@ const CardTrigger = () => {
       <div className="flex flex-col justify-between items-end pe-3">
         {updated_at && (
           <p className="text-slate-500 text-xs">
-            {new Date(updated_at).toLocaleString()}
+            Cập nhật lần cuối {new Date(updated_at).toLocaleString()}
           </p>
         )}
         {isClustersDirty ? <EditCriteriaInfo /> : <EditCriteriaClusters />}
