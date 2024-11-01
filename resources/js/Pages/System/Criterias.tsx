@@ -1,5 +1,4 @@
 import CriteriaCard from "@/Components/Sections/System/Criterias/Card/CriteriaCard";
-import CreateCriteria from "@/Components/Sections/System/Criterias/CreateCriteria";
 import { Accordion } from "@/Components/UI/accordion";
 import { TypographyH1 } from "@/Components/UI/typography";
 import { CriteriaCardProvider } from "@/Contexts/CriteriaCardContext";
@@ -15,7 +14,6 @@ export default function CriteriasPage({
   criterias,
   indicators,
 }: CriteriasPageProps) {
-  console.log("criterias: ", criterias);
   return (
     <Authenticated
       header={true}
@@ -24,7 +22,7 @@ export default function CriteriasPage({
       <Head title="Quản lý tiêu tiêu chí" />
       {/* PAGE HEADER */}
       <div className="flex items-center gap-6">
-        <TypographyH1>Quản lý tiêu chí</TypographyH1> <CreateCriteria />
+        <TypographyH1>Quản lý tiêu chí</TypographyH1>
       </div>
       {/* CRITERIAS CARD CONTAINER */}
       <section className="">

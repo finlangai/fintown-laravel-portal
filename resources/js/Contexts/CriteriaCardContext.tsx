@@ -33,7 +33,6 @@ export const CriteriaCardProvider = ({
   criteriaInfo,
   indicators,
 }: { children: ReactNode } & CriteriaCardProviderProps) => {
-  console.log("criterias info: ", criteriaInfo);
   // states for drag and drop clusters
   const [clusters, setClusters] = useState<CriteriaCluster[]>(
     criteriaInfo.group,
@@ -47,9 +46,11 @@ export const CriteriaCardProvider = ({
     const isNotDirty =
       JSON.stringify(criteriaInfo.group) === JSON.stringify(clusters);
     if (isNotDirty != isClustersDirty) setIsClustersDirty(isNotDirty);
+  }, [clusters]);
 
+  useEffect(() => {
     setClusters(criteriaInfo.group);
-  }, [criteriaInfo, clusters]);
+  }, [criteriaInfo]);
 
   return (
     <CriteriaCardContext.Provider

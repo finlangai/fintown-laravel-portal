@@ -15,13 +15,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/Components/UI/popover";
-import { Plus } from "lucide-react";
 
 type AddIndicatorProps = {
+  trigger: React.ReactNode;
   indicators: CompactIndicator[];
   appendIndicator: (identifier: string) => void;
 };
 export const AddIndicator: React.FC<AddIndicatorProps> = ({
+  trigger,
   indicators,
   appendIndicator,
 }) => {
@@ -29,11 +30,7 @@ export const AddIndicator: React.FC<AddIndicatorProps> = ({
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <span className="flex items-center gap-1 border-slate-200 px-2 py-1 border rounded-sm font-bold text-green-400 text-xs cursor-pointer">
-          <Plus className="size-3 stroke-[3px]" /> Thêm
-        </span>
-      </PopoverTrigger>
+      <PopoverTrigger asChild>{trigger}</PopoverTrigger>
       <PopoverContent className="p-0" side="right" align="start">
         <Command>
           <CommandInput placeholder="Tìm kiếm chỉ số..." />

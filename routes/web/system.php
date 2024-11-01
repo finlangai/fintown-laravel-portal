@@ -14,6 +14,7 @@ Route::prefix("system")
         );
         // CRITERIA RELATED ROUTES
         Route::resource("criterias", CriteriaController::class)->except(
+            "store",
             "show",
             "edit",
             "create"
@@ -21,10 +22,21 @@ Route::prefix("system")
         Route::prefix("criterias")
             ->name("criterias.")
             ->group(function () {
+                Route::post("create-cluster/{criteriaId}", [
+                    CriteriaController::class,
+                    "storeCluster",
+                ])->name("store-cluster");
+
+                Route::delete("delete-cluster/{criteriaId}/{clusterIndex}", [
+                    CriteriaController::class,
+                    "destroyCluster",
+                ])->name("destory-cluster");
+
                 Route::patch("update-clusters/{criteriaId}", [
                     CriteriaController::class,
                     "updateClustersOrder",
                 ])->name("update-clusters");
+
                 Route::patch("update-cluster-info/{criteriaId}", [
                     CriteriaController::class,
                     "updateClusterInfo",

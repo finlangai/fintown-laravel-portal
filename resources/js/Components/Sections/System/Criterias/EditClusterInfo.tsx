@@ -1,3 +1,4 @@
+import ConfirmDelete from "@/Components/Specialized/confirm-delete";
 import { SaveButton } from "@/Components/Specialized/crud-button";
 import {
   DrawerCloseButton,
@@ -6,9 +7,10 @@ import {
 import { useCriteriaCard } from "@/Contexts/CriteriaCardContext";
 import { toSnakeCase } from "@/Lib/utils";
 import { useForm } from "@inertiajs/react";
-import { PencilLine, X } from "lucide-react";
+import { PencilLine, Plus } from "lucide-react";
 import { FC, FormEvent, RefObject, useState } from "react";
 import { AddIndicator } from "./Card/AddIndicator";
+import IndicatorTag from "./Cluster/IndicatorTag";
 
 type EditClusterInfoProps = {
   clusterIndex: number;
@@ -24,7 +26,8 @@ const EditClusterInfo: FC<EditClusterInfoProps> = ({
     indicators,
     criteriaInfo: { id: currentCriteriaId },
   } = useCriteriaCard();
-  const { patch, setData, data, errors, wasSuccessful, isDirty } = useForm({
+
+  const { patch, setData, data, isDirty } = useForm({
     clusterIndex,
     name,
     metrics: [...metrics],
@@ -68,6 +71,7 @@ const EditClusterInfo: FC<EditClusterInfoProps> = ({
             const chUnitWidth = parseFloat(getComputedStyle(target).fontSize);
             const calculatedWidthPx = value.length * chUnitWidth;
 
+            // This is for enabling dynamic width for the cluster name if it's overflows
             if (
               calculatedWidthPx >= currentParentWidthPx &&
               calculatedWidthPx < (window.innerWidth * 2) / 3
@@ -93,26 +97,29 @@ const EditClusterInfo: FC<EditClusterInfoProps> = ({
         {/* indicator cards container */}
         <div className="flex flex-wrap gap-2">
           {data.metrics.map((identifier, index) => (
-            <span
+            <IndicatorTag
               key={index}
-              className="flex items-center gap-1 border-slate-200 px-2 py-1 border rounded-sm font-bold text-slate-600 text-xs cursor-pointer"
-              onClick={() => removeIndicator(index)}
-            >
-              <X className="size-3 stroke-[3px]" />{" "}
-              {
-                // getting the names of the identifiers
+              indicatorName={
                 indicators.find(
                   ({ identifier: currentIdentifier }) =>
                     currentIdentifier == identifier,
                 )?.name
               }
-            </span>
+              removeHandler={() => {
+                removeIndicator(index);
+              }}
+            />
           ))}
 
           <AddIndicator
+            trigger={
+              <span className="flex items-center gap-1 border-slate-200 px-2 py-1 border rounded-sm font-bold text-green-400 text-xs cursor-pointer">
+                <Plus className="size-3 stroke-[3px]" /> Thêm
+              </span>
+            }
             appendIndicator={appendIndicator}
             indicators={indicators.filter(({ identifier }) =>
-              metrics.every(
+              data.metrics.every(
                 (clusterIdentifier) => identifier != clusterIdentifier,
               ),
             )}
@@ -120,13 +127,21 @@ const EditClusterInfo: FC<EditClusterInfoProps> = ({
         </div>
       </div>
 
-      <div className="flex justify-center gap-3">
+      <div className="relative flex justify-center gap-3">
+        <ConfirmDelete
+          destroyUrl={route("system.criterias.destory-cluster", {
+            criteriaId: currentCriteriaId,
+            clusterIndex,
+          })}
+        />
+
+        {/* CHECKING IF THE CLUSTER HAS BEEN MODIFIED TO DISPLAY CORRESPONDING BUTTON */}
         {isDirty || isIndicatorsModified ? (
           <>
-            <DrawerCloseButton className="bg-slate-400 mx-0 px-3 text-white">
+            <DrawerCloseButton className="border-neutral-400 bg-neutral-400 shadow-sm mx-0 px-3 text-white">
               Hủy thay đổi
             </DrawerCloseButton>
-            <SaveButton />
+            <SaveButton className="shadow-sm" />
           </>
         ) : (
           <DrawerCloseButton />

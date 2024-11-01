@@ -29,14 +29,6 @@ class CriteriaController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateCriteriaInfoRequest $request, int $criteriaId)
@@ -77,11 +69,39 @@ class CriteriaController extends Controller
         Toasting::success("Cập nhật thông tin nhóm chỉ số thành công");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function storeCluster(Request $request, int $criteriaId)
     {
-        //
+        $validated = $request->validate([
+            "name" => "required|string",
+            "metrics" => "required|array",
+        ]);
+
+        $criteria = Criteria::where("id", $criteriaId)->first();
+        $criteria->push("group", [$validated]);
+
+        Toasting::success("Thêm nhóm chỉ số thành công.");
+    }
+
+    public function destroyCluster(int $criteriaId, int $clusterIndex)
+    {
+        try {
+            $collection = DB::connection("mongodb")->getCollection(
+                Criteria::COLLECTION_NAME
+            );
+
+            $collection->updateOne(
+                ["_id" => $criteriaId],
+                ['$unset' => ["group.$clusterIndex" => 1]]
+            );
+
+            $collection->updateOne(
+                ["_id" => $criteriaId],
+                ['$pull' => ["group" => null]]
+            );
+
+            Toasting::success("Xóa nhóm chỉ số thành công.");
+        } catch (\Throwable $th) {
+            Toasting::error("Có lỗi xảy ra trong quá trình thực hiện.");
+        }
     }
 }

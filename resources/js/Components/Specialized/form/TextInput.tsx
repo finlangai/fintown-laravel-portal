@@ -8,6 +8,7 @@ interface TextInputProps {
   currentValue: any;
   setData: (name: string, value: any) => void;
   error: string | undefined;
+  placehodler?: string;
 }
 
 const TextInput = ({
@@ -16,6 +17,7 @@ const TextInput = ({
   setData,
   currentValue,
   error,
+  placehodler,
 }: TextInputProps) => {
   return (
     <div className="flex flex-col gap-1">
@@ -27,6 +29,7 @@ const TextInput = ({
         className="py-2 h-fit"
         type="text"
         value={currentValue}
+        placeholder={placehodler}
         onChange={({ target: { value } }) => {
           setData(name, value);
         }}

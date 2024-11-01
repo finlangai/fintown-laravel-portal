@@ -5,9 +5,8 @@ import EditCriteriaInfo from "../EditCriteriaInfo";
 
 const CardTrigger = () => {
   const {
-    criteriaInfo: { id, name, group, slug, updated_at },
+    criteriaInfo: { name, group, slug, updated_at },
     isClustersDirty,
-    clusters,
   } = useCriteriaCard();
   const totalClusters = group.length;
   const totalIndicators = group.reduce(
