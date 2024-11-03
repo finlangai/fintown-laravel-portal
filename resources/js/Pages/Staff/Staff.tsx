@@ -29,7 +29,6 @@ import {
   DialogTrigger,
 } from "@/Components/UI/dialog";
 import AddRole from "./StaffFunction/AddRole";
-import RemoveStaff from "./StaffFunction/RemoveStaff";
 import { BadgePlus } from "lucide-react";
 
 export default function Staff() {
@@ -64,10 +63,9 @@ export default function Staff() {
     edit_products_services: "Chỉnh sửa sản phẩm và dịch vụ",
     delete_products_services: "Xóa sản phẩm và dịch vụ",
   };
-  const { staffList }: any = usePage().props;
+  const { staffList, role}: any = usePage().props;
   const listStaff: any = staffList || []; 
   const [dataID, setDataID] = useState<number>();
-
   return (
     <>
       <AuthenticatedLayout header={true}>
@@ -103,11 +101,7 @@ export default function Staff() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </div>
-                <div className="flex space-x-2">
-                  <button className="bg-custom-button-success hover:bg-custom-button-warning shadow-md px-4 py-2 rounded-lg focus:ring-2 focus:ring-blue-300 text-white transform transition duration-200 ease-in-out hover:scale-105 focus:outline-none">
-                    Thêm nhân viên
-                  </button>
-                </div>
+               
               </div>
               <div className="bg-white shadow-lg mt-5 rounded-lg overflow-x-auto">
                 <Table>
@@ -138,7 +132,7 @@ export default function Staff() {
                         Quyền
                       </TableHead>
                       <TableHead className="text-right py-3 text-gray-600">
-                        Phân quyền{" "}
+                        Phân Vai trò
                       </TableHead>
                     </TableRow>
                   </TableHeader>
@@ -168,9 +162,9 @@ export default function Staff() {
                                 {item.roles[0]}
                               </span>
                             ) : (
-                               <button>
-                                  <BadgePlus />
-                               </button>
+                               <strong className="text-red-400">
+                                  Chưa có role
+                               </strong>
                             )
                           }
 
@@ -212,13 +206,8 @@ export default function Staff() {
                         </TableCell>
                         <TableCell className="text-right flex justify-end text-gray-800">
                           <div onClick={() => setDataID(item.id)}>
-                            <AddRole
-                              permissionTranslations={permissionTranslations}
-                              nameStaff={item.fullname}
-                              StaffID={dataID || NaN}
-                            />
+                            <AddRole listRole={role} RoleName={item.roles} staffId={item.id}/>
                           </div>
-                          <RemoveStaff />
                         </TableCell>
                       </TableRow>
                     ))}
