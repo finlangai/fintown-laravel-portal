@@ -37,7 +37,7 @@ const SystemMenuItems = ({ isExpanded }: SystemMenuItemsProps) => {
               <ul>
                 {/* Công thức */}
                 <li className="mt-5 hover:underline">
-                  <Link href="/add-staff">
+                  <Link href={route("system.formulars.index")}>
                     <div className="flex justify-start items-center">
                       <SquareRadical className="size-6" />
                       {isExpanded && (

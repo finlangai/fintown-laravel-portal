@@ -14,7 +14,7 @@ use Inertia\Inertia;
 class CriteriaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the list of Criterias
      */
     public function index()
     {
@@ -29,7 +29,11 @@ class CriteriaController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the Info of the Criteria
+     *
+     * @param UpdateCriteriaInfoRequest $request
+     * @param integer $criteriaId
+     * @return void
      */
     public function update(UpdateCriteriaInfoRequest $request, int $criteriaId)
     {
@@ -41,6 +45,13 @@ class CriteriaController extends Controller
         Toasting::success("Cập nhật thông tin tiêu chí thành công");
     }
 
+    /**
+     * Update the Criteria's cluster order
+     *
+     * @param Request $request
+     * @param integer $criteriaId
+     * @return void
+     */
     public function updateClustersOrder(Request $request, int $criteriaId)
     {
         $clustersData = $request->input("group");
@@ -50,6 +61,13 @@ class CriteriaController extends Controller
         Toasting::success("Cập nhật thứ tự nhóm chỉ số thành công");
     }
 
+    /**
+     * Update the info of the Cluster including its indicators
+     *
+     * @param Request $request
+     * @param integer $criteriaId
+     * @return void
+     */
     public function updateClusterInfo(Request $request, int $criteriaId)
     {
         $validated = $request->validate([
@@ -69,6 +87,13 @@ class CriteriaController extends Controller
         Toasting::success("Cập nhật thông tin nhóm chỉ số thành công");
     }
 
+    /**
+     * Store new Cluster
+     *
+     * @param Request $request
+     * @param integer $criteriaId
+     * @return void
+     */
     public function storeCluster(Request $request, int $criteriaId)
     {
         $validated = $request->validate([
@@ -82,6 +107,13 @@ class CriteriaController extends Controller
         Toasting::success("Thêm nhóm chỉ số thành công.");
     }
 
+    /**
+     * Delete Cluster
+     *
+     * @param integer $criteriaId
+     * @param integer $clusterIndex
+     * @return void
+     */
     public function destroyCluster(int $criteriaId, int $clusterIndex)
     {
         try {

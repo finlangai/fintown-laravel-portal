@@ -16,7 +16,6 @@ const CriteriaCard = () => {
   const {
     criteriaInfo: { id },
     clusters,
-    setActiveClusterId,
     setDropPositionId,
   } = useCriteriaCard();
 

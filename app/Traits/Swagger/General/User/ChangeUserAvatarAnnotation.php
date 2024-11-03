@@ -9,6 +9,7 @@ trait ChangeUserAvatarAnnotation
      *     path="/api/general/user/change-avatar",
      *     summary="Change user avatar",
      *     tags={"User"},
+     *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\MediaType(

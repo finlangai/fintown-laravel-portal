@@ -1,5 +1,5 @@
 import ConfirmDelete from "@/Components/Specialized/confirm-delete";
-import { SaveButton } from "@/Components/Specialized/crud-button";
+import { DeleteButton, SaveButton } from "@/Components/Specialized/crud-button";
 import {
   DrawerCloseButton,
   DrawerWrapperHandler,
@@ -129,6 +129,7 @@ const EditClusterInfo: FC<EditClusterInfoProps> = ({
 
       <div className="relative flex justify-center gap-3">
         <ConfirmDelete
+          trigger={<DeleteButton type="button" className="left-0 absolute" />}
           destroyUrl={route("system.criterias.destory-cluster", {
             criteriaId: currentCriteriaId,
             clusterIndex,

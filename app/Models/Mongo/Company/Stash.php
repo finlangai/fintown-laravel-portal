@@ -9,6 +9,6 @@ class Stash extends Model
     protected $connection = "mongodb";
     protected $table = "stash";
 
-    protected $hidden = ["id"];
+    protected $hidden = ["id", "is_stock"];
     public $timestamps = false;
 }

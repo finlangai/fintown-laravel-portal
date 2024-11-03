@@ -15,11 +15,17 @@ import { DeleteButton } from "./crud-button";
 
 interface ConfirmDeleteProps {
   children?: ReactNode;
+  trigger?: ReactNode;
   title?: string;
   destroyUrl: string;
 }
 
-const ConfirmDelete = ({ children, title, destroyUrl }: ConfirmDeleteProps) => {
+const ConfirmDelete = ({
+  children,
+  trigger,
+  title,
+  destroyUrl,
+}: ConfirmDeleteProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const { delete: deleteMethod } = useForm();
 
@@ -32,12 +38,16 @@ const ConfirmDelete = ({ children, title, destroyUrl }: ConfirmDeleteProps) => {
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
         <span>
-          <DeleteButton
-            onClick={() => {
-              setOpen(true);
-            }}
-            type="button"
-          />
+          {trigger ? (
+            trigger
+          ) : (
+            <DeleteButton
+              onClick={() => {
+                setOpen(true);
+              }}
+              type="button"
+            />
+          )}
         </span>
       </AlertDialogTrigger>
       <AlertDialogContent>
