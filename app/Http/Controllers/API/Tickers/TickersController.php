@@ -3,15 +3,12 @@
 namespace App\Http\Controllers\API\Tickers;
 
 use App\Actions\FilterTickersList;
-use App\Actions\PopulateTickers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\TickersRequest;
 use App\Models\Mongo\Company\Company;
 use App\Models\Mongo\Company\Stash;
 use App\Traits\Swagger\Tickers\TickersAnnotation;
 use App\Utils\ApiResponse;
-use App\Utils\Redis;
-use App\Utils\Unix;
 
 class TickersController extends Controller
 {

@@ -38,7 +38,7 @@ class TopRevenueTickersController extends Controller
         }
 
         // set cache
-        Redis::set($cacheName, $result, Unix::hour(12));
+        Redis::set($cacheName, $result, Unix::untilNextHour(4));
 
         return ApiResponse::success($result);
     }

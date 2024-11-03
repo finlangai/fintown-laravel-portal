@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\Tickers\BestTickerController;
 use App\Http\Controllers\API\Tickers\IndustryTickersController;
+use App\Http\Controllers\API\Tickers\TechnicalChartController;
 use App\Http\Controllers\API\Tickers\TickersController;
 use App\Http\Controllers\API\Tickers\TopGainerTickersController;
 use App\Http\Controllers\API\Tickers\TopRevenueTickersController;
@@ -17,4 +18,9 @@ Route::prefix("tickers")->group(function () {
     Route::get("top-gainers", TopGainerTickersController::class);
     Route::get("top-revenue", TopRevenueTickersController::class);
     Route::get("industry", IndustryTickersController::class);
+
+    Route::prefix("technical-chart")->group(function () {
+        Route::get("overview", [TechnicalChartController::class, "overview"]);
+        Route::get("stocks", [TechnicalChartController::class, "stocks"]);
+    });
 });
