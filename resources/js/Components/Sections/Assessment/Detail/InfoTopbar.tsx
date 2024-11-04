@@ -37,6 +37,7 @@ const InfoTopbar = () => {
   } = usePage();
 
   const handleRegenerateAssessment = async () => {
+    const currentSymbolUrl = window.location.href;
     setIsUpdatingAssessment(!isUpdatingAssessment);
     await makeSSERequest(
       pythonServiceUrl + "/regenerate/assessment",
@@ -46,11 +47,13 @@ const InfoTopbar = () => {
     // have it like this because the value is not changing yet
     setIsUpdatingAssessment(isUpdatingAssessment);
 
-    router.visit(route("assessments.show", assessment.symbol), {
-      method: "get",
-      preserveState: true,
-      preserveScroll: true,
-    });
+    if (currentSymbolUrl == window.location.href) {
+      router.visit(route("assessments.show", assessment.symbol), {
+        method: "get",
+        preserveState: true,
+        preserveScroll: true,
+      });
+    }
   };
 
   const regenerateButtonClasses = "border-slate-400 bg-slate-400 text-white ";

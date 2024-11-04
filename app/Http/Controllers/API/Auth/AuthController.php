@@ -50,6 +50,8 @@ class AuthController extends Controller
 
     public function profile()
     {
+        // return ApiResponse::success(auth("api")->user()->id);
+        // Cần thêm role vào profile
         return ApiResponse::success(auth("api")->user());
     }
 

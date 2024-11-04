@@ -7,6 +7,7 @@ use App\Utils\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Models\Mongo\Company\Company;
 use App\Models\Mongo\Company\Quote;
+use App\Models\Mongo\Company\Stash;
 use App\Utils\QuoteIntervalIndex;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -16,9 +17,10 @@ class FluctuationController extends Controller
     {
         $symbol = strtoupper($symbol);
         try {
-            $company = Company::where("symbol", $symbol)
+            $stash = Stash::where("symbol", $symbol)
                 ->project($this->getFluctuationProjection())
                 ->firstOrFail();
+
             $recentQuotes = Quote::where("symbol", $symbol)
                 ->where(
                     "interval",
@@ -31,9 +33,11 @@ class FluctuationController extends Controller
         } catch (ModelNotFoundException $e) {
             return ApiResponse::notFound("Không tìm thấy công ty");
         }
+
         list($firstQuote, $secondQuote) = $recentQuotes;
+
         return ApiResponse::success(
-            array_merge($firstQuote->toArray(), $company->toArray(), [
+            array_merge($firstQuote->toArray(), $stash->toArray(), [
                 "previousClosingPrice" => $secondQuote["close"],
             ])
         );

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Symbols;
 use App\Actions\GetCompanyProfile;
 use App\Http\Controllers\Controller;
 use App\Models\Mongo\Company\Company;
+use App\Models\Mongo\General\Watchlist;
 use App\Traits\Swagger\Symbols\ProfileAnnotation;
 use App\Utils\ApiResponse;
 use App\Utils\Redis;
@@ -16,9 +17,12 @@ class ProfileController extends Controller
     use ProfileAnnotation;
     public function __invoke(string $symbol, GetCompanyProfile $action)
     {
+        $isInWatchlist = Watchlist::checkSymbol($symbol);
+
         $cacheName = "symbols:profile:$symbol:";
         $cache = Redis::get($cacheName);
         if ($cache) {
+            $cache["isInWatchlist"] = $isInWatchlist;
             return ApiResponse::success($cache);
         }
 
@@ -43,7 +47,9 @@ class ProfileController extends Controller
         }
 
         $result = $action->handle($company);
-        Redis::set($cacheName, $result, Unix::hour(6));
+        Redis::set($cacheName, $result, Unix::untilNextHour(4));
+
+        $result["isInWatchlist"] = $isInWatchlist;
 
         return ApiResponse::success($result);
     }

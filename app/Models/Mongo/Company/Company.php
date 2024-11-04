@@ -23,6 +23,7 @@ class Company extends Model
         "logo",
         "profile",
     ];
+
     /**
      * Get the route key for the model.
      */

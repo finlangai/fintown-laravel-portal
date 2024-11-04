@@ -5,3 +5,5 @@ type classNameInterface = {
 type styleInterface = {
   style?: React.CSSProperties;
 };
+
+type CompactIndicator = { name: string; identifier: string };

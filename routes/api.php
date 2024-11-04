@@ -12,5 +12,6 @@ Route::middleware([])->group(function () {
         ->middleware(["auth:api"])
         ->group(function () {
             require __DIR__ . "/api/user.php";
+            require __DIR__ . "/api/watchlist.php";
         });
 });

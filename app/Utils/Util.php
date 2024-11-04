@@ -68,4 +68,52 @@ class Util
 
         return $source;
     }
+
+    /**
+     * flatten aggregation look up result
+     *
+     * @param [type] $array
+     * @return void
+     */
+    public static function flattenLookUpAggregation($array)
+    {
+        $flattened = [];
+
+        foreach ($array as $key => $value) {
+            // Convert objects to arrays
+            if (is_object($value)) {
+                $value = (array) $value;
+            }
+
+            // Flatten single-element arrays that contain arrays
+            if (
+                is_array($value) &&
+                count($value) === 1 &&
+                is_array(reset($value))
+            ) {
+                $value = reset($value);
+            }
+
+            // Handle arrays with nested arrays or objects
+            if (is_array($value)) {
+                foreach ($value as $subKey => $subValue) {
+                    if (is_object($subValue)) {
+                        $subValue = (array) $subValue;
+                    }
+                    // Add nested values to flattened array
+                    if (is_array($subValue)) {
+                        foreach ($subValue as $nestedKey => $nestedValue) {
+                            $flattened[$nestedKey] = $nestedValue;
+                        }
+                    } else {
+                        $flattened[$subKey] = $subValue;
+                    }
+                }
+            } else {
+                $flattened[$key] = $value;
+            }
+        }
+
+        return $flattened;
+    }
 }

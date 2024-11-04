@@ -3,9 +3,11 @@
 use App\Http\Controllers\CompanyWebController;
 use App\Http\Controllers\FinancialController;
 use App\Http\Controllers\HolderWebController;
+use App\Http\Controllers\Payment\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StaffListController;
 use App\Http\Controllers\StaffWebController;
+use App\Http\Controllers\SubscriptionProgramController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -48,15 +50,7 @@ Route::middleware("auth")->group(function () {
     // financial
     Route::get("/financial", [FinancialController::class, "index"]);
 
-
     // users và các trang liên quan đến users
-        
-
-
-
-
-
-
 
     // staff và các trang liên quan đến Staff
 
@@ -64,30 +58,31 @@ Route::middleware("auth")->group(function () {
         "staff.index"
     );
 
-
     Route::get("/staff-list", [StaffListController::class, "index"])->name(
         "staffList.index"
     );
-    Route::delete("/staffRemove/{id}", [StaffListController::class, "destroy"])->name("staffRemove");
-    
-    
-    Route::post("/staffAdd", [StaffListController::class, "store"])->name("staffAdd");
+    Route::delete("/staffRemove/{id}", [
+        StaffListController::class,
+        "destroy",
+    ])->name("staffRemove");
 
+    Route::post("/staffAdd", [StaffListController::class, "store"])->name(
+        "staffAdd"
+    );
 
-    Route::put('/staffedit/{id}', [StaffListController::class, 'update'])->name('staff.update');
+    Route::put("/staffedit/{id}", [StaffListController::class, "update"])->name(
+        "staff.update"
+    );
 
-    Route::post('/staff/reset-password/{id}', [StaffListController::class, 'resetPassword'])->name('staff.reset-password');
-
-    
-
+    Route::post("/staff/reset-password/{id}", [
+        StaffListController::class,
+        "resetPassword",
+    ])->name("staff.reset-password");
 
     Route::put("/staff/update-permissions/{StaffID}", [
         StaffWebController::class,
         "updatePermissions",
     ])->name("staff.updatePermissions");
-
-        
-
 
     Route::get("/profile", [ProfileController::class, "edit"])->name(
         "profile.edit"
@@ -101,6 +96,8 @@ Route::middleware("auth")->group(function () {
 
     require __DIR__ . "/web/assessments.php";
     require __DIR__ . "/web/system.php";
+    require __DIR__ . "/web/subscription.php";
+    require __DIR__ . "/web/payment.php";
 });
 
 require __DIR__ . "/auth.php";

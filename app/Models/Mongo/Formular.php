@@ -6,9 +6,17 @@ use MongoDB\Laravel\Eloquent\Model;
 
 class Formular extends Model
 {
-    protected $connection = 'mongodb';
-    protected $table      = 'formular_library';
+    protected $connection = "mongodb";
+    protected $table = "formular_library";
 
-    protected $hidden  = [ 'id' ];
+    protected $hidden = ["id"];
     public $timestamps = false;
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return "identifier";
+    }
 }

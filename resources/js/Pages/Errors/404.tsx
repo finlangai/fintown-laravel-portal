@@ -7,11 +7,7 @@ export default function Error404() {
           Không tìm thấy trang nào hết :(
         </p>
       </div>
-      <img
-        className="h-96"
-        src="https://media.discordapp.net/attachments/913304070255689742/1298582978758443079/image-removebg-preview.png?ex=671a1724&is=6718c5a4&hm=a56a8b9bcfc7e00019764fe96ed491e86c141a8f859f15e63f282dfeb3d19533&=&format=webp&quality=lossless&width=915&height=515"
-        alt=""
-      />
+      <img className="h-96" src="https://i.imgur.com/3IvcsdB.png" alt="" />
     </main>
   );
 }

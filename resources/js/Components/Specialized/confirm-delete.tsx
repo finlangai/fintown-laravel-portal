@@ -10,26 +10,44 @@ import {
   AlertDialogTrigger,
 } from "@/Components/UI/alert-dialog";
 import { useForm } from "@inertiajs/react";
-import { FormEvent, ReactNode } from "react";
+import { FormEvent, ReactNode, useState } from "react";
 import { DeleteButton } from "./crud-button";
 
 interface ConfirmDeleteProps {
   children?: ReactNode;
+  trigger?: ReactNode;
   title?: string;
   destroyUrl: string;
 }
 
-const ConfirmDelete = ({ children, title, destroyUrl }: ConfirmDeleteProps) => {
+const ConfirmDelete = ({
+  children,
+  trigger,
+  title,
+  destroyUrl,
+}: ConfirmDeleteProps) => {
+  const [open, setOpen] = useState<boolean>(false);
   const { delete: deleteMethod } = useForm();
+
   const deleteHandle = (e: FormEvent) => {
     e.preventDefault();
-    deleteMethod(destroyUrl);
+    deleteMethod(destroyUrl, { preserveScroll: true, preserveState: true });
+    setOpen(false);
   };
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
         <span>
-          <DeleteButton />
+          {trigger ? (
+            trigger
+          ) : (
+            <DeleteButton
+              onClick={() => {
+                setOpen(true);
+              }}
+              type="button"
+            />
+          )}
         </span>
       </AlertDialogTrigger>
       <AlertDialogContent>

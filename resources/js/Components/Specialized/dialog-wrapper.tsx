@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/Components/UI/dialog";
-import { forwardRef, ReactNode, useImperativeHandle, useRef } from "react";
+import { forwardRef, ReactNode, useImperativeHandle, useState } from "react";
 
 type DialogWrapperProps = {
   trigger: ReactNode;
@@ -19,21 +19,33 @@ type DialogWrapperProps = {
 
 export type DialogWrapperHandler = {
   toggle: () => void;
+  open: () => void;
+  close: () => void;
 };
 const DialogWrapper = forwardRef<DialogWrapperHandler, DialogWrapperProps>(
   ({ title, trigger, children, footer, description, className }, ref) => {
-    const triggerRef = useRef<HTMLDivElement>(null);
+    const [open, setOpen] = useState<boolean>(false);
 
     useImperativeHandle(ref, () => ({
       toggle: () => {
-        if (triggerRef.current) triggerRef.current.click();
+        setOpen(!open);
+      },
+      open: () => {
+        setOpen(true);
+      },
+      close: () => {
+        setOpen(false);
       },
     }));
 
+    // useEffect(() => {
+    //   console.log("the state of the fucking dialog: ", open);
+    // }, [open]);
+
     return (
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <div ref={triggerRef}>{trigger}</div>
+          <div>{trigger}</div>
         </DialogTrigger>
         <DialogContent className={className}>
           <DialogHeader>

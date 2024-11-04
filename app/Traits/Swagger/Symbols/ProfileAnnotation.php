@@ -41,7 +41,8 @@ trait ProfileAnnotation
      *              @OA\Property(property="pe", type="number", format="float", example=58.78),
      *              @OA\Property(property="pb", type="number", format="float", example=1.54),
      *              @OA\Property(property="roe", type="number", format="float", example=2.67),
-     *              @OA\Property(property="roa", type="number", format="float", example=1.44)
+     *              @OA\Property(property="roa", type="number", format="float", example=1.44),
+     *              @OA\Property(property="isInWatchList", type="bool", example="false"),
      *          )
      *       ),
      *      @OA\Response(

@@ -3,6 +3,7 @@ type Criteria = {
   name: string;
   slug: string;
   group: CriteriaCluster[];
+  updated_at?: string;
 };
 
 type CriteriaCluster = {
