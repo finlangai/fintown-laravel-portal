@@ -32,46 +32,41 @@ class StaffWebController extends Controller
             ];
         });
         $permissions = Permission::all();
+        $roles = Role::all();
+
         return Inertia::render('Staff/Staff', [
+            'role'=> $roles,
             'staffList' => $staffList, 
             'permissionsList' => $permissions,
         ]);
     }
+
     public function updatePermissions(Request $request, $id)
-{
-    $staff = Staff::findOrFail($id);
-
-    // Lấy tất cả quyền từ request
-    $permissions = $request->input('permissions');
-    $permissionIds = [];
-
-    // Kiểm tra xem nhân viên thuộc vai trò nào (admin, super-admin)
-    $staffRole = DB::table('model_has_roles')
-        ->where('model_id', $staff->id)
-        ->where('model_type', 'App\Models\SQL\Staff\Staff')
-        ->first();
-
-    if (!$staffRole) {
-        return redirect()->back()->with('error', 'Không tìm thấy vai trò cho nhân viên này.');
-    }
-    $roleId = $staffRole->role_id;
-    foreach ($permissions as $permission) {
-        $perm = Permission::where('name', $permission)->first();
-        if (!$perm) {
-            return redirect()->back();
+    {
+        $user = Staff::findOrFail($id);
+        $roles = $request->input('roles', []); 
+        DB::table('model_has_roles')->where('model_id', $user->id)->delete();
+        if (!empty($roles)) {
+            $role = $roles[0]; 
+    
+            $roleRecord = DB::table('roles')->where('name', $role)->first();
+    
+            if ($roleRecord) {
+                DB::table('model_has_roles')->insert([
+                    'role_id' => $roleRecord->id,
+                    'model_type' => Staff::class, 
+                    'model_id' => $user->id,
+                ]);
+            }
         }
-        $permissionIds[] = $perm->id;
+    
+        return redirect()->back()->with('success', 'Cập nhật vai trò thành công!');
     }
-    DB::table('role_has_permissions')
-        ->where('role_id', $roleId)
-        ->delete();
-    foreach ($permissionIds as $permissionId) {
-        DB::table('role_has_permissions')->insert([
-            'permission_id' => $permissionId,
-            'role_id' => $roleId,
-        ]);
-    }
-    return redirect()->back();
-}
+    
+    
+    
 
+    
+    
+    
 }
