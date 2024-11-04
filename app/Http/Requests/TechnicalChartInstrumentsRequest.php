@@ -24,6 +24,7 @@ class TechnicalChartInstrumentsRequest extends FormRequest
         return [
             "limit" => "nullable|integer|min:1",
             "offset" => "nullable|integer|min:1",
+            "search" => "nullable|string|min:1",
             "category" => "required|string|in:watchlist,vn30,hose,hnx",
         ];
     }

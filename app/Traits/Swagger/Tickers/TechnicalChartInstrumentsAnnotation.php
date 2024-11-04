@@ -34,6 +34,16 @@ trait TechnicalChartInstrumentsAnnotation
      *         description="Offset for the results"
      *     ),
      *     @OA\Parameter(
+     *         name="search",
+     *         in="query",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string",
+     *             minimum=1
+     *         ),
+     *         description="Searching symbol, only apply for hose and hnx category"
+     *     ),
+     *     @OA\Parameter(
      *         name="category",
      *         in="query",
      *         required=true,
