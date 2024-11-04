@@ -3,11 +3,17 @@
 namespace App\Http\Controllers\API\Tickers;
 
 use App\Actions\AggregateTickersTechnicalChartOverview;
+use App\Actions\GetTechnicalChartInstruments;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TechnicalChartInstrumentsRequest;
 use App\Utils\ApiResponse;
 use App\Utils\Redis;
 use App\Utils\Unix;
+use App\Utils\Util;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+
+use function PHPUnit\Framework\isJson;
 
 class TechnicalChartController extends Controller
 {
@@ -27,7 +33,23 @@ class TechnicalChartController extends Controller
         return ApiResponse::success($result);
     }
 
-    public function stocks($request)
+    public function instruments(
+        TechnicalChartInstrumentsRequest $request,
+        GetTechnicalChartInstruments $action
+    ) {
+        $validated = $request->validated();
+        // $cacheName = $this->baseCacheName . "";
+
+        $result = $action->handle($validated);
+
+        if ($result instanceof JsonResponse) {
+            return $result;
+        }
+
+        return ApiResponse::success($result);
+    }
+
+    public function search()
     {
     }
 }

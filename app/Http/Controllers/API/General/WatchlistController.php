@@ -23,16 +23,15 @@ class WatchlistController extends Controller
             fn($collection) => $collection->updateOne(
                 ["_id" => $userId],
                 [
-                    // '$setOnInsert' => [
-                    //     "symbols" => [],
-                    // ],
                     '$addToSet' => ["symbols" => $symbol],
                 ],
                 ["upsert" => true]
             )
         );
 
-        return ApiResponse::success();
+        return ApiResponse::success([
+            "messaage" => "Đã thêm mã $symbol vào danh sách theo dõi.",
+        ]);
     }
 
     public function removeFromWatchlist(WatchlistSymbolRequest $request)
@@ -53,6 +52,8 @@ class WatchlistController extends Controller
             )
         );
 
-        return ApiResponse::success();
+        return ApiResponse::success([
+            "message" => "Đã xóa mã $symbol khỏi danh sách theo dõi.",
+        ]);
     }
 }

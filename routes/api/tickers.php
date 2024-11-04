@@ -21,6 +21,9 @@ Route::prefix("tickers")->group(function () {
 
     Route::prefix("technical-chart")->group(function () {
         Route::get("overview", [TechnicalChartController::class, "overview"]);
-        Route::get("stocks", [TechnicalChartController::class, "stocks"]);
+        Route::get("instruments", [
+            TechnicalChartController::class,
+            "instruments",
+        ]);
     });
 });
