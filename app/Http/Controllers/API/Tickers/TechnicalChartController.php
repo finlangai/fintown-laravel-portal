@@ -38,7 +38,6 @@ class TechnicalChartController extends Controller
         GetTechnicalChartInstruments $action
     ) {
         $validated = $request->validated();
-        // $cacheName = $this->baseCacheName . "";
 
         $result = $action->handle($validated);
 
@@ -47,9 +46,5 @@ class TechnicalChartController extends Controller
         }
 
         return ApiResponse::success($result);
-    }
-
-    public function search()
-    {
     }
 }

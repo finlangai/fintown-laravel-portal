@@ -8,7 +8,7 @@ trait ChangeUserAvatarAnnotation
      * @OA\Post(
      *     path="/api/general/user/change-avatar",
      *     summary="Change user avatar",
-     *     tags={"User"},
+     *     tags={"General","User"},
      *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=true,

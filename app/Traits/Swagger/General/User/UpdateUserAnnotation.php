@@ -8,7 +8,7 @@ trait UpdateUserAnnotation
      * @OA\Put(
      *     path="/api/general/user/update",
      *     summary="Update user information",
-     *     tags={"User"},
+     *     tags={"General","User"},
      *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=true,

@@ -1,5 +1,5 @@
-<?php
 
+<?php
 use App\Http\Controllers\CompanyWebController;
 use App\Http\Controllers\FinancialController;
 use App\Http\Controllers\HolderWebController;
@@ -142,3 +142,4 @@ Route::middleware("auth")->group(function () {
 });
 
 require __DIR__ . "/auth.php";
+

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\General\PricingController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([])->group(function () {
@@ -11,6 +12,10 @@ Route::middleware([])->group(function () {
     Route::prefix("general")
         ->middleware(["auth:api"])
         ->group(function () {
+            Route::get("pricing", PricingController::class)->withoutMiddleware([
+                "auth:api",
+            ]);
+
             require __DIR__ . "/api/user.php";
             require __DIR__ . "/api/watchlist.php";
         });
