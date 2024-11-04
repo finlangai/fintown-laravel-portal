@@ -36,7 +36,6 @@ export default function Edit({
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
-
           <div className="bg-white shadow p-4 sm:p-8 sm:rounded-lg">
             <UpdateProfileInformationForm
               mustVerifyEmail={mustVerifyEmail}
@@ -44,11 +43,9 @@ export default function Edit({
               className="max-w-xl"
             />
           </div>
-
           <div className="bg-white shadow p-4 sm:p-8 sm:rounded-lg">
             <UpdatePasswordForm className="max-w-xl" />
           </div>
-
           <div className="bg-white shadow p-4 sm:p-8 sm:rounded-lg">
             <DeleteUserForm className="max-w-xl" />
           </div>

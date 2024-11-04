@@ -82,7 +82,6 @@ export default function ResetPassword({
                             setData("password_confirmation", e.target.value)
                         }
                     />
-
                     <InputError
                         message={errors.password_confirmation}
                         className="mt-2"

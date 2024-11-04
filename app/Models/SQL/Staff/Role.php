@@ -14,7 +14,7 @@ class Role extends Model
     // {
     //     return $this->belongsToMany(Staff::class, 'staff_roles', 'role_id', 'staff_id');
     // }
-
+    
     // public function permissions(): BelongsToMany
     // {
     //     return $this->belongsToMany(Permission::class, 'role_permissions', 'role_id', 'permission_id');

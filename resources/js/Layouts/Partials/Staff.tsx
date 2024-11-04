@@ -10,7 +10,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@radix-ui/react-hover-card";
-import { UserCheck, UserPen, UserRoundCog, UserRoundPlus } from "lucide-react";
+import { ChartNoAxesGantt, UserCheck, UserPen, UserRoundCog, UserRoundPlus, UsersRound } from "lucide-react";
 
 interface StaffLiProps {
   isExpanded: boolean;
@@ -52,6 +52,22 @@ const StaffLi = ({ isExpanded }: StaffLiProps) => {
                                              <div className="flex justify-start items-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user-round-plus" > <path d="M2 21a8 8 0 0 1 13.292-6" /> <circle cx={10} cy={8} r={5} /> <path d="M19 16v6" /> <path d="M22 19h-6" /> </svg>
                                                 <span className="whitespace-nowrap ml-2 text-xs">Phân quyền</span>
+                                             </div>
+                                          </Link>
+                                       </li>
+                                       <li className="mt-5 hover:underline">
+                                          <Link href="/staff/role">
+                                             <div className="flex justify-start items-center">
+                                             <UsersRound size={20}/>
+                                                <span className="whitespace-nowrap ml-2 text-xs">Vai trò</span>
+                                             </div>
+                                          </Link>
+                                       </li>
+                                       <li className="mt-5 hover:underline">
+                                          <Link href="/staff/permission">
+                                             <div className="flex justify-start items-center">
+                                             <ChartNoAxesGantt size={20}/>
+                                                <span className="whitespace-nowrap ml-2 text-xs">Quyền sử dụng</span>
                                              </div>
                                           </Link>
                                        </li>
@@ -102,6 +118,30 @@ const StaffLi = ({ isExpanded }: StaffLiProps) => {
                                                 </HoverCardTrigger>
                                                 <HoverCardContent  side="right"  align="start">
                                                    Phân quyền
+                                                </HoverCardContent>
+                                             </HoverCard>
+                                          </li>
+                                          <li className="mt-5">
+                                             <HoverCard>
+                                                <HoverCardTrigger>
+                                                   <Link href="/staff/role">
+                                                         <UsersRound size={20}/>
+                                                   </Link>
+                                                </HoverCardTrigger>
+                                                <HoverCardContent  side="right"  align="start">
+                                                  Vai trò
+                                                </HoverCardContent>
+                                             </HoverCard>
+                                          </li>
+                                          <li className="mt-5">
+                                             <HoverCard>
+                                                <HoverCardTrigger>
+                                                   <Link href="/staff/permission">
+                                                      <ChartNoAxesGantt size={20}/>
+                                                   </Link>
+                                                </HoverCardTrigger>
+                                                <HoverCardContent  side="right"  align="start">
+                                                  Quyền sử dụng
                                                 </HoverCardContent>
                                              </HoverCard>
                                           </li>

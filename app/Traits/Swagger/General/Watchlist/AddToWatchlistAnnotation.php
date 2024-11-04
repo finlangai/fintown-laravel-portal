@@ -8,7 +8,7 @@ trait AddToWatchlistAnnotation
      * @OA\Post(
      *     path="/api/general/watchlist/add",
      *     summary="Add stock symbol to a watchlist",
-     *     tags={"Watchlist"},
+     *     tags={"General","Watchlist"},
      *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=true,

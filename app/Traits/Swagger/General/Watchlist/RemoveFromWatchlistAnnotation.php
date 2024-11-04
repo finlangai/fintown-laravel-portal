@@ -8,7 +8,7 @@ trait RemoveFromWatchlistAnnotation
      * @OA\Post(
      *     path="/api/general/watchlist/remove",
      *     summary="Remove stock symbol from a watchlist",
-     *     tags={"Watchlist"},
+     *     tags={"General","Watchlist"},
      *     security={{"bearerAuth": {}}},
      *     @OA\RequestBody(
      *         required=true,

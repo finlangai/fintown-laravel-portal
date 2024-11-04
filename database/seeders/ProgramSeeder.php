@@ -27,39 +27,29 @@ class ProgramSeeder extends Seeder
 
         // Seed các Programs với liên kết đến user_types thông qua incharge_id
         Program::create([
-            "id" => "P001",
-            "incharge_id" => "T01",
-            "name" => "Chương trình đăng ký theo ngày",
-            "description" => "Chương trình đăng ký theo ngày",
-            "price" => 100.0,
-            "discount" => 10.0,
+            "id" => "PM1",
+            "incharge_id" => "1",
+            "name" => "Professional - 1 Tháng",
+            "description" =>
+                "Gói Professional danh cho người dùng chuyên nghiệp muốn truy cập vào các chức năng chuyên sâu",
+            "price" => 199000,
+            "discount" => 0,
             "duration" => 1,
             "duration_type" => "month",
             "is_renewable" => true,
         ]);
 
         Program::create([
-            "id" => "P002",
-            "incharge_id" => "T02",
-            "name" => "Chương trình đăng ký theo tháng",
-            "description" => "Chương trình đăng ký theo tháng",
-            "price" => 200.0,
-            "discount" => 20.0,
-            "duration" => 6,
+            "id" => "PY1",
+            "incharge_id" => "1",
+            "name" => "Professional - 1 Năm",
+            "description" =>
+                "Gói Professional theo năm dành cho người dùng chuyên nghiệp muốn gắn bó lâu dài và hưởng lợi từ ưu đãi",
+            "price" => 199000 * 12,
+            "discount" => 21,
+            "duration" => 12,
             "duration_type" => "month",
             "is_renewable" => true,
-        ]);
-
-        Program::create([
-            "id" => "P003",
-            "incharge_id" => "T03",
-            "name" => "Chương trình đăng ký theo năm",
-            "description" => "Chương trình đăng ký theo năm",
-            "price" => 500.0,
-            "discount" => 50.0,
-            "duration" => 1,
-            "duration_type" => "year",
-            "is_renewable" => false,
         ]);
     }
 }
