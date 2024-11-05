@@ -30,6 +30,7 @@ const UsersMenuItems = () => {
               className="border-none transition-none"
             >
               <AccordionTrigger className="flex items-center w-full">
+                {/* ===== */}
                 <div className="flex justify-center items-center">
                   <Users className="size-6" />
                   {isMenuExpanded && (
@@ -42,17 +43,26 @@ const UsersMenuItems = () => {
               <AccordionContent className="ml-2">
                 <ul>
                   {/* === */}
-                  <MenuItem label="Danh sách khách hàng">
+                  <MenuItem
+                    url={route("users.index")}
+                    label="Danh sách khách hàng"
+                  >
                     <BookUser className="size-6" />
                   </MenuItem>
 
                   {/* === */}
-                  <MenuItem label="Cài đặt quyền hạn">
+                  <MenuItem
+                    url={route("users.roles.index")}
+                    label="Cài đặt quyền hạn"
+                  >
                     <EarthLock className="size-6" />
                   </MenuItem>
 
                   {/* === */}
-                  <MenuItem label="Quản lý gói đăng ký">
+                  <MenuItem
+                    url={route("system.formulars.index")}
+                    label="Quản lý gói đăng ký"
+                  >
                     <CircleDollarSign className="size-6" />
                   </MenuItem>
                 </ul>

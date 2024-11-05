@@ -5,14 +5,15 @@ import { FC, ReactNode } from "react";
 interface MenuItemProps {
   label: string;
   children: ReactNode;
+  url: string;
 }
 
-const MenuItem: FC<MenuItemProps> = ({ label, children }) => {
+const MenuItem: FC<MenuItemProps> = ({ label, children, url }) => {
   const { isMenuExpanded } = useSideMenu();
 
   return (
     <li className="mt-5 hover:underline">
-      <Link href={route("system.formulars.index")}>
+      <Link href={url}>
         <div className="flex justify-start items-center">
           {children}
           {isMenuExpanded && (

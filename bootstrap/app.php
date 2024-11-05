@@ -30,6 +30,7 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($response->getStatusCode() == 404) {
                 return Inertia::render("Errors/404");
             }
+            return $response;
         });
 
         $exceptions->report(function (Throwable $exception) {
