@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\Enums\InstrumentCategory;
+use App\Traits\CheckKeyAndSet;
 use App\Traits\ProcessLimitAndOffset;
 use App\Traits\Stages\TechnicalChartInstrumentsStages;
 use App\Utils\ApiResponse;
@@ -13,10 +14,17 @@ use MongoDB\Model\BSONDocument;
 
 class GetTechnicalChartInstruments
 {
-    use AsAction, ProcessLimitAndOffset, TechnicalChartInstrumentsStages;
+    use AsAction,
+        ProcessLimitAndOffset,
+        TechnicalChartInstrumentsStages,
+        CheckKeyAndSet;
+
+    private array $validated;
 
     private string $category;
+    private ?array $symbols = null;
     private ?string $search = null;
+
     private ?int $limit = null;
     private ?int $offset = null;
 
@@ -28,12 +36,10 @@ class GetTechnicalChartInstruments
      */
     public function handle(array $validated)
     {
-        $this->category = $validated["category"];
+        $this->validated = $validated;
         $this->processLimitAndOffset($validated);
 
-        if (array_key_exists("search", $validated)) {
-            $this->search = $validated["search"];
-        }
+        $this->checkKeyAndSet($validated, "category");
 
         $isLoggedIn = auth("api")->check();
 
@@ -72,6 +78,7 @@ class GetTechnicalChartInstruments
         $result = iterator_to_array($result);
         $result = array_map(function (BSONDocument $item) use ($isLoggedIn) {
             $flattened = Util::flattenLookUpAggregation($item->getArrayCopy());
+            // rounding delta value to 2 digit
             $flattened["delta"] = round($flattened["delta"], 2);
             // having isInWatchlist as false by default if not logged in
             if (!$isLoggedIn) {

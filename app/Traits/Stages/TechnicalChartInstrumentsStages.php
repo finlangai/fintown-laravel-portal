@@ -23,15 +23,15 @@ trait TechnicalChartInstrumentsStages
             }
         }
 
-        // this if for default case
-        $symbolSearchStages = [];
-        if ($this->search) {
-            $symbolSearchStages[] = [
-                '$match' => [
-                    "symbol" => ['$regex' => $this->search, '$options' => "i"],
+        $grouppingAfterMatchStages = [
+            [
+                '$group' => [
+                    "_id" => null,
+                    "symbol" => ['$addToSet' => '$symbol'],
                 ],
-            ];
-        }
+            ],
+            ['$project' => ["symbol" => 1, "_id" => 0]],
+        ];
 
         switch ($this->category) {
             case InstrumentCategory::WATCHLIST->value:
@@ -49,13 +49,47 @@ trait TechnicalChartInstrumentsStages
                     ['$match' => ["is_stock" => ['$ne' => false]]],
                     ['$sort' => ["stats.marketcap" => -1]],
                     ['$limit' => 30],
+                    ...$grouppingAfterMatchStages,
+                ];
+
+                break;
+
+            case InstrumentCategory::MANUAL->value:
+                $startingCollectionName = "companies";
+                $firstStages = [
                     [
-                        '$group' => [
-                            "_id" => null,
-                            "symbol" => ['$addToSet' => '$symbol'],
+                        '$match' => [
+                            "symbol" => ['$in' => $this->validated["symbols"]],
                         ],
                     ],
-                    ['$project' => ["symbol" => 1, "_id" => 0]],
+                    ...$grouppingAfterMatchStages,
+                ];
+
+                break;
+
+            case InstrumentCategory::SEARCH->value:
+                $startingCollectionName = "companies";
+                $firstStages = [
+                    [
+                        '$match' => [
+                            '$or' => [
+                                [
+                                    "company_name" => [
+                                        '$regex' => $this->validated["q"],
+                                        '$options' => "i",
+                                    ],
+                                ],
+                                [
+                                    "symbol" => [
+                                        '$regex' => $this->validated["q"],
+                                        '$options' => "i",
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    ...$quantifyStages,
+                    ...$grouppingAfterMatchStages,
                 ];
 
                 break;
@@ -70,15 +104,8 @@ trait TechnicalChartInstrumentsStages
                             "exchange" => strtoupper($this->category),
                         ],
                     ],
-                    ...$symbolSearchStages,
                     ...$quantifyStages,
-                    [
-                        '$group' => [
-                            "_id" => null,
-                            "symbol" => ['$addToSet' => '$symbol'],
-                        ],
-                    ],
-                    ['$project' => ["symbol" => 1, "_id" => 0]],
+                    ...$grouppingAfterMatchStages,
                 ];
 
                 break;
