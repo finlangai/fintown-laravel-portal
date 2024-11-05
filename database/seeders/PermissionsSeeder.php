@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 class PermissionsSeeder extends Seeder
 {
@@ -12,45 +13,64 @@ class PermissionsSeeder extends Seeder
      */
     public function run(): void
     {
-        $permissions = [
-            // quản lý user 
-            'view_users',
-            'create_users',
-            'edit_users',
-            'delete_users',
-            // quản lý hóa đơn 
-            'view_bill',
-            'create_bill',
-            'edit_bill',
-            'delete_bill',
-            // sản phẩm và dịch vụ 
-            'view_products_services',
-            'create_products_services',
-            'edit_products_services',
-            'delete_products_services',
-            // quản lý công ty 
-            'view_company',
-            'create_company',
-            'edit_company',
-            'delete_company',
-            // Quản lý tài chính
-            'view_financial',
-            'create_financial',
-            'edit_financial',
-            'delete_financial',
-            // quản lý chỉ số tài chính 
-            'view_financial_index',
-            'create_financial_index',
-            'edit_financial_index',
-            'delete_financial_index',
-            // kết quả dự phóng
-            'view_Projected_results',
-            'create_Projected_results',
-            'edit_Projected_results',
-            'delete_Projected_results',
+        // WEB GUARD PERMISSION
+        $prefixes = [
+            "user",
+            "role",
+            "bill",
+            "company",
+            "financial",
+            "financial_index",
+            "subscription_program",
+            "assessment",
+            "formular",
+            "criteria",
+            "backjob",
         ];
+        // base permission
+        $permissions = [];
+        foreach ($prefixes as $prefix) {
+            $permissions[] = "$prefix-read";
+            $permissions[] = "$prefix-write";
+            $permissions[] = "$prefix-create";
+            $permissions[] = "$prefix-delete";
+        }
         foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission, 'guard_name' => 'web']);
+            Permission::firstOrCreate([
+                "name" => $permission,
+                "guard_name" => "web",
+            ]);
+        }
+
+        // API GUARD PERMISSION
+        $userRead = [
+            "account",
+            "watchlist",
+            "transaction",
+            "assessment",
+            "business-profile",
+            "financial-statements",
+            "financial-indicators",
+            "tickers-list",
+            "technical-chart",
+            "valuation",
+        ];
+        $userWrite = ["account", "watchlist"];
+
+        $userPermissions = [];
+        foreach ($userRead as $value) {
+            $userPermissions[] = "$value-read";
+        }
+
+        foreach ($userWrite as $value) {
+            $userPermissions[] = "$value-write";
+        }
+
+        foreach ($userPermissions as $permission) {
+            Permission::firstOrCreate([
+                "name" => $permission,
+                "guard_name" => "api",
+            ]);
         }
     }
 }

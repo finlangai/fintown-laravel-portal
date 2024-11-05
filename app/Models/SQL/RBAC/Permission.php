@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\SQL\Staff;
+namespace App\Models\SQL\RBAC;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

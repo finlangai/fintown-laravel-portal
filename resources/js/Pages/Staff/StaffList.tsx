@@ -1,11 +1,4 @@
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/Components/UI/breadcrumb";
+import { AddButton } from "@/Components/Specialized/crud-button";
 import {
   Dialog,
   DialogContent,
@@ -98,20 +91,6 @@ export default function StaffListCRUD() {
       <div className="py-5">
         <div className="mx-auto sm:px-6 lg:px-8 max-w-7xl">
           <div className="flex flex-col min-h-[86vh]">
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink href="/">Welcome</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage className="text-white">
-                    Staff List
-                  </BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-
             <div className="mt-6">
               <Toaster />
               <div className="flex justify-between items-center my-5">
@@ -125,8 +104,8 @@ export default function StaffListCRUD() {
 
                 <div className="flex space-x-2">
                   <Dialog>
-                    <DialogTrigger className="bg-custom-button-success hover:bg-custom-button-warning shadow-md px-2 py-1 rounded-lg focus:ring-2 focus:ring-blue-300 text-white transform transition duration-200 ease-in-out hover:scale-105 focus:outline-none">
-                      Thêm nhân viên
+                    <DialogTrigger>
+                      <AddButton asDiv>Thêm nhân viên</AddButton>
                     </DialogTrigger>
                     <DialogContent>
                       <DialogHeader>

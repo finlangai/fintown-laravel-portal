@@ -10,11 +10,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Arr;
 use MongoDB\Laravel\Relations\HasMany;
 use MongoDB\Laravel\Relations\HasOne;
+use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
     use HasFactory;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -102,11 +104,6 @@ class User extends Authenticatable implements JWTSubject
     }
 
     // === RELATIONS
-
-    public function watchlists(): HasMany
-    {
-        return $this->hasMany(Watchlist::class, "user_id");
-    }
 
     public function subcriptions(): HasMany
     {

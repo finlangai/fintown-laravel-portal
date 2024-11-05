@@ -14,7 +14,7 @@ const AssessmentCard = ({
   updated_at,
 }: AssessmentCardProps) => {
   return (
-    <div className="bg-slate-50 shadow-md p-4 rounded-lg">
+    <div className="bg-slate-50 bg-opacity-10 shadow-md p-4 rounded-lg">
       {/* == START CARD HEAD */}
       <div id="card-head" className="flex gap-2">
         {/* LOGO */}

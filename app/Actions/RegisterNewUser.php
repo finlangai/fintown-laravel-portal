@@ -25,6 +25,7 @@ class RegisterNewUser
         $user = new User($data);
         $user->avatar = env("DEFAULT_AVATAR");
         $isSuccess = $user->save();
+        $user->assignRole("basic");
         return ["isSuccess" => $isSuccess, "errors" => []];
     }
 }
