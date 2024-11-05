@@ -8,4 +8,6 @@ enum InstrumentCategory: string
     case VN30 = "vn30";
     case HOSE = "hose";
     case HSX = "hsx";
+    case MANUAL = "manual";
+    case SEARCH = "search";
 }

@@ -2,46 +2,28 @@
 
 namespace App\Traits\Swagger\Tickers;
 
-trait TechnicalChartInstrumentsAnnotation
+trait TechnicalChartInstrumentsManualAnnotation
 {
     /**
-     * @OA\Get(
+     * @OA\POST(
      *     path="/api/tickers/technical-chart/instruments",
-     *     operationId="GetTechnicalChartInstruments",
+     *     operationId="GetTechnicalChartInstrumentsBySymbols",
      *     tags={"Tickers","Instruments"},
-     *     summary="Get Technical Chart Instruments",
-     *     description="Retrieve list of instruments on technical chart",
-     *     @OA\Parameter(
-     *         name="limit",
-     *         in="query",
-     *         required=false,
-     *         @OA\Schema(
-     *             type="integer",
-     *             format="int32",
-     *             minimum=1
-     *         ),
-     *         description="Limit the number of results"
-     *     ),
-     *     @OA\Parameter(
-     *         name="offset",
-     *         in="query",
-     *         required=false,
-     *         @OA\Schema(
-     *             type="integer",
-     *             format="int32",
-     *             minimum=1
-     *         ),
-     *         description="Offset for the results"
-     *     ),
-     *     @OA\Parameter(
-     *         name="category",
-     *         in="query",
+     *     summary="Get Technical Chart Instruments by Symbols",
+     *     description="Retrieve list of instruments on technical chart by providing a list of symbols",
+     *     @OA\RequestBody(
      *         required=true,
-     *         @OA\Schema(
-     *             type="string",
-     *             enum={"watchlist", "vn30", "hose", "hnx"}
-     *         ),
-     *         description="Category of the instruments"
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="symbols",
+     *                 type="array",
+     *                 example={"VCB", "HPG", "SSI"},
+     *                 @OA\Items(
+     *                     type="string"
+     *                 )
+     *             )
+     *         )
      *     ),
      *     @OA\Response(
      *         response=200,
@@ -80,10 +62,6 @@ trait TechnicalChartInstrumentsAnnotation
      *         )
      *     ),
      *     @OA\Response(
-     *         response=404,
-     *         description="Not Found"
-     *     ),
-     *     @OA\Response(
      *         response=422,
      *         description="Unprocessable Entity"
      *     ),
@@ -93,7 +71,7 @@ trait TechnicalChartInstrumentsAnnotation
      *     )
      * )
      */
-    public function TechnicalChartInstrumentsAnnotation()
+    public function TechnicalChartInstrumentsManualAnnotation()
     {
     }
 }

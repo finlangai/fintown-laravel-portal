@@ -2,15 +2,26 @@
 
 namespace App\Traits\Swagger\Tickers;
 
-trait TechnicalChartInstrumentsAnnotation
+trait TechnicalChartInstrumentsSearchAnnotation
 {
     /**
      * @OA\Get(
-     *     path="/api/tickers/technical-chart/instruments",
-     *     operationId="GetTechnicalChartInstruments",
+     *     path="/api/tickers/technical-chart/instruments/search",
+     *     operationId="GetTechnicalChartInstrumentsBySearching",
      *     tags={"Tickers","Instruments"},
-     *     summary="Get Technical Chart Instruments",
-     *     description="Retrieve list of instruments on technical chart",
+     *     summary="Searching Technical Chart Instruments",
+     *     description="Retrieve list of instruments on technical chart by query",
+     *     @OA\Parameter(
+     *         name="q",
+     *         in="query",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             minimum=1,
+     *             default="Ngân hàng",
+     *         ),
+     *         description="Searching symbol base on symbol and company name"
+     *     ),
      *     @OA\Parameter(
      *         name="limit",
      *         in="query",
@@ -21,27 +32,6 @@ trait TechnicalChartInstrumentsAnnotation
      *             minimum=1
      *         ),
      *         description="Limit the number of results"
-     *     ),
-     *     @OA\Parameter(
-     *         name="offset",
-     *         in="query",
-     *         required=false,
-     *         @OA\Schema(
-     *             type="integer",
-     *             format="int32",
-     *             minimum=1
-     *         ),
-     *         description="Offset for the results"
-     *     ),
-     *     @OA\Parameter(
-     *         name="category",
-     *         in="query",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string",
-     *             enum={"watchlist", "vn30", "hose", "hnx"}
-     *         ),
-     *         description="Category of the instruments"
      *     ),
      *     @OA\Response(
      *         response=200,
@@ -93,7 +83,7 @@ trait TechnicalChartInstrumentsAnnotation
      *     )
      * )
      */
-    public function TechnicalChartInstrumentsAnnotation()
+    public function TechnicalChartInstrumentsSearchAnnotation()
     {
     }
 }

@@ -40,7 +40,7 @@ export default function HeaderComponent({
     >
       {/* MENU ITEM CONTAINER */}
       <div className="flex flex-col overflow-y-scroll">
-        <ul className="flex flex-col space-y-4 mt-5">
+        <ul className="flex flex-col gap-3 mt-5">
           {/* cả admin và supper ADMIN đều sử dụng được  */}
           <li
             className={cn(
@@ -69,6 +69,7 @@ export default function HeaderComponent({
               </Link>
             </div>
           </li>
+
           <DashboardLi isExpanded={isExpanded} />
 
           {/* Mọi quyền cho super admin */}
@@ -77,12 +78,6 @@ export default function HeaderComponent({
               <StaffLi isExpanded={isExpanded} />
               {/* <BillLi isExpanded={isExpanded} /> */}
               {/* <Postforecast isExpanded={isExpanded} /> */}
-            </>
-          )}
-        </ul>
-        <ul className="flex flex-col space-y-4">
-          {superAdmin && (
-            <>
               <CompanyLi isExpanded={isExpanded} />
               <FinancialLi isExpanded={isExpanded} />
               {/* <IndexFinancial isExpanded={isExpanded} /> */}

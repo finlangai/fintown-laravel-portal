@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Tickers;
 
 use App\Actions\AggregateTickersTechnicalChartOverview;
 use App\Actions\GetTechnicalChartInstruments;
+use App\Enums\InstrumentCategory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TechnicalChartInstrumentsRequest;
 use App\Utils\ApiResponse;
@@ -44,6 +45,36 @@ class TechnicalChartController extends Controller
         if ($result instanceof JsonResponse) {
             return $result;
         }
+
+        return ApiResponse::success($result);
+    }
+
+    public function instrumentsManual(
+        Request $request,
+        GetTechnicalChartInstruments $action
+    ) {
+        $validated = $request->validate(["symbols" => "required|array"]);
+
+        // add category
+        $validated["category"] = InstrumentCategory::MANUAL->value;
+
+        $result = $action->handle($validated);
+
+        return ApiResponse::success($result);
+    }
+
+    public function searchInstruments(
+        Request $request,
+        GetTechnicalChartInstruments $action
+    ) {
+        $validated = $request->validate([
+            "q" => "required|string",
+            "limit" => "nullable|integer|min:1",
+        ]);
+
+        $validated["category"] = InstrumentCategory::SEARCH->value;
+
+        $result = $action->handle($validated);
 
         return ApiResponse::success($result);
     }
