@@ -1,4 +1,7 @@
-import CreateBackjob from "@/Components/Sections/System/Backjobs/CreateBackjob";
+import ChangeUserPassword from "@/Components/Sections/User/Users/ChangeUserPassword";
+import CreateUser from "@/Components/Sections/User/Users/CreateUser";
+import EditUser from "@/Components/Sections/User/Users/EditUser";
+import ConfirmDelete from "@/Components/Specialized/confirm-delete";
 import { PaginationWrapper } from "@/Components/Specialized/pagination-wrapper";
 import {
   DropdownMenu,
@@ -50,7 +53,7 @@ export default function UserPage(props: UserPageProps) {
         {/* PAGE HEADER */}
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-6">
-            <TypographyH1>Danh sách khách hàng</TypographyH1> <CreateBackjob />
+            <TypographyH1>Danh sách khách hàng</TypographyH1> <CreateUser />
           </div>
           <form
             id="user-search-wrapper"
@@ -63,13 +66,13 @@ export default function UserPage(props: UserPageProps) {
             />
             <Input
               placeholder="Tìm kiếm bằng tên, số điện thoại hoặc email"
-              className="shadow-md h-12 ps-12"
+              className="shadow-md py-[21px] ps-12"
               onChange={({ target: { value } }) => setData("search", value)}
             />
           </form>
         </div>
 
-        {/* ROLES CONTAINER */}
+        {/* USERS LIST CONTAINER */}
         <Table className="rounded-md overflow-hidden">
           <TableHeader className="bg-slate-50">
             <TableRow className="h-12">
@@ -98,12 +101,40 @@ export default function UserPage(props: UserPageProps) {
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger>
-                        <EllipsisVertical className="size-5" />
+                        {/* === ACTION TRIGGER */}
+                        <EllipsisVertical className="rounded-full hover:bg-text-active hover:stroke-white py-1 transition-all duration-200 ease-out size-7" />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
-                        <DropdownMenuItem>Chỉnh sửa thông tin</DropdownMenuItem>
-                        <DropdownMenuItem>Đổi mật khẩu</DropdownMenuItem>
-                        <DropdownMenuItem>Xóa khách hàng</DropdownMenuItem>
+                        <DropdownMenuItem>
+                          {/* === EIDT USER INFO ACTION */}
+                          <EditUser user={user} />
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          {/* === CHANGE PASSWORD ACTION */}
+                          <ChangeUserPassword user={user} />
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          {/* === DELETE ACTION */}
+                          <ConfirmDelete
+                            trigger={
+                              <button type="button">Xóa khách hàng</button>
+                            }
+                            destroyUrl={route("users.destroy", user.id)}
+                            noPropogation
+                            title={
+                              <div className="text-base text-slate-700">
+                                Bạn có chắc chắn muốn xóa khách hàng <br></br>
+                                <span className="font-bold text-lg underline underline-offset-2">
+                                  {user.fullname}
+                                </span>{" "}
+                                với email{" "}
+                                <span className="font-bold text-lg underline underline-offset-2">
+                                  {user.email}
+                                </span>
+                              </div>
+                            }
+                          />
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>

@@ -13,8 +13,9 @@ type DialogWrapperProps = {
   trigger: ReactNode;
   children?: ReactNode;
   footer?: ReactNode;
-  title: string;
+  title: ReactNode;
   description?: string;
+  noPropogation?: boolean;
 } & classNameInterface;
 
 export type DialogWrapperHandler = {
@@ -23,7 +24,18 @@ export type DialogWrapperHandler = {
   close: () => void;
 };
 const DialogWrapper = forwardRef<DialogWrapperHandler, DialogWrapperProps>(
-  ({ title, trigger, children, footer, description, className }, ref) => {
+  (
+    {
+      title,
+      trigger,
+      children,
+      footer,
+      description,
+      className,
+      noPropogation = false,
+    },
+    ref,
+  ) => {
     const [open, setOpen] = useState<boolean>(false);
 
     useImperativeHandle(ref, () => ({
@@ -47,7 +59,11 @@ const DialogWrapper = forwardRef<DialogWrapperHandler, DialogWrapperProps>(
         <DialogTrigger asChild>
           <div>{trigger}</div>
         </DialogTrigger>
-        <DialogContent className={className}>
+        <DialogContent
+          className={className}
+          onClick={(e) => (noPropogation ? e.stopPropagation() : null)}
+          onKeyDown={(e) => (noPropogation ? e.stopPropagation() : null)}
+        >
           <DialogHeader>
             <DialogTitle className="text-slate-700 text-xl">
               {title}

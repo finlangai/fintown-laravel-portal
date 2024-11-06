@@ -14,6 +14,12 @@ Route::resource("users", UserController::class)->only(
 Route::prefix("users")
     ->name("users.")
     ->group(function () {
+        Route::patch("change-password/{user}", [
+            UserController::class,
+            "updatePassword",
+        ])->name("update.password");
+
+        // === USER ROLES ROUTES
         Route::prefix("roles")
             ->name("roles.")
             ->group(function () {

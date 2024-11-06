@@ -1,5 +1,5 @@
 import { cn } from "@/Lib/utils";
-import { BadgePlus, PencilLine, Save, Trash2 } from "lucide-react";
+import { BadgePlus, FilePlus2, PencilLine, Save, Trash2 } from "lucide-react";
 import { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -43,6 +43,22 @@ export const AddButton = ({
     {...props}
   >
     <BadgePlus className="size-5" />
+    {children}
+  </ButtonComponent>
+);
+
+export const StoreButton = ({
+  asDiv,
+  children = "Xác nhận",
+  className,
+  ...props
+}: ButtonProps & HTMLAttributes<HTMLDivElement>) => (
+  <ButtonComponent
+    asDiv={asDiv}
+    className={cn("bg-green-500", buttonStyles, className)}
+    {...props}
+  >
+    <FilePlus2 className="size-5" />
     {children}
   </ButtonComponent>
 );
