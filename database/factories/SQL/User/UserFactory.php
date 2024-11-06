@@ -18,7 +18,6 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            "type_id" => 0,
             "fullname" => fake()->firstName() . " " . fake()->lastName(),
             "email" => fake()->email(),
             "phone" => "0" . rand(100000000, 999999999),

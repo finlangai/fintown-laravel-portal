@@ -6,14 +6,21 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/Components/Specialized/pagination-inertia";
-import { AssessmentProps } from "@/Pages/Assessment/Assessment";
+import { cn } from "@/Lib/utils";
 
-export function AssessmentPagination({ paginationData }: AssessmentProps) {
+type PaginationWrapperProps<paginateModelType> = {
+  paginationData: Pagination<paginateModelType>;
+} & classNameInterface;
+
+export const PaginationWrapper = <T,>({
+  paginationData,
+  className,
+}: PaginationWrapperProps<T>) => {
   const paginationLinks = paginationData.links.slice();
   const prevLink = paginationLinks.shift();
   const nextLink = paginationLinks.pop();
   return (
-    <Pagination className="mx-0 w-fit">
+    <Pagination className={cn("mx-0 w-fit", className)}>
       <PaginationContent className="gap-2">
         {/* PREVIOUS BUTTON */}
         <PaginationItem>
@@ -42,4 +49,4 @@ export function AssessmentPagination({ paginationData }: AssessmentProps) {
       </PaginationContent>
     </Pagination>
   );
-}
+};

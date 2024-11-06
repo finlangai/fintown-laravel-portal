@@ -11,10 +11,6 @@ Route::resource("users", UserController::class)->only(
     "destroy"
 );
 
-// Route::get("users/roles", UserRolesController::class)->name(
-//     "users.roles.index"
-// );
-
 Route::prefix("users")
     ->name("users.")
     ->group(function () {

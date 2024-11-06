@@ -38,12 +38,11 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $hidden = [
-        "id",
-        "type_id",
+        // "id",
         "is_banned",
         "password",
-        "updated_at",
-        "created_at",
+        // "updated_at",
+        // "created_at",
         // 'remember_token',
     ];
 
@@ -67,7 +66,6 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $attributes = [
         "is_banned" => false,
-        "type_id" => 0,
     ];
 
     /**

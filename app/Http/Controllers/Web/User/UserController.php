@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Web\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\SQL\User\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,7 +15,24 @@ class UserController extends Controller
      */
     public function index()
     {
-        return Inertia::render("User/User");
+        $query = User::with("roles");
+
+        $search = request()->input("search");
+        if ($search) {
+            $query->where(
+                fn(Builder $query) => $query
+                    ->whereRaw("LOWER(fullname) LIKE ?", [
+                        "%" . strtolower($search) . "%",
+                    ])
+                    ->orWhereRaw("LOWER(email) LIKE ?", [
+                        "%" . strtolower($search) . "%",
+                    ])
+                    ->orWhereRaw("LOWER(phone) LIKE ?", ["%" . $search . "%"])
+            );
+        }
+        $paginating = $query->paginate(8);
+
+        return Inertia::render("User/User", compact("paginating"));
     }
 
     /**

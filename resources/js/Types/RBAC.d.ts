@@ -3,6 +3,11 @@ type Role = {
   name: string;
   guard_name: string;
   updated_at: string;
+  pivot: ?{
+    model_id: number;
+    model_type: string;
+    role_id: number;
+  };
   created_at: string;
 };
 

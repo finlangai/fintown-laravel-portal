@@ -42,23 +42,32 @@ export default function UserRolesPage(props: UserRolesPageProps) {
           <TableCaption>Danh sách vai trò của khách hàng</TableCaption>
           <TableHeader className="bg-slate-50">
             <TableRow className="h-12">
-              <TableHead className="w-1/4 ps-6">ID</TableHead>
-              <TableHead className="w-1/4 ">Tên vai trò</TableHead>
-              <TableHead className="w-1/4 ">Số lượng quyền</TableHead>
-              <TableHead className="text-right pe-6 w-1/4">Hành động</TableHead>
+              <TableHead className="w-1/4 font-bold ps-6">ID</TableHead>
+              <TableHead className="w-1/4 font-bold">Tên vai trò</TableHead>
+              <TableHead className="w-1/4 font-bold">Số lượng quyền</TableHead>
+              <TableHead className="text-right w-1/4 font-bold pe-6">
+                Hành động
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {/* START = ROLES TABLE BODY */}
             {props.roles.map((role) => (
-              <TableRow key={role.id} className="">
-                <TableCell className="ps-6 py-4">{role.id}</TableCell>
-                <TableCell className="font-medium text-base text-slate-700">
+              <TableRow key={role.id} className="text-slate-700">
+                <TableCell className="py-4 font-medium ps-6">
+                  {role.id}
+                </TableCell>
+                <TableCell className="font-medium">
                   {capitalizeFirstChar(role.name)}
                 </TableCell>
-                <TableCell>{role.permissions.length}</TableCell>
-                <TableCell className="text-right pe-6" align="right">
-                  <div className="flex gap-3 justify-end w-full ">
+                <TableCell className="font-medium">
+                  {role.permissions.length}
+                </TableCell>
+                <TableCell
+                  className="text-right font-medium pe-6"
+                  align="right"
+                >
+                  <div className="flex justify-end gap-3 w-full">
                     <EditRole role={role} />
                     <ConfirmDelete
                       destroyUrl={route("users.roles.destroy", role.id)}
