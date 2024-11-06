@@ -31,7 +31,7 @@ const CreateUser: FC<CreateUserProps> = ({}) => {
     <DialogWrapper
       ref={editDialogRef}
       title="Thêm khách hàng mới"
-      trigger={<AddButton />}
+      trigger={<AddButton className="shadow-md" />}
       footer={
         <StoreButton
           disabled={!isDirty}

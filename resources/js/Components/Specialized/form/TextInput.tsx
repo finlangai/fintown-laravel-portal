@@ -1,5 +1,6 @@
 import { Input } from "@/Components/UI/input";
 import { Label } from "@/Components/UI/label";
+import { cn } from "@/Lib/utils";
 import { InputHTMLAttributes, ReactNode } from "react";
 
 interface TextInputProps {
@@ -18,6 +19,7 @@ const TextInput = ({
   currentValue,
   error,
   placehodler,
+  className,
   ...props
 }: TextInputProps & InputHTMLAttributes<HTMLInputElement>) => {
   return (
@@ -27,7 +29,7 @@ const TextInput = ({
       </Label>
       <Input
         id={`textinput_${name}`}
-        className="py-2 h-fit"
+        className={cn("py-2 h-fit", className)}
         value={currentValue}
         placeholder={placehodler}
         onChange={({ target: { value } }) => {

@@ -42,7 +42,6 @@ export default function UserPage(props: UserPageProps) {
     });
   };
 
-  console.log(props);
   return (
     <Authenticated
       header={true}
@@ -87,7 +86,7 @@ export default function UserPage(props: UserPageProps) {
           <TableBody>
             {/* START = USERS TABLE BODY */}
             {props.paginating.data.map((user) => {
-              const { id, fullname, avatar, email, phone, roles } = user;
+              const { id, fullname, email, phone, roles } = user;
 
               return (
                 <TableRow key={id} className="text-slate-700">

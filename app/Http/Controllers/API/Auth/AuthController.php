@@ -6,6 +6,7 @@ use App\Actions\RegisterNewUser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Auth\LoginRequest;
 use App\Http\Requests\API\Auth\RegisterRequest;
+use App\Models\SQL\User\User;
 use App\Traits\Swagger\Auth as AuthSwagger;
 use App\Utils\ApiResponse;
 use Illuminate\Support\Facades\Auth;
@@ -50,9 +51,27 @@ class AuthController extends Controller
 
     public function profile()
     {
-        // return ApiResponse::success(auth("api")->user()->id);
-        // Cần thêm role vào profile
-        return ApiResponse::success(auth("api")->user());
+        $currentUserId = auth("api")->id();
+        $user = User::find($currentUserId);
+
+        $profile = $user->toArray();
+        // get permissions for the user
+        $userPermissions = $user->getAllPermissions()->toArray();
+        $permissionList = array_map(
+            fn($permission) => $permission["name"],
+            $userPermissions
+        );
+        $profile["scope"] = $permissionList;
+
+        // get role name
+        $profile["role"] = $user->getRoleNames()[0];
+
+        // unset unnecessary properties
+        unset($profile["id"]);
+        unset($profile["created_at"]);
+        unset($profile["updated_at"]);
+
+        return ApiResponse::success($profile);
     }
 
     public function refresh()

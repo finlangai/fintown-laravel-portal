@@ -86,7 +86,6 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [
-            "clientType" => $this->type_id,
             "scope" => $this->getSelfScope(),
         ];
     }
