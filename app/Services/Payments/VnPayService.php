@@ -1,15 +1,14 @@
 <?php
+namespace App\Services\Payments;
 
-namespace App\Actions\Payment;
-
-use Lorisleiva\Actions\Concerns\AsAction;
-
-class GenerateVNPayURL
+class VnPayService
 {
-    use AsAction;
-
-    public function handle(array $data)
-    {
+    public static function generateUrl(
+        string $returnUrl,
+        string $orderId,
+        string $orderInfo,
+        float $amount
+    ) {
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
 
         $vnp_TmnCode = env("VNPAY_TMN_CODE"); //Mã website tại VNPAY
@@ -17,11 +16,11 @@ class GenerateVNPayURL
 
         // === INPUT PARAMETERS
         // Return URL with transaction info after payment complete
-        $vnp_Returnurl = "http://localhost:8000/payment/info";
+        $vnp_Returnurl = $returnUrl;
         //Order ID
-        $vnp_TxnRef = rand(1, 99999);
-        $vnp_OrderInfo = "Thanh toán gói đăng ký";
-        $vnp_Amount = $data["amount"] * 100;
+        $vnp_TxnRef = $orderId;
+        $vnp_OrderInfo = $orderInfo;
+        $vnp_Amount = $amount * 100;
 
         $vnp_OrderType = 190004; //Thẻ học trực tuyến/thẻ hội viên
         $vnp_Locale = "VN";

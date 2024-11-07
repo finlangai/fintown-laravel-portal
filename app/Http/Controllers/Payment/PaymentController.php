@@ -10,6 +10,10 @@ use Inertia\Inertia;
 
 class PaymentController extends Controller
 {
+    public function entry(Request $request)
+    {
+    }
+
     public function info(Request $request)
     {
         dd($request->all());

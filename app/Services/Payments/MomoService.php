@@ -1,15 +1,14 @@
 <?php
+namespace App\Services\Payments;
 
-namespace App\Actions\Payment;
-
-use Lorisleiva\Actions\Concerns\AsAction;
-
-class GenerateMoMoUrl
+class MomoService
 {
-    use AsAction;
-
-    public function handle(array $data)
-    {
+    public static function generateUrl(
+        string $returnUrl,
+        string $orderId,
+        string $orderInfo,
+        float $amount
+    ) {
         $endpoint =
             "https://test-payment.momo.vn/gw_payment/transactionProcessor";
 
@@ -18,11 +17,10 @@ class GenerateMoMoUrl
         $secretKey = env("MOMO_SECRET_KEY");
 
         // === INPUT PARAMETERS
-        // return url
-        $returnUrl = route("payment.info");
-        $orderId = time() . "";
-        $orderInfo = "Thanh toán qua MoMo";
-        $amount = "199000";
+        // $returnUrl = route("payment.info");
+        // $orderId = time() . "";
+        // $orderInfo = "Thanh toán qua MoMo";
+        // $amount = "199000";
 
         // Lưu ý: link notifyUrl không phải là dạng localhost
         $bankCode = "SML";
@@ -72,7 +70,7 @@ class GenerateMoMoUrl
             "requestType" => $requestType,
             "signature" => $signature,
         ];
-        $result = $this->execPostRequest($endpoint, json_encode($data));
+        $result = self::execPostRequest($endpoint, json_encode($data));
         $jsonResult = json_decode($result, true); // decode json
 
         return $jsonResult["payUrl"];

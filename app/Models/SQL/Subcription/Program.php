@@ -12,7 +12,7 @@ class Program extends Model
 {
     use HasFactory;
 
-    protected $table = "subcription_programs";
+    protected $table = "subscription_programs";
     public $incrementing = false;
     protected $fillable = [
         "id",
@@ -53,7 +53,7 @@ class Program extends Model
 
     public function subcriptions(): HasMany
     {
-        return $this->hasMany(Subcription::class, "program_id");
+        return $this->hasMany(UserSubcription::class, "program_id");
     }
 
     public function promotionCodes(): HasMany
