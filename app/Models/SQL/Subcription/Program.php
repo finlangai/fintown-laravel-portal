@@ -53,7 +53,7 @@ class Program extends Model
 
     public function subcriptions(): HasMany
     {
-        return $this->hasMany(UserSubcription::class, "program_id");
+        return $this->hasMany(UserSubscription::class, "program_id");
     }
 
     public function promotionCodes(): HasMany

@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Route;
 Route::prefix("payment")
     ->name("payment.")
     ->group(function () {
-        Route::post("vnpay", [PaymentController::class, "vnpay"])->name(
-            "vnpay"
-        );
-        Route::post("momo", [PaymentController::class, "momo"])->name("momo");
-        Route::get("info", [PaymentController::class, "info"])->name("info");
+        Route::get("verify/{provider}", [
+            PaymentController::class,
+            "verify",
+        ])->name("verify");
+        Route::get("test", [PaymentController::class, "test"])->name("test");
     });

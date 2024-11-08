@@ -29,7 +29,7 @@ class ProgramSeeder extends Seeder
         Program::create([
             "id" => "PM1",
             "incharge_id" => "1",
-            "name" => "Professional - 1 Tháng",
+            "name" => "Fintown Professional - 1 Tháng",
             "description" =>
                 "Gói Professional danh cho người dùng chuyên nghiệp muốn truy cập vào các chức năng chuyên sâu",
             "price" => 199000,
@@ -42,7 +42,7 @@ class ProgramSeeder extends Seeder
         Program::create([
             "id" => "PY1",
             "incharge_id" => "1",
-            "name" => "Professional - 1 Năm",
+            "name" => "Fintown  Professional - 1 Năm",
             "description" =>
                 "Gói Professional theo năm dành cho người dùng chuyên nghiệp muốn gắn bó lâu dài và hưởng lợi từ ưu đãi",
             "price" => 199000 * 12,

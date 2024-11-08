@@ -1,8 +1,34 @@
 <?php
 namespace App\Services\Payments;
 
+use App\Models\SQL\Payment\Transaction;
+use App\Traits\ExecPostRequest;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
+
 class VnPayService
 {
+    use ExecPostRequest;
+
+    public static function hashingSignature(string $rawHashData)
+    {
+        $vnp_HashSecret = env("VNPAY_HASH_SECRET");
+        return hash_hmac("sha512", $rawHashData, $vnp_HashSecret);
+    }
+
+    public static function normalizeBill(array $bill)
+    {
+        $normalized = [
+            "id" => $bill["vnp_TxnRef"],
+            "amount" => $bill["vnp_Amount"],
+        ];
+        $normalized["completion_time"] = Carbon::createFromFormat(
+            "YmdHis",
+            $bill["vnp_PayDate"]
+        );
+        return $normalized;
+    }
+
     public static function generateUrl(
         string $returnUrl,
         string $orderId,
@@ -67,10 +93,82 @@ class VnPayService
 
         $vnp_Url = $vnp_Url . "?" . $query;
         if (isset($vnp_HashSecret)) {
-            $vnpSecureHash = hash_hmac("sha512", $hashdata, $vnp_HashSecret); //
+            $vnpSecureHash = self::hashingSignature($hashdata); //
             $vnp_Url .= "vnp_SecureHash=" . $vnpSecureHash;
         }
 
         return $vnp_Url;
+    }
+
+    /**
+     * THIS FUNCTION IS MALFUNCTIONING AND THE AUTHOR IS NOT BOTHER ON FIXING
+     * DO NOT USE UNLESS YOU KNOW WHAT YOU ARE DOING
+     *
+     * -34 minutes later- okay it's ainnot malfunctioning any more, feel free to use
+     *
+     * this should ensure the consistence return format [$success, $jsonResult]
+     *
+     * @param string $orderId
+     * @return void
+     */
+    public static function queryTransaction(array $data): array|false
+    {
+        $vnp_Url =
+            "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
+        $vnp_TmnCode = env("VNPAY_TMN_CODE"); //Mã website tại VNPAY
+        $vnp_HashSecret = env("VNPAY_HASH_SECRET"); //Chuỗi bí mật
+
+        $vnp_TxnRef = $data["vnp_TxnRef"];
+
+        // $vnp_BankCode = "NCB";
+        $vnp_IpAddr = $_SERVER["REMOTE_ADDR"];
+        $inputData = [
+            "vnp_RequestId" => time() . uniqid(),
+            "vnp_Version" => "2.1.0",
+            "vnp_Command" => "querydr",
+            "vnp_TmnCode" => $vnp_TmnCode,
+            "vnp_TxnRef" => $vnp_TxnRef,
+            "vnp_OrderInfo" => $data["vnp_OrderInfo"],
+            "vnp_TransactionDate" => $data["vnp_PayDate"],
+            "vnp_CreateDate" => date("YmdHis"),
+            "vnp_IpAddr" => $vnp_IpAddr,
+        ];
+
+        $hashdata =
+            $inputData["vnp_RequestId"] .
+            "|" .
+            $inputData["vnp_Version"] .
+            "|" .
+            $inputData["vnp_Command"] .
+            "|" .
+            $inputData["vnp_TmnCode"] .
+            "|" .
+            $inputData["vnp_TxnRef"] .
+            "|" .
+            $inputData["vnp_TransactionDate"] .
+            "|" .
+            $inputData["vnp_CreateDate"] .
+            "|" .
+            $inputData["vnp_IpAddr"] .
+            "|" .
+            $inputData["vnp_OrderInfo"];
+
+        // $vnp_Url = $vnp_Url . "?" . $query;
+        if (isset($vnp_HashSecret)) {
+            $vnpSecureHash = self::hashingSignature($hashdata); //
+            $inputData["vnp_SecureHash"] = $vnpSecureHash;
+            // $vnp_Url .= "vnp_SecureHash=" . $vnpSecureHash;
+        }
+
+        $result = Http::post($vnp_Url, $inputData)->json();
+
+        $success = true;
+        // if not response code is not success
+        $transactionStatus = $result["vnp_TransactionStatus"];
+        if (!($transactionStatus == "00" || $transactionStatus == "07")) {
+            $success = false;
+        }
+
+        return [$success, $result];
     }
 }

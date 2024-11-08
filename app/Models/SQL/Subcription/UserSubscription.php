@@ -8,10 +8,24 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use MongoDB\Laravel\Relations\BelongsTo;
 
-class UserSubcription extends Model
+class UserSubscription extends Model
 {
     use HasFactory;
     protected $table = "user_subscriptions";
+
+    protected $fillable = [
+        "user_id",
+        "program_id",
+        "transaction_id",
+        "status",
+        "start_date",
+        "end_date",
+    ];
+
+    protected $casts = [
+        "start_date" => "datetime",
+        "end_date" => "datetime",
+    ];
 
     public function user(): BelongsTo
     {

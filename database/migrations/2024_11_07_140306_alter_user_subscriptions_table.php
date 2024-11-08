@@ -21,8 +21,8 @@ return new class extends Migration {
                 ->after("program_id");
             $table
                 ->enum("status", ["imminent", "active", "expired", "cancelled"])
-                ->after("transaction_id")
-                ->default("imminent");
+                ->default("imminent")
+                ->after("transaction_id");
         });
     }
 
@@ -31,10 +31,14 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::table("user_subscriptions", function (Blueprint $table) {
-            $table->dropColumn("status");
-            $table->dropForeign(["transaction_id"]);
-            $table->dropColumn("transaction_id");
+        $tableName = "user_subscriptions";
+        Schema::table($tableName, function (Blueprint $table) use ($tableName) {
+            if (Schema::hasColumn($tableName, "status")) {
+                $table->dropColumn("status");
+            }
+            if (Schema::hasColumn($tableName, "transaction_id")) {
+                $table->dropColumn("transaction_id");
+            }
             $table->boolean("is_active")->after("program_id");
             $table->date("renewal_date")->after("is_active");
             $table->date("payment_date")->after("renewal_date");

@@ -9,14 +9,14 @@ Route::middleware([])->group(function () {
     require __DIR__ . "/api/tickers.php";
     require __DIR__ . "/api/symbols.php";
 
-    Route::prefix("general")
-        ->middleware(["auth:api"])
-        ->group(function () {
-            Route::get("pricing", PricingController::class)->withoutMiddleware([
-                "auth:api",
-            ]);
+    Route::prefix("general")->group(function () {
+        require __DIR__ . "/api/pricing.php";
+
+        Route::middleware(["auth:api"])->group(function () {
+            require __DIR__ . "/api/payment.php";
 
             require __DIR__ . "/api/user.php";
             require __DIR__ . "/api/watchlist.php";
         });
+    });
 });

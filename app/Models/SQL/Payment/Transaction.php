@@ -3,6 +3,7 @@
 namespace App\Models\SQL\Payment;
 
 use App\Models\SQL\User\User;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Transaction extends Model
 {
     use HasFactory;
+    use HasUuids;
 
     protected $table = "transactions";
     protected $fillable = [
@@ -21,6 +23,8 @@ class Transaction extends Model
         "status",
         "payload",
     ];
+
+    protected $casts = ["payload" => "array"];
 
     public function user(): BelongsTo
     {

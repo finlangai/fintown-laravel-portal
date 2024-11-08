@@ -1,29 +1,45 @@
 <?php
 namespace App\Services\Payments;
 
+use App\Models\SQL\Payment\Transaction;
+use App\Traits\ExecPostRequest;
+use Carbon\Carbon;
+
 class MomoService
 {
+    use ExecPostRequest;
+
+    public static function hashingSignature(string $rawHashData)
+    {
+        $secretKey = env("MOMO_SECRET_KEY");
+        return hash_hmac("sha256", $rawHashData, $secretKey);
+    }
+
+    public static function normalizeBill(array $bill)
+    {
+        $normalized = [
+            "id" => $bill["orderId"],
+            "amount" => $bill["amount"],
+        ];
+        $normalized["completion_time"] = Carbon::now();
+        return $normalized;
+    }
+
     public static function generateUrl(
         string $returnUrl,
         string $orderId,
         string $orderInfo,
-        float $amount
+        string $amount
     ) {
         $endpoint =
             "https://test-payment.momo.vn/gw_payment/transactionProcessor";
 
         $partnerCode = env("MOMO_PARTNER_CODE");
         $accessKey = env("MOMO_ACCESS_KEY");
-        $secretKey = env("MOMO_SECRET_KEY");
-
-        // === INPUT PARAMETERS
-        // $returnUrl = route("payment.info");
-        // $orderId = time() . "";
-        // $orderInfo = "Thanh toán qua MoMo";
-        // $amount = "199000";
 
         // Lưu ý: link notifyUrl không phải là dạng localhost
         $bankCode = "SML";
+        $notifyurl = "https://blank.page";
 
         $requestId = time() . "";
         $requestType = "payWithMoMoATM";
@@ -47,14 +63,14 @@ class MomoService
             $orderInfo .
             "&returnUrl=" .
             $returnUrl .
-            // "&notifyUrl=" .
-            // $notifyurl .
+            "&notifyUrl=" .
+            $notifyurl .
             "&extraData=" .
             $extraData .
             "&requestType=" .
             $requestType;
 
-        $signature = hash_hmac("sha256", $rawHash, $secretKey);
+        $signature = self::hashingSignature($rawHash);
 
         $data = [
             "partnerCode" => $partnerCode,
@@ -65,7 +81,7 @@ class MomoService
             "orderInfo" => $orderInfo,
             "returnUrl" => $returnUrl,
             "bankCode" => $bankCode,
-            // "notifyUrl" => $notifyurl,
+            "notifyUrl" => $notifyurl,
             "extraData" => $extraData,
             "requestType" => $requestType,
             "signature" => $signature,
@@ -76,22 +92,57 @@ class MomoService
         return $jsonResult["payUrl"];
     }
 
-    private function execPostRequest($url, $data)
+    /**
+     * THIS ONE WORKS NICE, NOT MALFUNCTION LIKE VNPAY QUERY BUT NOT USING
+     * this should ensure the consistence return format [$success, $jsonResult]
+     *
+     * @param string $orderId
+     * @return void
+     */
+    public static function queryTransaction(array $data): array|false
     {
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            "Content-Type: application/json",
-            "Content-Length: " . strlen($data),
-        ]);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-        //execute post
-        $result = curl_exec($ch);
-        //close connection
-        curl_close($ch);
-        return $result;
+        $endpoint =
+            "https://test-payment.momo.vn/gw_payment/transactionProcessor";
+        $partnerCode = env("MOMO_PARTNER_CODE");
+        $accessKey = env("MOMO_ACCESS_KEY");
+        $secretKey = env("MOMO_SECRET_KEY");
+        $requestId = time() . "";
+        $requestType = "transactionStatus";
+
+        $orderId = $data["orderId"];
+
+        //before sign HMAC SHA256 signature
+        $rawHash =
+            "partnerCode=" .
+            $partnerCode .
+            "&accessKey=" .
+            $accessKey .
+            "&requestId=" .
+            $requestId .
+            "&orderId=" .
+            $orderId .
+            "&requestType=" .
+            $requestType;
+
+        $signature = hash_hmac("sha256", $rawHash, $secretKey);
+
+        $data = [
+            "partnerCode" => $partnerCode,
+            "accessKey" => $accessKey,
+            "requestId" => $requestId,
+            "orderId" => $orderId,
+            "requestType" => $requestType,
+            "signature" => $signature,
+        ];
+        $result = self::execPostRequest($endpoint, json_encode($data));
+        $jsonResult = json_decode($result, true); // decode json
+
+        $success = true;
+        // false if not success code
+        if (!$jsonResult["errorCode"] == 0) {
+            $success = false;
+        }
+
+        return [$success, $jsonResult];
     }
 }

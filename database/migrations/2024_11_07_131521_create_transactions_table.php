@@ -13,7 +13,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create("transactions", function (Blueprint $table) {
-            $table->id();
+            $table->uuid("id")->primary();
             $table->foreignIdFor(User::class, "user_id");
             $table->foreignIdFor(PaymentMethod::class, "payment_method_id");
             $table->string("info", 255)->nullable();
