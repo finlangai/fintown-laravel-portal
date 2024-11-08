@@ -11,3 +11,7 @@ export function toSnakeCase(str: string) {
     .replace(/[\s\W-]+/g, "_")
     .replace(/^_+|_+$/g, "");
 }
+
+export function capitalizeFirstChar(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}

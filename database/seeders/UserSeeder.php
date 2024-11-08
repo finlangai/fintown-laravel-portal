@@ -12,6 +12,9 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(12)->create();
+        $users = User::factory(42)->create();
+        foreach ($users as $user) {
+            $user->assignRole("basic");
+        }
     }
 }

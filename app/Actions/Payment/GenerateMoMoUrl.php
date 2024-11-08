@@ -16,11 +16,13 @@ class GenerateMoMoUrl
         $partnerCode = env("MOMO_PARTNER_CODE");
         $accessKey = env("MOMO_ACCESS_KEY");
         $secretKey = env("MOMO_SECRET_KEY");
+
+        // === INPUT PARAMETERS
+        // return url
+        $returnUrl = route("payment.info");
+        $orderId = time() . "";
         $orderInfo = "Thanh toán qua MoMo";
         $amount = "199000";
-        $orderId = time() . "";
-
-        $returnUrl = route("payment.info");
 
         // Lưu ý: link notifyUrl không phải là dạng localhost
         $bankCode = "SML";

@@ -16,8 +16,9 @@ import { DeleteButton } from "./crud-button";
 interface ConfirmDeleteProps {
   children?: ReactNode;
   trigger?: ReactNode;
-  title?: string;
+  title?: ReactNode;
   destroyUrl: string;
+  noPropogation?: boolean;
 }
 
 const ConfirmDelete = ({
@@ -25,6 +26,7 @@ const ConfirmDelete = ({
   trigger,
   title,
   destroyUrl,
+  noPropogation = false,
 }: ConfirmDeleteProps) => {
   const [open, setOpen] = useState<boolean>(false);
   const { delete: deleteMethod } = useForm();
@@ -36,7 +38,10 @@ const ConfirmDelete = ({
   };
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger asChild>
+      <AlertDialogTrigger
+        asChild
+        onClick={(e) => (noPropogation ? e.stopPropagation() : null)}
+      >
         <span>
           {trigger ? (
             trigger
@@ -50,7 +55,9 @@ const ConfirmDelete = ({
           )}
         </span>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent
+        onClick={(e) => (noPropogation ? e.stopPropagation() : null)}
+      >
         <AlertDialogHeader>
           <AlertDialogTitle>{title ?? "Bạn chắc chắn chứ?"}</AlertDialogTitle>
           <AlertDialogDescription>

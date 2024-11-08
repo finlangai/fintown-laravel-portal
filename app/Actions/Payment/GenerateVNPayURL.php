@@ -11,17 +11,21 @@ class GenerateVNPayURL
     public function handle(array $data)
     {
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://localhost:8000/payment/info";
 
         $vnp_TmnCode = env("VNPAY_TMN_CODE"); //Mã website tại VNPAY
         $vnp_HashSecret = env("VNPAY_HASH_SECRET"); //Chuỗi bí mật
 
-        $vnp_TxnRef = rand(1, 99999); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này
-        // sang VNPAY
+        // === INPUT PARAMETERS
+        // Return URL with transaction info after payment complete
+        $vnp_Returnurl = "http://localhost:8000/payment/info";
+        //Order ID
+        $vnp_TxnRef = rand(1, 99999);
         $vnp_OrderInfo = "Thanh toán gói đăng ký";
-        $vnp_OrderType = "Subscriptions";
         $vnp_Amount = $data["amount"] * 100;
+
+        $vnp_OrderType = 190004; //Thẻ học trực tuyến/thẻ hội viên
         $vnp_Locale = "VN";
+
         // $vnp_BankCode = "NCB";
         $vnp_IpAddr = $_SERVER["REMOTE_ADDR"];
         $inputData = [

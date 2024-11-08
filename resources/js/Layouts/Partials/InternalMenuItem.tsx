@@ -12,6 +12,7 @@ import {
 } from "@radix-ui/react-hover-card";
 import {
   ChartNoAxesGantt,
+  ShieldEllipsis,
   UserCheck,
   UserPen,
   UserRoundCog,
@@ -19,24 +20,24 @@ import {
   UsersRound,
 } from "lucide-react";
 
-interface StaffLiProps {
+interface InternalMenuItemProps {
   isExpanded: boolean;
 }
 
-const StaffLi = ({ isExpanded }: StaffLiProps) => {
+const InternalMenuItem = ({ isExpanded }: InternalMenuItemProps) => {
   return (
-    <li className="hover:bg-accent-color ml-2 p-2 rounded-xl text-text-head transition duration-300 cursor-pointer">
+    <li className="hover:bg-accent-color ml-2 p-2 rounded-xl text-text-head hover:text-white transition duration-300 cursor-pointer">
       <div className="flex items-center">
         {isExpanded ? (
           <Accordion type="single" collapsible>
             <AccordionItem
               value="item-2"
-              className="border-none hover:text-white transition-none"
+              className="border-none transition-none"
             >
               <AccordionTrigger className="flex justify-center items-center h-fit">
-                <UserRoundCog />
+                <ShieldEllipsis />
                 <span className="flex items-center ml-4 text-center text-xs whitespace-nowrap">
-                  Quản lí Người dùng
+                  Nội bộ
                 </span>
               </AccordionTrigger>
               <AccordionContent className="ml-2">
@@ -51,16 +52,7 @@ const StaffLi = ({ isExpanded }: StaffLiProps) => {
                       </div>
                     </Link>
                   </li>
-                  <li className="mt-5 hover:underline">
-                    <Link href="/add-staff">
-                      <div className="flex justify-start items-center">
-                        <UserRoundPlus />
-                        <span className="ml-2 text-xs whitespace-nowrap">
-                          Danh sách khách hàng
-                        </span>
-                      </div>
-                    </Link>
-                  </li>
+
                   <li className="mt-5 hover:underline">
                     <Link href="/staff">
                       <div className="flex justify-start items-center">
@@ -103,7 +95,7 @@ const StaffLi = ({ isExpanded }: StaffLiProps) => {
             >
               <AccordionTrigger>
                 <div className="inline-block relative">
-                  <UserRoundCog />
+                  <ShieldEllipsis />
                 </div>
               </AccordionTrigger>
               <AccordionContent className="ml-2">
@@ -168,7 +160,6 @@ const StaffLi = ({ isExpanded }: StaffLiProps) => {
                       </HoverCardContent>
                     </HoverCard>
                   </li>
-                  <li></li>
                 </ul>
               </AccordionContent>
             </AccordionItem>
@@ -179,4 +170,4 @@ const StaffLi = ({ isExpanded }: StaffLiProps) => {
   );
 };
 
-export default StaffLi;
+export default InternalMenuItem;

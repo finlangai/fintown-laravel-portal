@@ -10,11 +10,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Arr;
 use MongoDB\Laravel\Relations\HasMany;
 use MongoDB\Laravel\Relations\HasOne;
+use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
     use HasFactory;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -36,12 +38,11 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $hidden = [
-        "id",
-        "type_id",
+        // "id",
         "is_banned",
         "password",
-        "updated_at",
-        "created_at",
+        // "updated_at",
+        // "created_at",
         // 'remember_token',
     ];
 
@@ -65,7 +66,6 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $attributes = [
         "is_banned" => false,
-        "type_id" => 0,
     ];
 
     /**
@@ -86,7 +86,6 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [
-            "clientType" => $this->type_id,
             "scope" => $this->getSelfScope(),
         ];
     }
@@ -102,11 +101,6 @@ class User extends Authenticatable implements JWTSubject
     }
 
     // === RELATIONS
-
-    public function watchlists(): HasMany
-    {
-        return $this->hasMany(Watchlist::class, "user_id");
-    }
 
     public function subcriptions(): HasMany
     {

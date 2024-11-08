@@ -18,7 +18,6 @@ export default function Login({
   });
   const submit: FormEventHandler = (e) => {
     e.preventDefault();
-    console.log("submitting", data);
     post(route("login"), {
       onFinish: () => reset("password"),
     });
@@ -45,11 +44,13 @@ export default function Login({
             <img
               src="https://fintown.software/imgs/logo.png"
               alt=""
-              width={70}
-              height={70}
+              width={50}
+              height={50}
               className="block"
             />
-            <span> FinTown</span>
+            <span className="items-center font-bold text-2xl text-white">
+              fintown
+            </span>
           </h3>
           <label
             className="block mt-6 font-medium text-lg text-white"

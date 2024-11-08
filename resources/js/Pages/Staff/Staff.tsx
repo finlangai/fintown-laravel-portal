@@ -1,35 +1,24 @@
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/Components/UI/breadcrumb";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, usePage } from "@inertiajs/react";
-import { useState } from "react";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/Components/UI/dialog";
 import {
   Table,
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/Components/UI/table";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/Components/UI/dialog";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Head, usePage } from "@inertiajs/react";
+import { useState } from "react";
 import AddRole from "./StaffFunction/AddRole";
-import { BadgePlus } from "lucide-react";
 
 export default function Staff() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -63,8 +52,8 @@ export default function Staff() {
     edit_products_services: "Chỉnh sửa sản phẩm và dịch vụ",
     delete_products_services: "Xóa sản phẩm và dịch vụ",
   };
-  const { staffList, role}: any = usePage().props;
-  const listStaff: any = staffList || []; 
+  const { staffList, role }: any = usePage().props;
+  const listStaff: any = staffList || [];
   const [dataID, setDataID] = useState<number>();
   return (
     <>
@@ -73,24 +62,6 @@ export default function Staff() {
         <div className="py-5">
           <div className="mx-auto sm:px-6 lg:px-8 max-w-7xl">
             <div className="flex flex-col min-h-[86vh]">
-              <Breadcrumb>
-                <BreadcrumbList>
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="/">Welcome</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="/Dashboard">Dashboard</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbPage className="text-white">
-                      Staff
-                    </BreadcrumbPage>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
-
               <div className="flex justify-between items-center mt-5">
                 <div>
                   <input
@@ -101,7 +72,6 @@ export default function Staff() {
                     onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </div>
-               
               </div>
               <div className="bg-white shadow-lg mt-5 rounded-lg overflow-x-auto">
                 <Table>
@@ -156,23 +126,20 @@ export default function Staff() {
                         </TableCell>
                         <TableCell className="text-gray-800">*******</TableCell>
                         <TableCell className="text-gray-800">
-                          {
-                            item.roles[0] ? (
-                              <span>
-                                {item.roles[0]}
-                              </span>
-                            ) : (
-                               <strong className="text-red-400">
-                                  Chưa có role
-                               </strong>
-                            )
-                          }
-
+                          {item.roles[0] ? (
+                            <span>{item.roles[0]}</span>
+                          ) : (
+                            <strong className="text-red-400">
+                              Chưa có role
+                            </strong>
+                          )}
                         </TableCell>
                         <TableCell className="text-green-500">
                           <Dialog>
                             <DialogTrigger className="bg-custom-button-success rounded-md text-text-Content">
-                              <span className="p-3">Xem quyền</span>
+                              <span className="flex items-center p-1 font-medium text-white text-xs">
+                                Xem quyền
+                              </span>
                             </DialogTrigger>
                             <DialogContent>
                               <DialogHeader>
@@ -206,7 +173,11 @@ export default function Staff() {
                         </TableCell>
                         <TableCell className="text-right flex justify-end text-gray-800">
                           <div onClick={() => setDataID(item.id)}>
-                            <AddRole listRole={role} RoleName={item.roles} staffId={item.id}/>
+                            <AddRole
+                              listRole={role}
+                              RoleName={item.roles}
+                              staffId={item.id}
+                            />
                           </div>
                         </TableCell>
                       </TableRow>

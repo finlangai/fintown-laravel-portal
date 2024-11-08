@@ -1,5 +1,5 @@
 import AssessmentCard from "@/Components/Sections/Assessment/AssessmentCard";
-import { AssessmentPagination } from "@/Components/Sections/Assessment/Pagination";
+import { PaginationWrapper } from "@/Components/Specialized/pagination-wrapper";
 import TooltipWrapper from "@/Components/Specialized/tooltip-wrapper";
 import { Input } from "@/Components/UI/input";
 import { TypographyH1 } from "@/Components/UI/typography";
@@ -44,7 +44,7 @@ export default function Assessment({ paginationData }: AssessmentProps) {
             />
           </div>
         </form>
-        <AssessmentPagination paginationData={paginationData} />
+        <PaginationWrapper paginationData={paginationData} />
       </div>
 
       {/* === ASSESSMENT LIST */}

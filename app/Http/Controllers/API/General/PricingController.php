@@ -16,14 +16,14 @@ class PricingController extends Controller
     {
         // monthly data
         $rawMonthly = Program::find("PM1");
-        $monthlyPackage = [];
+        $monthlyPackage = ["programId" => "PM1"];
         foreach (["name", "price"] as $key) {
             $monthlyPackage[$key] = $rawMonthly[$key];
         }
 
         // populate data for yearly
         $rawYearly = Program::find("PY1");
-        $yearlyPackage = [];
+        $yearlyPackage = ["programId" => "PY1"];
 
         $yearlyPackage["name"] = $rawYearly["name"];
         $yearlyPackage["discountPercentage"] = $rawYearly["discount"];
@@ -40,5 +40,31 @@ class PricingController extends Controller
             "MONTHLY" => $monthlyPackage,
             "YEARLY" => $yearlyPackage,
         ]);
+    }
+
+    public function program(string $programId)
+    {
+        try {
+            $program = Program::findOrFail(strtoupper($programId));
+        } catch (\Throwable $th) {
+            return ApiResponse::notFound();
+        }
+
+        $discountFloat = $program->discount / 100;
+
+        $programInfo = [
+            "programId" => $program->id,
+            "name" => $program->name,
+            "discountPercentage" => $program->discount,
+            "originalPrice" => $program->price,
+            "discountAmount" => $program->price * $discountFloat,
+        ];
+
+        $programInfo["discountedPrice"] =
+            $program->price - $programInfo["discountAmount"];
+
+        $programInfo["monthDuration"] = $program->duration;
+
+        return ApiResponse::success($programInfo);
     }
 }

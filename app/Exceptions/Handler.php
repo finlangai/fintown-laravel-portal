@@ -20,7 +20,7 @@ class Handler extends ExceptionHandler
      */
     protected $levels = [
         //
-     ];
+    ];
 
     /**
      * A list of the exception types that are not reported.
@@ -29,7 +29,7 @@ class Handler extends ExceptionHandler
      */
     protected $dontReport = [
         //
-     ];
+    ];
 
     /**
      * A list of the inputs that are never flashed to the session on validation exceptions.
@@ -37,10 +37,10 @@ class Handler extends ExceptionHandler
      * @var array<int, string>
      */
     protected $dontFlash = [
-        'current_password',
-        'password',
-        'password_confirmation',
-     ];
+        "current_password",
+        "password",
+        "password_confirmation",
+    ];
 
     /**
      * Register the exception handling callbacks for the application.
@@ -48,7 +48,7 @@ class Handler extends ExceptionHandler
     public function register(): void
     {
         $this->renderable(function (Throwable $e, $request) {
-            if ($request->is('api/*') || $request->wantsJson()) {
+            if ($request->is("api/*") || $request->wantsJson()) {
                 return $this->handleApiException($e, $request);
             }
         });
@@ -60,29 +60,39 @@ class Handler extends ExceptionHandler
     private function handleApiException(Throwable $e, $request)
     {
         if ($e instanceof ValidationException) {
-            return ApiResponse::validationError($e->errors(), 'The given data was invalid.');
+            return ApiResponse::validationError(
+                $e->errors(),
+                "The given data was invalid."
+            );
         }
 
         if ($e instanceof ModelNotFoundException) {
-            return ApiResponse::notFound('Resource not found.');
+            return ApiResponse::notFound("Resource not found.");
         }
 
         if ($e instanceof NotFoundHttpException) {
-            return ApiResponse::notFound('The requested resource was not found.');
+            return ApiResponse::notFound(
+                "The requested resource was not found."
+            );
         }
 
         if ($e instanceof MethodNotAllowedHttpException) {
-            return ApiResponse::error('The specified method for the request is invalid.', 405);
+            return ApiResponse::error(
+                "The specified method for the request is invalid.",
+                405
+            );
         }
 
         if ($e instanceof AuthenticationException) {
-            return ApiResponse::unauthorized('Unauthenticated.');
+            return ApiResponse::unauthorized("Unauthenticated.");
         }
 
         // Log the exception
         // $this->report($e);
 
         // Return a generic error message to avoid exposing sensitive information
-        return ApiResponse::internalServerError('An unexpected error occurred.');
+        return ApiResponse::internalServerError(
+            "An unexpected error occurred."
+        );
     }
 }
