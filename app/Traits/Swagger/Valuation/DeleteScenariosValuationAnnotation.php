@@ -31,7 +31,7 @@ trait DeleteScenariosValuationAnnotation
      *         @OA\Schema(type="string"),
      *     ),
      *     @OA\Response(
-     *         response=200,
+     *         response=204,
      *         description="Scenario updated successfully",
      *         @OA\JsonContent(
      *             type="object",
