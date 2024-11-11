@@ -14,7 +14,10 @@ trait DeleteScenariosValuationAnnotation
      *         name="identifier",
      *         in="path",
      *         required=true,
-     *         @OA\Schema( * type="string", enum={"price-to-earnings-relative-valuation", "price-to-book-relative-valuation"}, example="price-to-earnings-relative-valuation"
+     *         @OA\Schema(
+     *             type="string",
+     *             enum={"price-to-earnings-relative-valuation", "price-to-book-relative-valuation"},
+     *             example="price-to-earnings-relative-valuation"
      *         )
      *     ),
      *     @OA\Parameter(
@@ -29,18 +32,40 @@ trait DeleteScenariosValuationAnnotation
      *         in="path",
      *         required=true,
      *         @OA\Schema(type="string"),
+     *         example="67320eb359b3d083fb09fa9a"
      *     ),
      *     @OA\Response(
      *         response=204,
-     *         description="Scenario updated successfully",
+     *         description="Scenario deleted successfully",
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(property="message", type="string", example="Xóa kịch bản thành công.")
      *         )
      *     ),
-     *     @OA\Response(response=401, description="Unauthorized"),
-     *     @OA\Response(response=404, description="Not Found"),
-     *     @OA\Response(response=500, description="Internal Server Error")
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string", example="Unauthorized request")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not Found",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string", example="Scenario not found")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal Server Error",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="string", example="An unexpected error occurred")
+     *         )
+     *     )
      * )
      */
     public function DeleteScenariosValuationAnnotation()
