@@ -11,4 +11,12 @@ class Stash extends Model
 
     protected $hidden = ["id", "is_stock"];
     public $timestamps = false;
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return "symbol";
+    }
 }
