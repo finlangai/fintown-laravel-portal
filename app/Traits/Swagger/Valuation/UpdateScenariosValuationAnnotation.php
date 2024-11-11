@@ -5,8 +5,8 @@ namespace App\Traits\Swagger\Valuation;
 trait UpdateScenariosValuationAnnotation
 {
     /**
-     * @OA\PATCH(
-     *     path="/api/valuation/{identifier}/{symbol}/scenarios/{scenarioId}/update",
+     * @OA\Patch(
+     *     path="/api/valuation/{identifier}/{symbol}/scenarios/{scenarioId}",
      *     summary="Update a scenario for a user on a stock",
      *     tags={"Valuation","Scenarios"},
      *     security={{"bearerAuth": {}}},
