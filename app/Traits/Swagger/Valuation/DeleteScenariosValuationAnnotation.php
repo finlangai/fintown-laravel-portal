@@ -5,8 +5,8 @@ namespace App\Traits\Swagger\Valuation;
 trait DeleteScenariosValuationAnnotation
 {
     /**
-     * @OA\DELETE(
-     *     path="/api/valuation/{identifier}/{symbol}/scenarios/{scenarioId}/delete",
+     * @OA\Delete(
+     *     path="/api/valuation/{identifier}/{symbol}/scenarios/{scenarioId}",
      *     summary="Delete a scenario for a user on a stock",
      *     tags={"Valuation","Scenarios"},
      *     security={{"bearerAuth": {}}},
