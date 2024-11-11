@@ -19,4 +19,8 @@ Route::middleware([])->group(function () {
             require __DIR__ . "/api/watchlist.php";
         });
     });
+
+    Route::middleware(["auth:api"])->group(function () {
+        require __DIR__ . "/api/valuation.php";
+    });
 });
