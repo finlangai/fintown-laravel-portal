@@ -6,7 +6,7 @@ trait UpdateScenariosValuationAnnotation
 {
     /**
      * @OA\PATCH(
-     *     path="/api/valuation/{identifier}/{symbol}/scenarios/{scenarioId}",
+     *     path="/api/valuation/{identifier}/{symbol}/scenarios/{scenarioId}/update",
      *     summary="Update a scenario for a user on a stock",
      *     tags={"Valuation","Scenarios"},
      *     security={{"bearerAuth": {}}},
@@ -14,10 +14,7 @@ trait UpdateScenariosValuationAnnotation
      *         name="identifier",
      *         in="path",
      *         required=true,
-     *         @OA\Schema(
-     *             type="string",
-     *             enum={"price-to-earnings-relative-valuation", "price-to-book-relative-valuation"},
-     *             example="price-to-earnings-relative-valuation"
+     *         @OA\Schema( * type="string", enum={"price-to-earnings-relative-valuation", "price-to-book-relative-valuation"}, example="price-to-earnings-relative-valuation"
      *         )
      *     ),
      *     @OA\Parameter(
@@ -50,30 +47,9 @@ trait UpdateScenariosValuationAnnotation
      *             @OA\Property(property="message", type="string", example="Cập nhật thông tin kịch bản thành công")
      *         )
      *     ),
-     *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="error", type="string", example="Unauthorized request")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Not Found",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="error", type="string", example="Scenario not found")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=500,
-     *         description="Internal Server Error",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="error", type="string", example="An unexpected error occurred")
-     *         )
-     *     )
+     *     @OA\Response(response=401, description="Unauthorized"),
+     *     @OA\Response(response=404, description="Not Found"),
+     *     @OA\Response(response=500, description="Internal Server Error")
      * )
      */
     public function UpdateScenariosValuationAnnotation()
