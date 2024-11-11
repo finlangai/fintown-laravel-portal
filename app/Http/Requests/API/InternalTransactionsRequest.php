@@ -23,7 +23,7 @@ class InternalTransactionsRequest extends FormRequest
     {
         return [
             "limit" => "nullable|integer|min:1",
-            "offset" => "nullable|integer|min:1",
+            "offset" => "nullable|integer|min:0",
             "start" => "nullable|integer",
             "end" => "nullable|integer",
         ];

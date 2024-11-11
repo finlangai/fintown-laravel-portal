@@ -35,13 +35,13 @@ class InternalTransactionsController extends Controller
         // check parameters
         $this->checkParameters($validated);
 
-        // define cache name for later use symbols:symbol:start:end:limit:offset
-        $cacheName = "symbols:$symbol:transactions:$this->start:$this->end:$this->limit:$this->offset";
-        // === Check if cached
-        $cache = Redis::get($cacheName);
-        if ($cache) {
-            return ApiResponse::success($cache);
-        }
+        // // define cache name for later use symbols:symbol:start:end:limit:offset
+        // $cacheName = "symbols:$symbol:transactions:$this->start:$this->end:$this->limit:$this->offset";
+        // // === Check if cached
+        // $cache = Redis::get($cacheName);
+        // if ($cache) {
+        //     return ApiResponse::success($cache);
+        // }
 
         // getting transaction, must be called after checking parameters
         $transactions = $this->getTransactions($symbol);
@@ -63,7 +63,7 @@ class InternalTransactionsController extends Controller
         ];
 
         // === set cache
-        Redis::set($cacheName, $transactions, Unix::hour(24));
+        // Redis::set($cacheName, $transactions, Unix::hour(24));
 
         return ApiResponse::success($result);
     }
@@ -81,11 +81,11 @@ class InternalTransactionsController extends Controller
 
         // check on start and end
         if (array_key_exists("start", $validated)) {
-            $this->start = $validated["start"];
+            $this->start = $validated["start"] * 1000;
         }
 
         if (array_key_exists("end", $validated)) {
-            $this->end = $validated["end"];
+            $this->end = $validated["end"] * 1000;
         }
     }
 
