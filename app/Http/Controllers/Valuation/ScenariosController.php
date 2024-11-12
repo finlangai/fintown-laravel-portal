@@ -85,9 +85,7 @@ class ScenariosController extends Controller
 
             $scenario->delete();
 
-            return ApiResponse::noContent([
-                "message" => "Xóa kịch bản thành công.",
-            ]);
+            return ApiResponse::noContent();
         } catch (\Throwable $th) {
             return ApiResponse::notFound("Kịch bản không tồn tại.");
         }

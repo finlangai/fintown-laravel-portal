@@ -54,8 +54,10 @@ class PermissionsSeeder extends Seeder
             "tickers-list",
             "technical-chart",
             "valuation",
+            "scenario",
+            "comparison",
         ];
-        $userWrite = ["account", "watchlist"];
+        $userWrite = ["account", "watchlist", "scenario"];
 
         $userPermissions = [];
         foreach ($userRead as $value) {

@@ -2,49 +2,36 @@
 
 namespace App\Actions\Valuation;
 
+use App\Actions\Valuation\Params\DiscountedCashFlowParams;
+use App\Actions\Valuation\Params\PriceToBookRelativeParams;
+use App\Actions\Valuation\Params\PriceToEarningsRelativeParams;
+use App\Enums\StockValuationMethods;
 use App\Models\Mongo\Company\Stash;
 use App\Models\Mongo\Formular;
 use App\Models\Mongo\MetricRecord;
+use App\Traits\GetLatestQuarterMetrics;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetValuationParams
 {
     use AsAction;
+    use GetLatestQuarterMetrics;
 
     public function handle(Formular $formularInfo, Stash $stash)
     {
-        $vn30Stash = Stash::where("symbol", "VN30")->first();
-        $metrics = $this->getLatestQuarterMetrics($stash->symbol);
+        $vn30Stash = Stash::where("symbol", "VN30")->first()->toArray();
+        $symbol = $stash->symbol;
 
         switch ($formularInfo["identifier"]) {
-            case "price-to-earnings-relative-valuation":
-                return [
-                    "earnings_per_share" => round(
-                        $metrics["earnings_per_share"],
-                        2
-                    ),
-                    "price_to_earnings" => $vn30Stash["pe"],
-                ];
+            case StockValuationMethods::DISCOUNTED_CASH_FLOW->value:
+                return DiscountedCashFlowParams::get($symbol);
                 break;
-            case "price-to-book-relative-valuation":
-                return [
-                    "book_value_per_share" => round(
-                        $metrics["book_value_per_share"],
-                        2
-                    ),
-                    "price_to_book" => $vn30Stash["pb"],
-                ];
+            case StockValuationMethods::PRICE_TO_EARNING_RELATIVE->value:
+                return PriceToEarningsRelativeParams::get($symbol, $vn30Stash);
+                break;
+            case StockValuationMethods::PRICE_TO_BOOK_RELATIVE->value:
+                return PriceToBookRelativeParams::get($symbol, $vn30Stash);
                 break;
         }
-    }
-
-    public function getLatestQuarterMetrics(string $symbol)
-    {
-        return MetricRecord::where("symbol", $symbol)
-            ->whereNot("quarter", 0)
-            ->orderBy("year", "desc")
-            ->orderBy("quarter", "desc")
-            ->first()
-            ->toArray()["metrics"];
     }
 }
