@@ -9,6 +9,7 @@ use App\Models\Mongo\Formular;
 use App\Models\Mongo\General\ValuationScenario;
 use App\Utils\ApiResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class ScenariosController extends Controller
 {
@@ -44,9 +45,13 @@ class ScenariosController extends Controller
         return ApiResponse::created(["message" => "Tạo kịch bản thành công."]);
     }
 
-    public function show()
+    public function show($_, $__, ValuationScenario $scenario)
     {
-        //
+        $scenario = $scenario->toArray();
+        $scenario["saveAt"] = Carbon::parse($scenario["created_at"])->timestamp;
+        unset($scenario["type_id"]);
+        unset($scenario["created_at"]);
+        return ApiResponse::success($scenario);
     }
 
     public function update(

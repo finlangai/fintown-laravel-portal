@@ -22,10 +22,9 @@ class GrahamIntrinsicValueParams
     public static function getEpsGrowthRate(string $symbol)
     {
         $records = MetricRecord::where("symbol", $symbol)
-            ->whereNot("quarter", 0)
+            ->where("quarter", 0)
             ->orderBy("year", "desc")
-            ->orderBy("quarter", "desc")
-            ->limit(12)
+            ->limit(10)
             ->whereNot("metrics." . self::EpsGrowthRateIdentifier, null)
             ->project(["value" => '$metrics.' . self::EpsGrowthRateIdentifier])
             ->get()
@@ -33,7 +32,7 @@ class GrahamIntrinsicValueParams
 
         $sumEpsGrowth = array_reduce(
             $records,
-            fn($carry, $item) => $carry + $item["value"],
+            fn($carry, $item) => $carry + $item["value"] / 100,
             0
         );
 
