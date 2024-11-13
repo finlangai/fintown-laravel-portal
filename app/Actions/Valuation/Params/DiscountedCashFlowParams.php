@@ -3,11 +3,12 @@
 namespace App\Actions\Valuation\Params;
 
 use App\Models\Mongo\MetricRecord;
+use Illuminate\Database\Eloquent\Collection;
 
 class DiscountedCashFlowParams
 {
-    const FCFIdentifier = "free_cash_flow";
-    const GrowthRateIdentifier = "free_cash_flow_growth_rate";
+    public const FCFIdentifier = "free_cash_flow";
+    public const GrowthRateIdentifier = "free_cash_flow_growth_rate";
 
     public static function get(string $symbol)
     {
@@ -17,21 +18,8 @@ class DiscountedCashFlowParams
             ->project(self::getMetricsProjection())
             ->get();
 
-        $growthRateSum = 0;
-        $validCount = 0;
-        $records->map(function ($record) use (&$growthRateSum, &$validCount) {
-            if (
-                $record[self::GrowthRateIdentifier] &&
-                $record[self::GrowthRateIdentifier] < 500 &&
-                $record[self::GrowthRateIdentifier] > -500
-            ) {
-                $growthRateSum += $record[self::GrowthRateIdentifier] / 100;
-                $validCount += 1;
-            }
-        });
-
+        $avgGrowthRate = self::calculateGrowthRate($records);
         $forecast = [];
-        $avgGrowthRate = $growthRateSum / $validCount;
 
         $latestFCF = $records[0][self::FCFIdentifier];
         $latestYear = $records[0]["year"];
@@ -63,10 +51,30 @@ class DiscountedCashFlowParams
         return compact("fcf_forecasts");
     }
 
-    private static function getMetricsProjection()
+    public static function calculateGrowthRate(Collection $records)
+    {
+        $growthRateSum = 0;
+        $validCount = 0;
+        $records->map(function ($record) use (&$growthRateSum, &$validCount) {
+            if (
+                $record[self::GrowthRateIdentifier]
+                // &&
+                // $record[self::GrowthRateIdentifier] < 500 &&
+                // $record[self::GrowthRateIdentifier] > -500
+            ) {
+                $growthRateSum += $record[self::GrowthRateIdentifier] / 100;
+                $validCount += 1;
+            }
+        });
+
+        return $growthRateSum / $validCount;
+    }
+
+    public static function getMetricsProjection()
     {
         return [
             "year" => 1,
+            "quarter" => 1,
             self::FCFIdentifier => '$metrics.' . self::FCFIdentifier,
             self::GrowthRateIdentifier =>
                 '$metrics.' . self::GrowthRateIdentifier,

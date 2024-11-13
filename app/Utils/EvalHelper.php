@@ -27,10 +27,10 @@ class EvalHelper
      */
     public static function safeEval(string $formula)
     {
-        // Validate and sanitize the formula before using eval
-        if (preg_match('/^[0-9\+\-\*\/\(\)\.\s]+$/', $formula)) {
+        try {
             return eval("return $formula;");
+        } catch (\Throwable $th) {
+            throw new \Exception("Invalid formula: $formula");
         }
-        throw new \Exception("Invalid formula");
     }
 }

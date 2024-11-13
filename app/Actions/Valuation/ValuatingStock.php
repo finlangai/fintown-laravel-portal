@@ -2,6 +2,11 @@
 
 namespace App\Actions\Valuation;
 
+use App\Actions\Valuation\Calculating\DiscountedCashFlowValuation;
+use App\Actions\Valuation\Calculating\PriceToBookRelativeValuation;
+use App\Actions\Valuation\Calculating\PriceToEarningsRelativeValuation;
+use App\Actions\Valuation\Params\DiscountedCashFlowParams;
+use App\Enums\StockValuationMethods;
 use App\Models\Mongo\Company\Stash;
 use App\Models\Mongo\Formular;
 use App\Utils\EvalHelper;
@@ -13,14 +18,29 @@ class ValuatingStock
 
     public function handle(Formular $formularInfo, Stash $stash)
     {
-        $params = (new GetValuationParams())->handle($formularInfo, $stash);
-        $formular = $formularInfo->formular;
+        $valuationResult = null;
 
-        $replacedFormular = EvalHelper::replaceParams($formular, $params);
+        switch ($formularInfo["identifier"]) {
+            case StockValuationMethods::DISCOUNTED_CASH_FLOW->value:
+                $valuationResult = DiscountedCashFlowValuation::calculate(
+                    $formularInfo,
+                    $stash
+                );
+                break;
+            case StockValuationMethods::PRICE_TO_EARNING_RELATIVE->value:
+                $valuationResult = PriceToEarningsRelativeValuation::calculate(
+                    $formularInfo,
+                    $stash
+                );
+                break;
+            case StockValuationMethods::PRICE_TO_BOOK_RELATIVE->value:
+                $valuationResult = PriceToBookRelativeValuation::calculate(
+                    $formularInfo,
+                    $stash
+                );
+                break;
+        }
 
-        $valuationResult = EvalHelper::safeEval($replacedFormular);
-        $valuationResult = round($valuationResult, 2);
-
-        return compact("valuationResult");
+        return $valuationResult;
     }
 }
