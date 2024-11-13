@@ -3,9 +3,11 @@
 namespace App\Actions\Valuation;
 
 use App\Actions\Valuation\Calculating\DiscountedCashFlowValuation;
+use App\Actions\Valuation\Calculating\GrahamIntrinsicValueValuation;
 use App\Actions\Valuation\Calculating\PriceToBookRelativeValuation;
 use App\Actions\Valuation\Calculating\PriceToEarningsRelativeValuation;
 use App\Actions\Valuation\Params\DiscountedCashFlowParams;
+use App\Actions\Valuation\Params\GrahamIntrinsicValueParams;
 use App\Enums\StockValuationMethods;
 use App\Models\Mongo\Company\Stash;
 use App\Models\Mongo\Formular;
@@ -23,6 +25,12 @@ class ValuatingStock
         switch ($formularInfo["identifier"]) {
             case StockValuationMethods::DISCOUNTED_CASH_FLOW->value:
                 $valuationResult = DiscountedCashFlowValuation::calculate(
+                    $formularInfo,
+                    $stash
+                );
+                break;
+            case StockValuationMethods::GRAHAM_INTRINSIC_VALUE->value:
+                $valuationResult = GrahamIntrinsicValueValuation::calculate(
                     $formularInfo,
                     $stash
                 );
