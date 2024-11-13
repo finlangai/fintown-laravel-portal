@@ -20,6 +20,7 @@ class ValuationScenario extends Model
         "title",
         "potential",
         "valuated",
+        "expected_date",
         "note",
     ];
 }
