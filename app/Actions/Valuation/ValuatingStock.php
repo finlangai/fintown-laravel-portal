@@ -4,6 +4,7 @@ namespace App\Actions\Valuation;
 
 use App\Actions\Valuation\Calculating\DiscountedCashFlowValuation;
 use App\Actions\Valuation\Calculating\GrahamIntrinsicValueValuation;
+use App\Actions\Valuation\Calculating\PriceEarningsToGrowthValuation;
 use App\Actions\Valuation\Calculating\PriceToBookRelativeValuation;
 use App\Actions\Valuation\Calculating\PriceToEarningsRelativeValuation;
 use App\Actions\Valuation\Params\DiscountedCashFlowParams;
@@ -43,6 +44,12 @@ class ValuatingStock
                 break;
             case StockValuationMethods::PRICE_TO_BOOK_RELATIVE->value:
                 $valuationResult = PriceToBookRelativeValuation::calculate(
+                    $formularInfo,
+                    $stash
+                );
+                break;
+            case StockValuationMethods::PRICE_EARNINGS_TO_GROWTH->value:
+                $valuationResult = PriceEarningsToGrowthValuation::calculate(
                     $formularInfo,
                     $stash
                 );

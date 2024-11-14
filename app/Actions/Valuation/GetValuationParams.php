@@ -4,6 +4,7 @@ namespace App\Actions\Valuation;
 
 use App\Actions\Valuation\Params\DiscountedCashFlowParams;
 use App\Actions\Valuation\Params\GrahamIntrinsicValueParams;
+use App\Actions\Valuation\Params\PriceEarningsToGrowthParams;
 use App\Actions\Valuation\Params\PriceToBookRelativeParams;
 use App\Actions\Valuation\Params\PriceToEarningsRelativeParams;
 use App\Enums\StockValuationMethods;
@@ -35,6 +36,9 @@ class GetValuationParams
                 break;
             case StockValuationMethods::PRICE_TO_BOOK_RELATIVE->value:
                 return PriceToBookRelativeParams::get($symbol, $vn30Stash);
+                break;
+            case StockValuationMethods::PRICE_EARNINGS_TO_GROWTH->value:
+                return PriceEarningsToGrowthParams::get($stash);
                 break;
         }
     }
