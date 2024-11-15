@@ -14,7 +14,7 @@ trait StockValuationParamsAnnotation
      *         name="identifier",
      *         in="path",
      *         required=true,
-     *         @OA\Schema( * type="string", enum={"price-to-earnings-relative-valuation", "price-to-book-relative-valuation","discounted-cash-flow", "graham-intrinsic-value-formula", "price-earnings-to-growth-ratio"}, example="price-to-earnings-relative-valuation"
+     *         @OA\Schema( * type="string", enum={"price-to-earnings-relative-valuation", "price-to-book-relative-valuation","discounted-cash-flow", "graham-intrinsic-value-formula", "price-earnings-to-growth-ratio", "capital-asset-pricing-model"}, example="price-to-earnings-relative-valuation"
      *         )
      *     ),
      *     @OA\Parameter(

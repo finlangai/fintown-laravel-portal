@@ -2,6 +2,7 @@
 
 namespace App\Actions\Valuation;
 
+use App\Actions\Valuation\Params\CapitalAssetPricingParams;
 use App\Actions\Valuation\Params\DiscountedCashFlowParams;
 use App\Actions\Valuation\Params\GrahamIntrinsicValueParams;
 use App\Actions\Valuation\Params\PriceEarningsToGrowthParams;
@@ -36,6 +37,9 @@ class GetValuationParams
                 break;
             case StockValuationMethods::PRICE_TO_BOOK_RELATIVE->value:
                 return PriceToBookRelativeParams::get($symbol, $vn30Stash);
+                break;
+            case StockValuationMethods::CAPITAL_ASSET_PRICING->value:
+                return CapitalAssetPricingParams::get($formularInfo, $stash);
                 break;
             case StockValuationMethods::PRICE_EARNINGS_TO_GROWTH->value:
                 return PriceEarningsToGrowthParams::get($stash);
