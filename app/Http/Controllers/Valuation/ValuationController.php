@@ -19,6 +19,10 @@ class ValuationController extends Controller
         GetValuationParams $action
     ) {
         $result = $action->handle($formularInfo, $stash);
+        // return straight away if the action return a json respnose
+        if ($result instanceof JsonResponse) {
+            return $result;
+        }
         return ApiResponse::success($result);
     }
 

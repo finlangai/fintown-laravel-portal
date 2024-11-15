@@ -18,6 +18,7 @@ class PriceEarningsToGrowthValuation
 
         $valuationResult = EvalHelper::safeEval($replacedFormular);
         $valuationResult = round($valuationResult, 2);
+
         return compact("valuationResult");
     }
 }

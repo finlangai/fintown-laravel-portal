@@ -70,7 +70,9 @@ class DiscountedCashFlowValuation
         $equity = $DCF + $discountedTV - $liablities + $cash;
         $valuationResult = $equity / $outstandingShare;
 
-        return compact("valuationResult");
+        $actualPrice = $stash["stats"]["last_closed_price"];
+
+        return compact("valuationResult", "actualPrice");
     }
 
     private static function getFCFWithGrowthRate(string $symbol)

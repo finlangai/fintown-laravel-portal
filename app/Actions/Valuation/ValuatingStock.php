@@ -4,6 +4,7 @@ namespace App\Actions\Valuation;
 
 use App\Actions\Valuation\Calculating\CapitalAssetPricingValuation;
 use App\Actions\Valuation\Calculating\DiscountedCashFlowValuation;
+use App\Actions\Valuation\Calculating\DividendDiscountValuation;
 use App\Actions\Valuation\Calculating\GrahamIntrinsicValueValuation;
 use App\Actions\Valuation\Calculating\PriceEarningsToGrowthValuation;
 use App\Actions\Valuation\Calculating\PriceToBookRelativeValuation;
@@ -27,6 +28,12 @@ class ValuatingStock
         switch ($formularInfo["identifier"]) {
             case StockValuationMethods::DISCOUNTED_CASH_FLOW->value:
                 $valuationResult = DiscountedCashFlowValuation::calculate(
+                    $formularInfo,
+                    $stash
+                );
+                break;
+            case StockValuationMethods::DIVIDEND_DISCOUNT->value:
+                $valuationResult = DividendDiscountValuation::calculate(
                     $formularInfo,
                     $stash
                 );

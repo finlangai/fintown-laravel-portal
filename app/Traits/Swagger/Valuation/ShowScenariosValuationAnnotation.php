@@ -16,7 +16,7 @@ trait ShowScenariosValuationAnnotation
      *         required=true,
      *         @OA\Schema(
      *             type="string",
-     *             enum={"price-to-earnings-relative-valuation", "price-to-book-relative-valuation", "discounted-cash-flow", "graham-intrinsic-value-formula", "price-earnings-to-growth-ratio", "capital-asset-pricing-model"},
+     *             enum={"price-to-earnings-relative-valuation", "price-to-book-relative-valuation", "discounted-cash-flow", "graham-intrinsic-value-formula", "price-earnings-to-growth-ratio", "capital-asset-pricing-model", "dividend-discount-model"},
      *             example="price-to-earnings-relative-valuation"
      *         )
      *     ),

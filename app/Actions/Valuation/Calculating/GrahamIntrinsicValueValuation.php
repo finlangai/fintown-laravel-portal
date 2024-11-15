@@ -27,6 +27,8 @@ class GrahamIntrinsicValueValuation
 
         $valuationResult = EvalHelper::safeEval($expression);
 
-        return compact("valuationResult");
+        $actualPrice = $stash["stats"]["last_closed_price"];
+
+        return compact("valuationResult", "actualPrice");
     }
 }

@@ -4,6 +4,7 @@ namespace App\Actions\Valuation;
 
 use App\Actions\Valuation\Params\CapitalAssetPricingParams;
 use App\Actions\Valuation\Params\DiscountedCashFlowParams;
+use App\Actions\Valuation\Params\DividendDiscountParams;
 use App\Actions\Valuation\Params\GrahamIntrinsicValueParams;
 use App\Actions\Valuation\Params\PriceEarningsToGrowthParams;
 use App\Actions\Valuation\Params\PriceToBookRelativeParams;
@@ -28,6 +29,9 @@ class GetValuationParams
         switch ($formularInfo["identifier"]) {
             case StockValuationMethods::DISCOUNTED_CASH_FLOW->value:
                 return DiscountedCashFlowParams::get($symbol);
+                break;
+            case StockValuationMethods::DIVIDEND_DISCOUNT->value:
+                return DividendDiscountParams::get($formularInfo, $stash);
                 break;
             case StockValuationMethods::GRAHAM_INTRINSIC_VALUE->value:
                 return GrahamIntrinsicValueParams::get($stash, $vn30Stash);
