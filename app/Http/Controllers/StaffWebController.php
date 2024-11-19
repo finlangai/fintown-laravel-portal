@@ -39,8 +39,8 @@ class StaffWebController extends Controller
                         : "admin",
                 ];
             });
-        $permissions = Permission::all();
-        $roles = Role::where("guard", "web")->get();
+        $permissions = Permission::where("guard_name", "web")->get();
+        $roles = Role::where("guard_name", "web")->get();
 
         return Inertia::render("Staff/Staff", [
             "role" => $roles,

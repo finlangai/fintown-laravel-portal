@@ -13,8 +13,8 @@ class RoleController extends Controller
 {
     public function index()
     {
-        $AllRoles = Role::all();
-        $AllPermission = Permission::all();
+        $AllRoles = Role::where("guard_name", "web")->get();
+        $AllPermission = Permission::where("guard_name", "web")->get();
         $AllRole_Has_Permission = DB::table("role_has_permissions")->get();
         return Inertia::render("Staff/Role", [
             "AllRoles" => $AllRoles,
