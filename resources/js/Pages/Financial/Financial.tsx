@@ -1,6 +1,3 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, usePage } from "@inertiajs/react";
-import * as React from "react";
 import {
   Pagination,
   PaginationContent,
@@ -10,16 +7,12 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/Components/UI/pagination";
+import { TypographyH1 } from "@/Components/UI/typography";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DataFinancial from "@/Pages/Financial/FinancialData/dataFinancial";
+import { Head, usePage } from "@inertiajs/react";
+import * as React from "react";
 import SearchFinancial from "./FinancialData/SearchComponent";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/Components/UI/breadcrumb";
 export default function Financial() {
   const { statements } = usePage().props;
   const dataStatements: any = statements;
@@ -74,33 +67,13 @@ export default function Financial() {
         <div className="py-5">
           <div className="mx-auto sm:px-6 lg:px-8 max-w-7xl">
             <div className="flex flex-col min-h-[86vh]">
-              <Breadcrumb>
-                <BreadcrumbList>
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="/">Welcome</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="/dashboad">dashboad</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbPage className="text-white">
-                      Financial
-                    </BreadcrumbPage>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
-
-              <div className="py-3">
-                <h2 className="font-bold text-2xl text-text-Content">
-                  Danh sách báo cáo tài chính{" "}
-                </h2>
+              <div className="mb-3 py-3">
+                <TypographyH1>Danh sách báo cáo tài chính</TypographyH1>
               </div>
               <div className="flex justify-between items-center">
                 <div
                   id="tool"
-                  className="flex border-0 bg-background-active p-4 rounded-[8px] w-[1000px]"
+                  className="flex border-0 shadow-md p-4 rounded-[8px] w-[1000px]"
                 >
                   <SearchFinancial
                     searchTerm={searchTerm}

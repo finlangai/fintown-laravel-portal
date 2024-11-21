@@ -35,10 +35,7 @@ export default function CompanyEdit() {
     setProfileAndshareholder(false);
   };
   return (
-    <AuthenticatedLayout
-      header={true}
-    
-    >
+    <AuthenticatedLayout header={true}>
       <Head title="Dashboard" />
       <div className="py-12">
         <div className="mx-auto sm:px-6 lg:px-8 max-w-7xl">
@@ -48,7 +45,7 @@ export default function CompanyEdit() {
                 <div className="inline-flex top-0 left-0 absolute justify-end items-center w-[140px] h-[140px]">
                   <img
                     src={ProfileData.logo}
-                    className="bg-[#d9d9d9] rounded-[10px]"
+                    className="rounded-[10px]"
                     style={{
                       position: "absolute",
                       width: "100%",
@@ -73,18 +70,18 @@ export default function CompanyEdit() {
           </div>
           <div className="flex mt-10 w-48 h-[50px]">
             <button
-              className={`w-48 h-[40px] ${profileAndshareholder ? `bg-custom-button-success` : "bg-background-active"} rounded-lg flex justify-center items-center`}
+              className={`w-48 h-[40px] ${profileAndshareholder ? `bg-custom-button-success text-white` : "border-neutral-400 border text-neutral-500"} rounded-lg flex justify-center items-center`}
               onClick={toggleProfile}
             >
-              <div className="w-[148px] font-['Inter'] font-medium text-center text-sm text-text-Content">
+              <div className="w-[148px] font-['Inter'] font-medium text-center text-sm">
                 Hồ sơ công ty
               </div>
             </button>
             <button
-              className={`w-48 h-[40px]  ${profileAndshareholder ? `bg-background-active` : "bg-custom-button-success"} rounded-lg flex justify-center items-center ml-5`}
+              className={`w-48 h-[40px]  ${profileAndshareholder ? `bg-white border text-slate-600 border-slate-400` : "bg-custom-button-success text-white"} rounded-lg flex justify-center items-center ml-5`}
               onClick={toggleShareholder}
             >
-              <div className="w-[148px] font-['Inter'] font-medium text-center text-sm text-text-Content">
+              <div className="w-[148px] font-['Inter'] font-medium text-center text-sm">
                 Danh sách cổ đông
               </div>
             </button>

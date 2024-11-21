@@ -8,7 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@radix-ui/react-accordion";
-import { BookUser, CircleDollarSign, EarthLock, Users } from "lucide-react";
+import { BookUser, CircleDollarSign, Users } from "lucide-react";
 import { useState } from "react";
 
 const UsersMenuItems = () => {
@@ -48,14 +48,6 @@ const UsersMenuItems = () => {
                     label="Danh sách khách hàng"
                   >
                     <BookUser className="size-6" />
-                  </MenuItem>
-
-                  {/* === */}
-                  <MenuItem
-                    url={route("users.roles.index")}
-                    label="Cài đặt quyền hạn"
-                  >
-                    <EarthLock className="size-6" />
                   </MenuItem>
 
                   {/* === */}

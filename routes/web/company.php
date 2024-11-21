@@ -12,14 +12,17 @@ Route::get("/companies/{symbol}/edit", [
     CompanyWebController::class,
     "edit",
 ])->name("companies.edit");
+
 Route::put("/companies/update/{symbol}", [
     CompanyWebController::class,
     "update",
 ])->name("companies.update");
+
 Route::put("/holders/update/{id}", [
     HolderWebController::class,
     "update",
 ])->name("holders.update");
+
 Route::delete("/holders/delete/{id}", [
     HolderWebController::class,
     "destroy",

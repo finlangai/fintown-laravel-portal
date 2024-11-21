@@ -68,7 +68,7 @@ const CompanyLi = ({ isExpanded }: CompanyLiProps) => {
                     </Link>
                   </li>
 
-                  <li className="mt-5 hover:underline">
+                  {/* <li className="mt-5 hover:underline">
                     <Link href="/edit-company">
                       <div className="flex justify-start items-center">
                         <svg
@@ -93,8 +93,8 @@ const CompanyLi = ({ isExpanded }: CompanyLiProps) => {
                         </span>
                       </div>
                     </Link>
-                  </li>
-                  <li className="mt-5 hover:underline">
+                  </li> */}
+                  {/* <li className="mt-5 hover:underline">
                     <Link href="/holder-list">
                       <div className="flex justify-start items-center">
                         <svg
@@ -129,7 +129,7 @@ const CompanyLi = ({ isExpanded }: CompanyLiProps) => {
                         </span>
                       </div>
                     </Link>
-                  </li>
+                  </li> */}
                 </ul>
               </AccordionContent>
             </AccordionItem>

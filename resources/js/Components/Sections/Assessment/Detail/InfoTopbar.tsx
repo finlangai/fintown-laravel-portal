@@ -76,7 +76,7 @@ const InfoTopbar = () => {
                 isUpdatingAssessment && "animate-reverse-spin",
               )}
             />
-            Cập nhật nhận định
+            Cập nhật dự báo
           </button>
 
           <span className="text-slate-600 text-sm">

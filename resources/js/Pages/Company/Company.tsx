@@ -1,32 +1,4 @@
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/Components/UI/alert-dialog";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/Components/UI/breadcrumb";
-import { Button } from "@/Components/UI/button";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/Components/UI/select";
+import { TypographyH1 } from "@/Components/UI/typography";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Vn30Stocks from "@/Pages/Company/Vn30Stocks";
 import { Head } from "@inertiajs/react";
@@ -63,61 +35,43 @@ export default function FinancialReports({
       <Head title="Company" />
       <div className="py-5">
         <div className="mx-auto sm:px-6 lg:px-8 max-w-7xl">
-          <div className="flex flex-col min-h-[86vh]">
-            <Breadcrumb>
-              <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink href="/">Welcome</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbLink href="/dashboad">Dashboad</BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbPage className="text-text-Content">
-                    Company
-                  </BreadcrumbPage>
-                </BreadcrumbItem>
-              </BreadcrumbList>
-            </Breadcrumb>
-            <div className="py-3">
-              <h2 className="font-bold text-2xl text-text-Content">
-                Danh sách Công ty
-              </h2>
+          <div className="flex flex-col">
+            <div className="flex justify-between items-center mb-6 py-3">
+              <TypographyH1>Danh sách Công ty</TypographyH1>
+              <div className="relative flex items-center shadow-md mx-2 py-1 rounded-md w-fit h-fit">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="left-3 absolute text-text-Content"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.3-4.3" />
+                </svg>
+
+                <InputComponent
+                  companies={companies}
+                  onSymbolsFiltered={handleSymbolsFiltered}
+                />
+              </div>
             </div>
-            <div className="flex justify-between items-center">
-              <div
-                id="tool"
-                className="flex border-0 bg-background-active p-4 rounded-[8px] w-[600px]"
-              >
-                <div className="relative flex flex-1 items-center mx-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="left-3 absolute text-text-Content"
-                  >
-                    <circle cx="11" cy="11" r="8" />
-                    <path d="m21 21-4.3-4.3" />
-                  </svg>
-                  <InputComponent
-                    companies={companies}
-                    onSymbolsFiltered={handleSymbolsFiltered}
-                  />
-                </div>
-                <div
+
+            {/* <div className="flex justify-between items-center"> */}
+            {/* <div id="tool" className="flex border-0 shadow-md p-2 rounded-md"> */}
+            {/* === OLD SEARCH INPUT PLACING POSITION */}
+            {/* === UPDATE DATE BUTTON */}
+            {/* <div
                   id="date"
-                  className="flex flex-1 justify-center items-center mx-2 rounded"
+                  className="flex flex-1 justify-center items-center mx-2 rounded ms-12"
                 >
                   <Select>
-                    <SelectTrigger className="border-none w-[180px] text-text-Content">
+                    <SelectTrigger className="border-slate-300 w-[180px] text-text-Content">
                       <SelectValue placeholder="Ngày cập nhập" />
                     </SelectTrigger>
                     <SelectContent>
@@ -129,8 +83,9 @@ export default function FinancialReports({
                       </SelectGroup>
                     </SelectContent>
                   </Select>
-                </div>
-                <div
+                </div> */}
+            {/* === RESET BUTTON */}
+            {/* <div
                   id="reset"
                   className="flex flex-1 justify-center items-center mx-2"
                 >
@@ -154,16 +109,12 @@ export default function FinancialReports({
                       Đặt lại tất cả
                     </span>
                   </div>
-                </div>
-              </div>
-              <AlertDialog>
+                </div> */}
+            {/* </div> */}
+
+            {/* <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="bg-custom-button-success hover:bg-slate-500 text-text-Content"
-                  >
-                    Thêm công ty
-                  </Button>
+                  <AddButton asDiv>Thêm công ty</AddButton>
                 </AlertDialogTrigger>
                 <AlertDialogContent className="bg-background-active">
                   <AlertDialogHeader className="flex flex-col p-4">
@@ -250,8 +201,9 @@ export default function FinancialReports({
                     <AlertDialogAction>Cập nhập</AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
-              </AlertDialog>
-            </div>
+              </AlertDialog> */}
+            {/* </div> */}
+
             <Vn30Stocks
               data={filteredSymbols.length > 0 ? filteredSymbols : dataVN30}
             />

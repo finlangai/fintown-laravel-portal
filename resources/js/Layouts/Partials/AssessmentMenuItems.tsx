@@ -25,7 +25,7 @@ const AssessmentMenuItems = ({ isExpanded }: AssessmentMenuItemsProps) => {
             <SquareDashedKanban />
             {isExpanded && (
               <span className="ml-4 text-xs whitespace-nowrap">
-                Kết quả nhận định
+                Kết quả dự báo
               </span>
             )}
           </Link>

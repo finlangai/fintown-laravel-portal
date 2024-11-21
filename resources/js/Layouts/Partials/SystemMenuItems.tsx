@@ -1,3 +1,4 @@
+import MenuItem from "@/Components/UI/menu-item";
 import { cn } from "@/Lib/utils";
 import { Link } from "@inertiajs/react";
 import {
@@ -6,7 +7,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@radix-ui/react-accordion";
-import { BrainCircuit, CalendarCog, Cog, SquareRadical } from "lucide-react";
+import {
+  BrainCircuit,
+  CalendarCog,
+  Cog,
+  EarthLock,
+  SquareRadical,
+} from "lucide-react";
 
 interface SystemMenuItemsProps {
   isExpanded: boolean;
@@ -35,6 +42,14 @@ const SystemMenuItems = ({ isExpanded }: SystemMenuItemsProps) => {
             </AccordionTrigger>
             <AccordionContent className="ml-2">
               <ul>
+                {/* === */}
+                <MenuItem
+                  url={route("users.roles.index")}
+                  label="Quyền hạn khách hàng"
+                >
+                  <EarthLock className="size-6" />
+                </MenuItem>
+
                 {/* Công thức */}
                 <li className="mt-5 hover:underline">
                   <Link href={route("system.formulars.index")}>

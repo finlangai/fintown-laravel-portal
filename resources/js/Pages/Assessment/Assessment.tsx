@@ -30,7 +30,7 @@ export default function Assessment({ paginationData }: AssessmentProps) {
       <Head title="Kết quả nhận định" />
       {/* === HEADER */}
       {/* HEADER TITLE */}
-      <TypographyH1>Kết quả nhận định</TypographyH1>
+      <TypographyH1>Kết quả dự báo</TypographyH1>
       <div className="flex justify-between items-center">
         <form onSubmit={searchSymbol}>
           <div id="symbol-search-wrapper" className="relative flex min-w-96">
