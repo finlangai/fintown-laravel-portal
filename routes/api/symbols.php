@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Symbols\AssessmentsController;
+use App\Http\Controllers\API\Symbols\ComparisonController;
 use App\Http\Controllers\API\Symbols\EventsController;
 use App\Http\Controllers\API\Symbols\FinancialStatementController;
 use App\Http\Controllers\API\Symbols\FluctuationController;
@@ -22,6 +23,12 @@ Route::prefix("symbols")->group(function () {
     Route::get("search", SearchController::class);
     // VN30
     Route::get("vn30", VN30BucketController::class);
+
+    // COMPARISON
+    Route::prefix("comparison")->group(function () {
+        Route::post("/", [ComparisonController::class, "retrieve"]);
+        Route::get("/search", [ComparisonController::class, "search"]);
+    });
 
     Route::prefix("{symbol}")->group(function () {
         Route::get("profile", ProfileController::class);
