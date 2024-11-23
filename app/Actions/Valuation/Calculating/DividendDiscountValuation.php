@@ -33,8 +33,7 @@ class DividendDiscountValuation
         ]);
 
         $valuationResult = EvalHelper::safeEval($expression);
-        $actualPrice = $stash["stats"]["last_closed_price"];
 
-        return compact("valuationResult", "actualPrice");
+        return compact("valuationResult");
     }
 }

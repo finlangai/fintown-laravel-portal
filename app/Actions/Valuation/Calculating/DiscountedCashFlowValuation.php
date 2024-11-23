@@ -14,12 +14,11 @@ class DiscountedCashFlowValuation
     {
         $validated = request()->validate([
             "t" => "required|integer|min:1",
-            "r" => "required|numeric",
         ]);
         // t here is the t in the DCF formular
         $t = $validated["t"];
         // r here is the WACC or demanded rate of return
-        $r = $validated["r"];
+        $r = $stash["stats"]["wacc"];
 
         list($records, $avgGrowthRate) = self::getFCFWithGrowthRate(
             $stash->symbol
@@ -70,9 +69,7 @@ class DiscountedCashFlowValuation
         $equity = $DCF + $discountedTV - $liablities + $cash;
         $valuationResult = $equity / $outstandingShare;
 
-        $actualPrice = $stash["stats"]["last_closed_price"];
-
-        return compact("valuationResult", "actualPrice");
+        return compact("valuationResult");
     }
 
     private static function getFCFWithGrowthRate(string $symbol)

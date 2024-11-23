@@ -2,6 +2,7 @@
 
 namespace App\Actions\Valuation\Params;
 
+use App\Models\Mongo\Company\Stash;
 use App\Models\Mongo\MetricRecord;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -10,7 +11,7 @@ class DiscountedCashFlowParams
     public const FCFIdentifier = "free_cash_flow";
     public const GrowthRateIdentifier = "free_cash_flow_growth_rate";
 
-    public static function get(string $symbol)
+    public static function get(string $symbol, Stash $stash)
     {
         $records = MetricRecord::where("symbol", $symbol)
             ->where("quarter", 0)
@@ -48,7 +49,10 @@ class DiscountedCashFlowParams
             return $point;
         }, $forecast);
 
-        return compact("fcf_forecasts");
+        // wacc
+        $r = $stash["stats"]["wacc"];
+
+        return compact("r", "fcf_forecasts");
     }
 
     public static function calculateGrowthRate(Collection $records)

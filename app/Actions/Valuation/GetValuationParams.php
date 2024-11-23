@@ -28,7 +28,7 @@ class GetValuationParams
 
         switch ($formularInfo["identifier"]) {
             case StockValuationMethods::DISCOUNTED_CASH_FLOW->value:
-                return DiscountedCashFlowParams::get($symbol);
+                return DiscountedCashFlowParams::get($symbol, $stash);
                 break;
             case StockValuationMethods::DIVIDEND_DISCOUNT->value:
                 return DividendDiscountParams::get($formularInfo, $stash);

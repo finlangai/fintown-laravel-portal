@@ -19,8 +19,6 @@ class PriceToBookRelativeValuation
         $valuationResult = EvalHelper::safeEval($replacedFormular);
         $valuationResult = round($valuationResult, 2);
 
-        $actualPrice = $stash["stats"]["last_closed_price"];
-
-        return compact("valuationResult", "actualPrice");
+        return compact("valuationResult");
     }
 }
