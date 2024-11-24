@@ -13,7 +13,10 @@ class GrahamIntrinsicValueValuation
     public static function calculate(Formular $formularInfo, Stash $stash)
     {
         $formular = $formularInfo["formular"];
-        $dynamicParams = (new GrahamIntrinsicValueParams())->get($stash);
+        $dynamicParams = (new GrahamIntrinsicValueParams())->get(
+            $formularInfo,
+            $stash
+        );
 
         $params = $formularInfo["params"];
         $earnings_per_share = $dynamicParams["earnings_per_share"];

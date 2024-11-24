@@ -3,17 +3,19 @@
 namespace App\Actions\Valuation\Params;
 
 use App\Models\Mongo\Company\Stash;
+use App\Models\Mongo\Formular;
 use App\Models\Mongo\MetricRecord;
 
 class GrahamIntrinsicValueParams
 {
     public const EpsGrowthRateIdentifier = "earnings_per_share_growth_rate";
 
-    public static function get(Stash $stash)
+    public static function get(Formular $formularInfo, Stash $stash)
     {
         $EpsGrowthRate = self::getEpsGrowthRate($stash->symbol);
 
         return [
+            "bonds_yield" => $formularInfo["params"]["Y"],
             "earnings_per_share" => $stash["stats"]["eps_ltm"],
             self::EpsGrowthRateIdentifier => $EpsGrowthRate,
         ];

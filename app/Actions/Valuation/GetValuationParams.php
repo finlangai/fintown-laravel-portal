@@ -34,7 +34,7 @@ class GetValuationParams
                 return DividendDiscountParams::get($formularInfo, $stash);
                 break;
             case StockValuationMethods::GRAHAM_INTRINSIC_VALUE->value:
-                return GrahamIntrinsicValueParams::get($stash, $vn30Stash);
+                return GrahamIntrinsicValueParams::get($formularInfo, $stash);
                 break;
             case StockValuationMethods::PRICE_TO_EARNING_RELATIVE->value:
                 return PriceToEarningsRelativeParams::get($symbol, $vn30Stash);

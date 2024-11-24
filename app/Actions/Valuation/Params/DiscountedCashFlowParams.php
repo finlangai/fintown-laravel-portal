@@ -50,7 +50,7 @@ class DiscountedCashFlowParams
         }, $forecast);
 
         // wacc
-        $r = $stash["stats"]["wacc"];
+        $r = $stash["wacc"];
 
         return compact("r", "fcf_forecasts");
     }
