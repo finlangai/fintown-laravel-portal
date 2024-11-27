@@ -31,7 +31,10 @@ class CreateSubscription
         // === SUBSCRIPTION DATA
         $user_id = $currentTransaction->user->id;
         $program_id = $programInfo->id;
-        $transaction_id = $currentTransaction->id;
+
+        // transaction_id is no longer needed
+        // $transaction_id = $currentTransaction->id;
+
         // THIS SHOULD BE CHANGE IN THE FUTURE, CHECKING IF THE PROVIDED SUBSCRIPTION PERIOD IS DUE
         $status = SubscriptionStatus::ACTIVE;
         list($start_date, $end_date) = $this->getSubscriptionPeriod(
@@ -48,7 +51,7 @@ class CreateSubscription
                 compact(
                     "user_id",
                     "program_id",
-                    "transaction_id",
+                    // "transaction_id",
                     "status",
                     "start_date",
                     "end_date"
