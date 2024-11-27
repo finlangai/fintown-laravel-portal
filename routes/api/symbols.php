@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\Symbols\AssessmentsController;
 use App\Http\Controllers\API\Symbols\ComparisonController;
+use App\Http\Controllers\API\Symbols\DividendsController;
 use App\Http\Controllers\API\Symbols\EventsController;
 use App\Http\Controllers\API\Symbols\FinancialStatementController;
 use App\Http\Controllers\API\Symbols\FluctuationController;
@@ -40,7 +41,7 @@ Route::prefix("symbols")->group(function () {
         Route::get("events", EventsController::class);
         Route::get("news", NewsController::class);
         Route::get("transactions", InternalTransactionsController::class);
-        // Route::get("dividends", ProfileController::class);
+        Route::get("dividends", DividendsController::class);
         Route::get("ratio", RatioController::class);
         Route::get("financial-statements", FinancialStatementController::class);
 
