@@ -5,6 +5,7 @@ namespace App\Models\SQL\User;
 use App\Models\SQL\Subcription\CommissionHistory;
 use App\Models\SQL\Subcription\PromotionCode;
 use App\Models\SQL\Subcription\Subcription;
+use App\Models\SQL\Subcription\UserSubscription;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Arr;
@@ -104,7 +105,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function subcriptions(): HasMany
     {
-        return $this->hasMany(Subcription::class, "user_id");
+        return $this->hasMany(UserSubscription::class, "user_id");
     }
 
     public function promotionCodes(): HasMany

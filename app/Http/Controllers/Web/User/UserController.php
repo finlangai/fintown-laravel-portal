@@ -57,7 +57,8 @@ class UserController extends Controller
         try {
             $validated["avatar"] = env("DEFAULT_AVATAR");
             $user = User::create($validated);
-            $user->assignRole("basic");
+            $role = $validated["role"];
+            $user->assignRole($role);
 
             Toasting::success("Thêm người dùng thành công.");
         } catch (\Throwable $th) {

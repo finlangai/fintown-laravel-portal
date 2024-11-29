@@ -3,17 +3,30 @@ import DialogWrapper, {
   DialogWrapperHandler,
 } from "@/Components/Specialized/dialog-wrapper";
 import TextInput from "@/Components/Specialized/form/TextInput";
+import { Label } from "@/Components/UI/label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/Components/UI/select";
+import { useUserPage } from "@/Contexts/UserPageContext";
+import { capitalizeFirstChar } from "@/Lib/utils";
 import { useForm } from "@inertiajs/react";
 import { FC, FormEvent, useEffect, useRef } from "react";
 
 type CreateUserProps = {};
 const CreateUser: FC<CreateUserProps> = ({}) => {
+  const { userRoles } = useUserPage();
   const editDialogRef = useRef<DialogWrapperHandler>(null);
   const { post, data, setData, errors, wasSuccessful, isDirty } = useForm({
     fullname: "",
     email: "",
     phone: "",
     address: "",
+    role: "basic",
     password: "",
     confirmPassword: "",
   });
@@ -84,6 +97,32 @@ const CreateUser: FC<CreateUserProps> = ({}) => {
           setData={setData}
           autoComplete="off"
         />
+        {/* === ROLE */}
+        <div>
+          <Label className="mb-1 text-slate-700" htmlFor={`textinput_${name}`}>
+            Loại khách hàng
+          </Label>
+          <Select
+            value={data.role}
+            onValueChange={(roleName: string) => setData("role", roleName)}
+          >
+            <SelectTrigger className="shadow-sm !ring-0 h-11">
+              <SelectValue placeholder="Loại khách hàng" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {userRoles
+                  .filter((item) => ["basic", "partner"].includes(item.name))
+                  .map((role, index) => (
+                    <SelectItem value={String(role.name)} key={index}>
+                      {capitalizeFirstChar(role.name)}
+                    </SelectItem>
+                  ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        {/* === PASSWORD */}
         <TextInput
           type="password"
           label={"Mật khẩu"}
@@ -93,7 +132,7 @@ const CreateUser: FC<CreateUserProps> = ({}) => {
           setData={setData}
           autoComplete="off"
         />
-        {/* === EMAIL */}
+        {/* === CONFIRM PASSWORD */}
         <TextInput
           type="password"
           label={"Xác nhận mật khẩu"}
