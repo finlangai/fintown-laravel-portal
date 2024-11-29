@@ -8,7 +8,7 @@ trait ComparisonSearchAnnotation
      * @OA\Get(
      *      path="/api/symbols/comparison/search",
      *      operationId="SearchComparisonData",
-     *      tags={"Symbols"},
+     *      tags={"Symbols","Comparison"},
      *      summary="Search Comparison Data",
      *      description="Search comparison spec of many companies",
      *      @OA\Parameter(

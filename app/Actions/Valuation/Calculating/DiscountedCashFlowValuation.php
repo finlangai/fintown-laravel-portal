@@ -35,6 +35,7 @@ class DiscountedCashFlowValuation
         $DCF = 0;
 
         Logger::info("avgGrowthRate: " . $avgGrowthRate);
+        Logger::info("shares: " . $stash["stats"]["outstanding_share"]);
 
         for ($index = 0; $index < $t; $index++) {
             // t value
@@ -57,6 +58,7 @@ class DiscountedCashFlowValuation
             Logger::info(
                 "FCF với t = $current_t: " . $free_cash_flow / 10 ** 9
             );
+            Logger::info("Tỷ lệ chiết khấu: " . (1 + $r) ** $current_t);
 
             // define the expresison to evaluate
             $expression = EvalHelper::replaceParams($formularInfo->formular, [
@@ -74,27 +76,26 @@ class DiscountedCashFlowValuation
 
         // === CALCULATE STOCK PRICE
         $outstandingShare = $stash["stats"]["outstanding_share"];
-        $liablities = $stash["latest_report"]["liabilities"];
-        $borrowings =
-            intval($stash["latest_report"]["short_term_borrowings"]) +
-            intval($stash["latest_report"]["long_term_borrowings"]);
-        $cash = $stash["latest_report"]["cash_and_cash_equivalents"];
 
         // g là tỷ lệ tăng trưởng vĩnh viễn
         $g = 0.02;
 
         $finalPredictedFCF = $growingFCFList[count($growingFCFList) - 1];
+        // $terminalValue = ($finalPredictedFCF * (1 + $g)) / ($r - $g);
+        // $discountedTV = $terminalValue / (1 + $r) ** $t;
         $terminalValue = ($finalPredictedFCF * (1 + $g)) / ($r - $g);
         $discountedTV = $terminalValue / (1 + $r) ** $t;
 
-        Logger::info("borrowings: " . $borrowings / 10 ** 9);
-        Logger::info("terminalValue: " . $terminalValue / 10 ** 9);
-        Logger::info("discountedTV: " . $discountedTV / 10 ** 9);
+        Logger::info("Terminal Value đã chiết khấu: " . $discountedTV);
 
         // Sum the discounted DCF and Terminal Value then minus the Liabilities of the companies and add the Cash and Equavilent
         // $equity = $DCF + $discountedTV - $liablities + $cash;
-        $equity = $DCF + $discountedTV - $borrowings + $cash;
+        // $equity = $DCF + $discountedTV;
+        $equity = $DCF + $discountedTV;
         $valuationResult = $equity / $outstandingShare;
+
+        Logger::info("equity: " . $equity);
+        Logger::info("valuated: " . $valuationResult);
 
         return compact("valuationResult");
     }
@@ -106,8 +107,14 @@ class DiscountedCashFlowValuation
             ->orderBy("year", "desc")
             ->orderBy("quarter", "desc")
             ->project(DiscountedCashFlowParams::getMetricsProjection())
-            ->limit(20)
+            ->limit(12)
             ->get();
+        // $records = MetricRecord::where("symbol", $symbol)
+        //     ->where("quarter", 0)
+        //     ->orderBy("year", "desc")
+        //     ->project(DiscountedCashFlowParams::getMetricsProjection())
+        //     ->limit(5)
+        //     ->get();
 
         $avgGrowthRate = DiscountedCashFlowParams::calculateGrowthRate(
             $records

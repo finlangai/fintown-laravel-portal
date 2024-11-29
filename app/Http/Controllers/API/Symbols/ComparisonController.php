@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API\Symbols;
 
+use App\Actions\GetCompanyComparisonPeers;
+use App\Actions\GetComparisonData;
 use App\Http\Controllers\Controller;
 use App\Models\Mongo\Company\Company;
 use App\Models\Mongo\Company\Stash;
@@ -11,48 +13,27 @@ use MongoDB\Collection;
 
 class ComparisonController extends Controller
 {
-    public function retrieve()
+    public function __invoke(
+        string $symbol,
+        GetCompanyComparisonPeers $getComparisonPeers
+    ) {
+        $symbol = strtoupper($symbol);
+        return $getComparisonPeers->handle($symbol);
+    }
+
+    public function retrieve(GetComparisonData $getComparisonData)
     {
         $validated = request()->validate([
             "symbols" => "required|array|min:1|max:5",
         ]);
         $symbols = $validated["symbols"];
 
-        $result = Stash::raw(
-            fn(Collection $collection) => $collection->aggregate([
-                // Match documents where 'is_stock' is not false
-                [
-                    '$match' => [
-                        "is_stock" => ['$ne' => false],
-                        "symbol" => ['$in' => $symbols],
-                    ],
-                ],
-                [
-                    '$lookup' => [
-                        "from" => "companies",
-                        "localField" => "symbol",
-                        "foreignField" => "symbol",
-                        "pipeline" => [
-                            ['$project' => ["_id" => 0, "logo" => 1]],
-                            ['$limit' => 1],
-                        ],
-                        "as" => "companyInfo",
-                    ],
-                ],
-                [
-                    '$project' => [
-                        "symbol" => 1,
-                        "companyInfo" => 1,
-                        "comparison" => 1,
-                    ],
-                ],
-            ])
-        );
+        $result = $getComparisonData->handle($symbols);
 
-        $result->map(function ($item) {
-            $item["logo"] = $item["companyInfo"][0]["logo"];
-            unset($item["companyInfo"]);
-        });
+        // $result->map(function ($item) {
+        //     $item["logo"] = $item["companyInfo"][0]["logo"];
+        //     unset($item["companyInfo"]);
+        // });
 
         return ApiResponse::success($result);
     }

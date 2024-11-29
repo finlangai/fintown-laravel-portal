@@ -10,6 +10,7 @@ use App\Utils\Toasting;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -34,8 +35,9 @@ class UserController extends Controller
             );
         }
         $paginating = $query->paginate(8);
+        $userRoles = Role::where("guard_name", "api")->get();
 
-        return Inertia::render("User/User", compact("paginating"));
+        return Inertia::render("User/User", compact("paginating", "userRoles"));
     }
 
     /**

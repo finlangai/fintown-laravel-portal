@@ -32,6 +32,7 @@ Route::prefix("symbols")->group(function () {
     });
 
     Route::prefix("{symbol}")->group(function () {
+        Route::get("comparison", ComparisonController::class);
         Route::get("profile", ProfileController::class);
         Route::get("quotes", QuotesController::class);
         Route::get("summary", SummaryController::class);

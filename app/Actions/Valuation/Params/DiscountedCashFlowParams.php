@@ -61,9 +61,10 @@ class DiscountedCashFlowParams
         $validCount = 0;
         $records->map(function ($record) use (&$growthRateSum, &$validCount) {
             if (
-                $record[self::GrowthRateIdentifier] &&
-                $record[self::GrowthRateIdentifier] <= 300 &&
-                $record[self::GrowthRateIdentifier] >= -300
+                $record[self::GrowthRateIdentifier]
+                // &&
+                // $record[self::GrowthRateIdentifier] <= 300 &&
+                // $record[self::GrowthRateIdentifier] >= -300
             ) {
                 $growthRateSum += $record[self::GrowthRateIdentifier] / 100;
                 $validCount += 1;

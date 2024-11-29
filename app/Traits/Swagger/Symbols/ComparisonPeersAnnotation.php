@@ -2,26 +2,23 @@
 
 namespace App\Traits\Swagger\Symbols;
 
-trait ComparisonRetrieveAnnotation
+trait ComparisonPeersAnnotation
 {
     /**
-     * @OA\Post(
-     *      path="/api/symbols/comparison",
-     *      operationId="RetrieveComparisonData",
+     * @OA\Get(
+     *      path="/api/symbols/{symbol}/comparison",
+     *      operationId="RetrievePeersComparison",
      *      tags={"Symbols","Comparison"},
-     *      summary="Retrieve Comparison Data",
-     *      description="Retrieve comparison spec of many companies",
-     *      @OA\RequestBody(
-     *          required=true,
-     *          @OA\JsonContent(
-     *              required={"symbols"},
-     *              @OA\Property(
-     *                  property="symbols",
-     *                  type="array",
-     *                  @OA\Items(type="string"),
-     *                  example={"HPG", "MBB", "SSI"}
-     *              ),
-     *          ),
+     *      summary="Retrieve Peers Comparison Data",
+     *      description="Retrieve comparison spec of a company's Peers",
+     *      @OA\Parameter(
+     *          description="Symbol of the instrument",
+     *          in="path",
+     *          name="symbol",
+     *          @OA\Schema(type="string"),
+     *          @OA\Examples(example="Vietcombank", value="VCB", summary="Vietcomebank"),
+     *          @OA\Examples(example="MB Bank", value="MBB", summary="MB Bank"),
+     *          @OA\Examples(example="Vietnamilk", value="VNM", summary="Vietnamilk"),
      *      ),
      *      @OA\Response(
      *          response=200,
@@ -49,16 +46,12 @@ trait ComparisonRetrieveAnnotation
      *          description="No resources found"
      *      ),
      *      @OA\Response(
-     *          response=422,
-     *          description="Insufficient parameters"
-     *      ),
-     *      @OA\Response(
      *          response=500,
      *          description="Internal Server Error"
      *      )
      * )
      */
-    public function ComparisonRetrieveAnnotation()
+    public function ComparisonPeersAnnotation()
     {
     }
 }

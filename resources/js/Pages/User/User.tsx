@@ -19,6 +19,15 @@ import {
   TableRow,
 } from "@/Components/UI/table";
 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/Components/UI/select";
 import { TypographyH1 } from "@/Components/UI/typography";
 import { UserPageProvider } from "@/Contexts/UserPageContext";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
@@ -29,6 +38,7 @@ import { FormEvent } from "react";
 
 export type UserPageProps = {
   paginating: Pagination<User & { roles: Role[] }>;
+  userRoles: Role[];
 };
 
 export default function UserPage(props: UserPageProps) {
@@ -42,6 +52,8 @@ export default function UserPage(props: UserPageProps) {
     });
   };
 
+  console.log(props.userRoles);
+
   return (
     <Authenticated
       header={true}
@@ -54,21 +66,40 @@ export default function UserPage(props: UserPageProps) {
           <div className="flex items-center gap-6">
             <TypographyH1>Danh sách khách hàng</TypographyH1> <CreateUser />
           </div>
-          <form
-            id="user-search-wrapper"
-            onSubmit={searchHandler}
-            className="relative flex min-w-96"
-          >
-            <Search
-              onClick={searchHandler}
-              className="top-1/2 left-3 absolute -translate-y-1/2 cursor-pointer size-5"
-            />
-            <Input
-              placeholder="Tìm kiếm bằng tên, số điện thoại hoặc email"
-              className="shadow-md py-[21px] ps-12"
-              onChange={({ target: { value } }) => setData("search", value)}
-            />
-          </form>
+          {/* HEADER LEFT */}
+          <div className="flex gap-3">
+            <Select>
+              <SelectTrigger className="shadow-md h-11">
+                <SelectValue placeholder="Lọc khách hàng" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Các loại khách hàng</SelectLabel>
+                  <SelectItem value="apple">Apple</SelectItem>
+                  <SelectItem value="banana">Banana</SelectItem>
+                  <SelectItem value="blueberry">Blueberry</SelectItem>
+                  <SelectItem value="grapes">Grapes</SelectItem>
+                  <SelectItem value="pineapple">Pineapple</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
+            <form
+              id="user-search-wrapper"
+              onSubmit={searchHandler}
+              className="relative flex min-w-96"
+            >
+              <Search
+                onClick={searchHandler}
+                className="top-1/2 left-3 absolute -translate-y-1/2 cursor-pointer size-5"
+              />
+              <Input
+                placeholder="Tìm kiếm bằng tên, số điện thoại hoặc email"
+                className="shadow-md py-[21px] ps-12"
+                onChange={({ target: { value } }) => setData("search", value)}
+              />
+            </form>
+          </div>
         </div>
 
         {/* USERS LIST CONTAINER */}
