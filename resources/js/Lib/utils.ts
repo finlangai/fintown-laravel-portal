@@ -15,3 +15,11 @@ export function toSnakeCase(str: string) {
 export function capitalizeFirstChar(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+export function getQueryParams(): { [key: string]: string } {
+  const queryParams: { [key: string]: string } = {};
+  const url = new URL(window.location.href);
+  url.searchParams.forEach((value, key) => {
+    queryParams[key] = value;
+  });
+  return queryParams;
+}

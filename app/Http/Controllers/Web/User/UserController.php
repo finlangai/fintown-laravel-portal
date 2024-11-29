@@ -7,6 +7,7 @@ use App\Http\Requests\Web\Users\StoreUserRequest;
 use App\Http\Requests\Web\Users\UpdateUserInfoRequest;
 use App\Models\SQL\User\User;
 use App\Utils\Toasting;
+use Illuminate\Contracts\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -22,6 +23,7 @@ class UserController extends Controller
         $query = User::with("roles");
 
         $search = request()->input("search");
+        $roleId = request()->input("roleId");
         if ($search) {
             $query->where(
                 fn(Builder $query) => $query
@@ -33,6 +35,12 @@ class UserController extends Controller
                     ])
                     ->orWhereRaw("LOWER(phone) LIKE ?", ["%" . $search . "%"])
             );
+        }
+        if ($roleId && $roleId != "all") {
+            $roleId = intval($roleId);
+            $query->whereHas("roles", function ($query) use ($roleId) {
+                $query->where("id", $roleId);
+            });
         }
         $paginating = $query->paginate(8);
         $userRoles = Role::where("guard_name", "api")->get();

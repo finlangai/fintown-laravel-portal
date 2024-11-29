@@ -31,7 +31,7 @@ import {
 import { TypographyH1 } from "@/Components/UI/typography";
 import { UserPageProvider } from "@/Contexts/UserPageContext";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { capitalizeFirstChar } from "@/Lib/utils";
+import { capitalizeFirstChar, getQueryParams } from "@/Lib/utils";
 import { Head, router, useForm } from "@inertiajs/react";
 import { EllipsisVertical, Search } from "lucide-react";
 import { FormEvent } from "react";
@@ -42,11 +42,26 @@ export type UserPageProps = {
 };
 
 export default function UserPage(props: UserPageProps) {
-  const { setData, data } = useForm({ search: "" });
+  const queryParams = getQueryParams();
+  const { setData, data } = useForm({
+    search: queryParams.search,
+    roleId: queryParams.roleId,
+  });
 
   const searchHandler = (e: FormEvent) => {
     e.preventDefault();
-    router.visit(route("users.index", { search: data.search }), {
+    router.visit(
+      route("users.index", { search: data.search, roleId: data.roleId }),
+      {
+        preserveScroll: true,
+        preserveState: true,
+      },
+    );
+  };
+
+  const roleFilterHandler = (value: string) => {
+    setData("roleId", value);
+    router.visit(route("users.index", { search: data.search, roleId: value }), {
       preserveScroll: true,
       preserveState: true,
     });
@@ -68,18 +83,19 @@ export default function UserPage(props: UserPageProps) {
           </div>
           {/* HEADER LEFT */}
           <div className="flex gap-3">
-            <Select>
-              <SelectTrigger className="shadow-md h-11">
+            <Select onValueChange={roleFilterHandler}>
+              <SelectTrigger className="shadow-md !ring-0 h-11">
                 <SelectValue placeholder="Lọc khách hàng" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>Các loại khách hàng</SelectLabel>
-                  <SelectItem value="apple">Apple</SelectItem>
-                  <SelectItem value="banana">Banana</SelectItem>
-                  <SelectItem value="blueberry">Blueberry</SelectItem>
-                  <SelectItem value="grapes">Grapes</SelectItem>
-                  <SelectItem value="pineapple">Pineapple</SelectItem>
+                  <SelectItem value="all">Tất cả</SelectItem>
+                  {props.userRoles.map((role, index) => (
+                    <SelectItem value={String(role.id)} key={index}>
+                      {capitalizeFirstChar(role.name)}
+                    </SelectItem>
+                  ))}
                 </SelectGroup>
               </SelectContent>
             </Select>
