@@ -9,10 +9,11 @@ const UserPageContext = createContext<UserPageContextProps | undefined>(
 
 export const UserPageProvider = ({
   children,
+  userRoles,
   paginating,
 }: { children: ReactNode } & UserPageContextProps) => {
   return (
-    <UserPageContext.Provider value={{ paginating }}>
+    <UserPageContext.Provider value={{ userRoles, paginating }}>
       {children}
     </UserPageContext.Provider>
   );
