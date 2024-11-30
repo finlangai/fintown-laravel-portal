@@ -25,8 +25,11 @@ function getTransactionStatusBackgound(status: UserTransactionStatus) {
 
 const ViewUserTransactions: FC<ViewUserTransactionProps> = ({ user }) => {
   const ViewUserTransactionDialogRef = useRef<DialogWrapperHandler>(null);
-  const { transactions } = user;
-  console.log(transactions);
+  let { transactions } = user;
+  transactions = transactions.sort(
+    (t1, t2) =>
+      new Date(t2.created_at!).getTime() - new Date(t1.created_at!).getTime(),
+  );
 
   return (
     <DialogWrapper
@@ -58,52 +61,45 @@ const ViewUserTransactions: FC<ViewUserTransactionProps> = ({ user }) => {
             Người dùng hiện chưa khởi tạo giao dịch nào
           </p>
         ) : (
-          transactions
-            .sort(
-              (t1, t2) =>
-                new Date(t2.created_at!).getTime() -
-                new Date(t1.created_at!).getTime(),
-            )
-            .map((transact, index) => (
-              <div
-                key={index}
-                className="flex flex-col gap-1 px-2 py-3 border rounded-md text-sm"
-              >
-                <div className="flex justify-between">
-                  <InfoField
-                    name="Số tiền: "
-                    value={formatNumberWithCommas(transact.amount!) + " VNĐ"}
-                  />
-                  <InfoField
-                    name="Phương thức GD: "
-                    value={transact.payment_method?.name}
-                  />
-                </div>
-                <p className="text-slate-700">
-                  <span className="font-medium text-slate-500 text-sm">
-                    Trạng thái:{" "}
-                  </span>{" "}
-                  <span
-                    className={cn(
-                      "p-1 rounded-md font-medium text-white text-xs",
-                      getTransactionStatusBackgound(transact.status),
-                    )}
-                  >
-                    {transact.status}
-                  </span>
-                </p>
-                <p className="text-slate-700">
-                  <span className="font-medium text-slate-500 text-sm">
-                    Nội dung:{" "}
-                  </span>{" "}
-                  {transact.info}
-                </p>
-                <div className="mt-1 text-end text-slate-600 text-xs">
-                  Thực hiện vào{" "}
-                  {new Date(transact.created_at!).toLocaleString()}
-                </div>
+          transactions.map((transact, index) => (
+            <div
+              key={index}
+              className="flex flex-col gap-1 px-2 py-3 border rounded-md text-sm"
+            >
+              <div className="flex justify-between">
+                <InfoField
+                  name="Số tiền: "
+                  value={formatNumberWithCommas(transact.amount!) + " VNĐ"}
+                />
+                <InfoField
+                  name="Phương thức GD: "
+                  value={transact.payment_method?.name}
+                />
               </div>
-            ))
+              <p className="text-slate-700">
+                <span className="font-medium text-slate-500 text-sm">
+                  Trạng thái:{" "}
+                </span>{" "}
+                <span
+                  className={cn(
+                    "p-1 rounded-md font-medium text-white text-xs",
+                    getTransactionStatusBackgound(transact.status),
+                  )}
+                >
+                  {transact.status}
+                </span>
+              </p>
+              <p className="text-slate-700">
+                <span className="font-medium text-slate-500 text-sm">
+                  Nội dung:{" "}
+                </span>{" "}
+                {transact.info}
+              </p>
+              <div className="mt-1 text-end text-slate-600 text-xs">
+                Thực hiện vào {new Date(transact.created_at!).toLocaleString()}
+              </div>
+            </div>
+          ))
         )}
       </section>
     </DialogWrapper>

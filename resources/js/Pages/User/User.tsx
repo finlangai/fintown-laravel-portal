@@ -19,6 +19,7 @@ import {
   TableRow,
 } from "@/Components/UI/table";
 
+import ViewUserSubscriptions from "@/Components/Sections/User/Users/UserSubscription";
 import ViewUserTransactions from "@/Components/Sections/User/Users/UserTransactions";
 import {
   Select,
@@ -40,6 +41,7 @@ import { FormEvent } from "react";
 export type UserGeneral = User & {
   roles: Role[];
   transactions: UserTransaction[];
+  subscriptions: (UserSubscription & { program: SubscriptionProgram })[];
 };
 
 export type UserPageProps = {
@@ -48,8 +50,6 @@ export type UserPageProps = {
 };
 
 export default function UserPage(props: UserPageProps) {
-  // console.log(props);
-
   const queryParams = getQueryParams();
   const { setData, data } = useForm({
     search: queryParams.search,
@@ -90,12 +90,14 @@ export default function UserPage(props: UserPageProps) {
           {/* HEADER LEFT */}
           <div className="flex gap-3">
             <Select onValueChange={roleFilterHandler}>
-              <SelectTrigger className="shadow-md !ring-0 h-11">
+              <SelectTrigger className="shadow-md !ring-0 h-11 text-slate-700 placeholder-slate-700">
                 <SelectValue placeholder="Lọc khách hàng" />
               </SelectTrigger>
               <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Các loại khách hàng</SelectLabel>
+                <SelectGroup className="text-slate-600">
+                  <SelectLabel className="text-slate-600">
+                    Các loại khách hàng
+                  </SelectLabel>
                   <SelectItem value="all">Tất cả</SelectItem>
                   {props.userRoles.map((role, index) => (
                     <SelectItem value={String(role.id)} key={index}>
@@ -164,6 +166,10 @@ export default function UserPage(props: UserPageProps) {
                         {/* === VIEW TRANSACTIONS LOG */}
                         <DropdownMenuItem>
                           <ViewUserTransactions user={user} />
+                        </DropdownMenuItem>
+                        {/* === VIEW SUBSCRIPTIONS */}
+                        <DropdownMenuItem>
+                          <ViewUserSubscriptions user={user} />
                         </DropdownMenuItem>
                         {/* === CHANGE PASSWORD ACTION */}
                         <DropdownMenuItem>

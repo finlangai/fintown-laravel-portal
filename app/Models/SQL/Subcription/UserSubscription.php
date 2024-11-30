@@ -6,7 +6,7 @@ use App\Models\SQL\Payment\Transaction;
 use App\Models\SQL\User\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use MongoDB\Laravel\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class UserSubscription extends Model
 {

@@ -19,6 +19,11 @@ Route::prefix("users")
             "updatePassword",
         ])->name("update.password");
 
+        Route::patch("cancel-subscription/{subscriptionId}", [
+            UserController::class,
+            "cancelSubscription",
+        ])->name("cancel-subscription");
+
         // === USER ROLES ROUTES
         Route::prefix("roles")
             ->name("roles.")

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Web\User;
 
+use App\Enums\SubscriptionStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Web\Users\StoreUserRequest;
 use App\Http\Requests\Web\Users\UpdateUserInfoRequest;
+use App\Models\SQL\Subcription\UserSubscription;
 use App\Models\SQL\User\User;
 use App\Utils\Toasting;
 use Illuminate\Contracts\Database\Eloquent\Builder as EloquentBuilder;
@@ -20,7 +22,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        $query = User::with("roles", "transactions.paymentMethod");
+        $query = User::with(
+            "roles",
+            "transactions.paymentMethod",
+            "subscriptions.program"
+        );
 
         $search = request()->input("search");
         $roleId = request()->input("roleId");
@@ -109,6 +115,18 @@ class UserController extends Controller
             Toasting::success("Đã xóa khách hàng khỏi hệ thống.");
         } catch (\Throwable $th) {
             Toasting::error("Có lỗi xảy ra trong quá trình thực hiện.");
+        }
+    }
+
+    public function cancelSubscription(int $subscriptionId)
+    {
+        try {
+            UserSubscription::findOrFail($subscriptionId)->update([
+                "status" => SubscriptionStatus::CANCELLED,
+            ]);
+            Toasting::success("Hủy bỏ thành công.");
+        } catch (\Throwable $th) {
+            Toasting::error("Đã có lỗi trong quá trình thực hiện.");
         }
     }
 }

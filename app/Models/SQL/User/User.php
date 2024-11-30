@@ -104,7 +104,7 @@ class User extends Authenticatable implements JWTSubject
 
     // === RELATIONS
 
-    public function subcriptions(): HasMany
+    public function subscriptions(): HasMany
     {
         return $this->hasMany(UserSubscription::class, "user_id");
     }
