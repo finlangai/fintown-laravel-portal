@@ -19,10 +19,15 @@ class MakePaymentUrl
         PaymentMethod $paymentMethod,
         string $callbackUrl
     ) {
+        // THE TRANSACT AMOUNT
+        $amount = $program->price;
+        $amount -= $amount * ($program->discount / 100);
+
         // CREATE NEW TRANSACTION RECORD
         $currentTransaction = Transaction::create([
             "user_id" => auth("api")->id(),
             "payment_method_id" => $paymentMethod->id,
+            "amount" => $amount,
             "info" => "Thanh toán gói hội viên $program->name",
             "payload" => [
                 "callbackUrl" => $callbackUrl,

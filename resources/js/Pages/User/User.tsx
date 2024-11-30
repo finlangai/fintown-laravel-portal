@@ -19,6 +19,7 @@ import {
   TableRow,
 } from "@/Components/UI/table";
 
+import ViewUserTransactions from "@/Components/Sections/User/Users/UserTransactions";
 import {
   Select,
   SelectContent,
@@ -36,12 +37,19 @@ import { Head, router, useForm } from "@inertiajs/react";
 import { EllipsisVertical, Search } from "lucide-react";
 import { FormEvent } from "react";
 
+export type UserGeneral = User & {
+  roles: Role[];
+  transactions: UserTransaction[];
+};
+
 export type UserPageProps = {
-  paginating: Pagination<User & { roles: Role[] }>;
+  paginating: Pagination<UserGeneral>;
   userRoles: Role[];
 };
 
 export default function UserPage(props: UserPageProps) {
+  // console.log(props);
+
   const queryParams = getQueryParams();
   const { setData, data } = useForm({
     search: queryParams.search,
@@ -66,8 +74,6 @@ export default function UserPage(props: UserPageProps) {
       preserveState: true,
     });
   };
-
-  console.log(props.userRoles);
 
   return (
     <Authenticated
@@ -151,16 +157,20 @@ export default function UserPage(props: UserPageProps) {
                         <EllipsisVertical className="rounded-full hover:bg-text-active hover:stroke-white py-1 transition-all duration-200 ease-out size-7" />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
+                        {/* === EIDT USER INFO ACTION */}
                         <DropdownMenuItem>
-                          {/* === EIDT USER INFO ACTION */}
                           <EditUser user={user} />
                         </DropdownMenuItem>
+                        {/* === VIEW TRANSACTIONS LOG */}
                         <DropdownMenuItem>
-                          {/* === CHANGE PASSWORD ACTION */}
+                          <ViewUserTransactions user={user} />
+                        </DropdownMenuItem>
+                        {/* === CHANGE PASSWORD ACTION */}
+                        <DropdownMenuItem>
                           <ChangeUserPassword user={user} />
                         </DropdownMenuItem>
+                        {/* === DELETE ACTION */}
                         <DropdownMenuItem>
-                          {/* === DELETE ACTION */}
                           <ConfirmDelete
                             trigger={
                               <button type="button">Xóa khách hàng</button>

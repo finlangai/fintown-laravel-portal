@@ -2,14 +2,15 @@
 
 namespace App\Models\SQL\User;
 
+use App\Models\SQL\Payment\Transaction;
 use App\Models\SQL\Subcription\CommissionHistory;
 use App\Models\SQL\Subcription\PromotionCode;
 use App\Models\SQL\Subcription\Subcription;
 use App\Models\SQL\Subcription\UserSubscription;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Arr;
-use MongoDB\Laravel\Relations\HasMany;
 use MongoDB\Laravel\Relations\HasOne;
 use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -113,8 +114,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(PromotionCode::class, "partner_id");
     }
 
-    public function commissionHistory(): HasOne
+    public function transactions(): HasMany
     {
-        return $this->hasOne(CommissionHistory::class, "user_id");
+        return $this->hasMany(Transaction::class, "user_id");
     }
 }

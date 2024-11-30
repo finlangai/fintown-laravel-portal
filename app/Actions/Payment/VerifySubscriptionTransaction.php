@@ -3,6 +3,8 @@
 namespace App\Actions\Payment;
 
 use App\Enums\PaymentMethods;
+use App\Enums\TransactionStatus;
+use App\Models\SQL\Payment\Transaction;
 use App\Services\Payments\MomoService;
 use App\Services\Payments\VnPayService;
 use Lorisleiva\Actions\Concerns\AsAction;
@@ -30,6 +32,15 @@ class VerifySubscriptionTransaction
 
         if (!$sucess) {
             $bill["failed"] = true;
+            return $bill;
+        }
+
+        try {
+            Transaction::find($bill["id"])->update([
+                "status" => TransactionStatus::FULFILLED,
+            ]);
+        } catch (\Throwable $th) {
+            //throw $th;
         }
 
         return $bill;

@@ -20,7 +20,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $query = User::with("roles");
+        $query = User::with("roles", "transactions.paymentMethod");
 
         $search = request()->input("search");
         $roleId = request()->input("roleId");
