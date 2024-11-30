@@ -142,6 +142,7 @@ export default function UserPage(props: UserPageProps) {
             {/* START = USERS TABLE BODY */}
             {props.paginating.data.map((user) => {
               const { id, fullname, email, phone, roles } = user;
+              console.log(roles);
 
               return (
                 <TableRow key={id} className="text-slate-700">
