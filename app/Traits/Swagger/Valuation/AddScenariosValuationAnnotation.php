@@ -14,7 +14,10 @@ trait AddScenariosValuationAnnotation
      *         name="identifier",
      *         in="path",
      *         required=true,
-     *         @OA\Schema( * type="string", enum={"price-to-earnings-relative-valuation", "price-to-book-relative-valuation","discounted-cash-flow", "graham-intrinsic-value-formula", "price-earnings-to-growth-ratio", "capital-asset-pricing-model", "dividend-discount-model"}, example="price-to-earnings-relative-valuation"
+     *         @OA\Schema(
+     *             type="string",
+     *             enum={"price-to-earnings-relative-valuation", "price-to-book-relative-valuation","discounted-cash-flow", "graham-intrinsic-value-formula", "price-earnings-to-growth-ratio", "capital-asset-pricing-model", "dividend-discount-model"},
+     *             example="price-to-earnings-relative-valuation"
      *         )
      *     ),
      *     @OA\Parameter(
@@ -29,8 +32,9 @@ trait AddScenariosValuationAnnotation
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(property="title", type="string", example="Kịch bản đầu tay"),
-     *             @OA\Property(property="potential", type="integer", example="11"),
-     *             @OA\Property(property="valuated", type="number", format="float", example="58203"),
+     *             @OA\Property(property="potential", type="integer", example=11),
+     *             @OA\Property(property="valuated", type="number", format="float", example=58203),
+     *             @OA\Property(property="actual", type="number", format="float", example=60000),
      *             @OA\Property(property="note", type="string", example="Cả người ngoài hành tinh lẫn ma quỷ đều có thật sao?")
      *         )
      *     ),

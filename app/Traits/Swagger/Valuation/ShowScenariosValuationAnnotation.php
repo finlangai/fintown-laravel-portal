@@ -43,6 +43,7 @@ trait ShowScenariosValuationAnnotation
      *             @OA\Property(property="title", type="string", example="Kịch bản này vjp pro"),
      *             @OA\Property(property="potential", type="integer", example=11),
      *             @OA\Property(property="valuated", type="integer", example=12123),
+     *             @OA\Property(property="actual", type="number", format="float", example=60000),
      *             @OA\Property(property="note", type="string", example="Cả người ngoài hành tinh lẫn ma quỷ đều có thật sao?"),
      *             @OA\Property(property="id", type="string", example="6734bf885fb113a3c906fc15"),
      *             @OA\Property(property="saveAt", type="integer", example=1731510152)
