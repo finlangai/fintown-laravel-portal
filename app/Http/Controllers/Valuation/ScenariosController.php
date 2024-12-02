@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Valuation;
 
+use App\Actions\GetUserScenariosList;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\AddValuationScenarioRequest;
 use App\Http\Requests\API\UpdateValuationScenarioRequest;
@@ -13,22 +14,14 @@ use Illuminate\Support\Carbon;
 
 class ScenariosController extends Controller
 {
-    public function index(Formular $formularInfo, string $symbol)
-    {
-        $userId = auth("api")->id();
-        $scenarios = ValuationScenario::where("symbol", $symbol)
-            ->where("type_id", $formularInfo->id)
-            ->where("user_id", $userId)
-            ->orderBy("created_at", "desc")
-            ->get();
+    public function index(
+        Formular $formularInfo,
+        string $symbol,
+        GetUserScenariosList $action
+    ) {
+        $result = $action->handle($formularInfo, $symbol);
 
-        $result = $scenarios->map(function ($item) {
-            $item["saveAt"] = $item["created_at"]->format("d/m/Y");
-            unset($item["created_at"]);
-            unset($item["type_id"]);
-        });
-
-        return ApiResponse::success($scenarios);
+        return ApiResponse::success($result);
     }
 
     public function store(
@@ -48,9 +41,9 @@ class ScenariosController extends Controller
     public function show($_, $__, ValuationScenario $scenario)
     {
         $scenario = $scenario->toArray();
-        $scenario["saveAt"] = Carbon::parse($scenario["created_at"])->timestamp;
+        $scenario["saveAt"] = Carbon::parse($scenario["updated_at"])->timestamp;
         unset($scenario["type_id"]);
-        unset($scenario["created_at"]);
+        unset($scenario["updated_at"]);
         return ApiResponse::success($scenario);
     }
 

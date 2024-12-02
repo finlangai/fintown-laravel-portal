@@ -7,7 +7,8 @@ use MongoDB\Laravel\Eloquent\Model;
 class ValuationScenario extends Model
 {
     const COLLECTION_NAME = "valuation_scenarios";
-    const UPDATED_AT = null;
+    // const UPDATED_AT = null;
+    const CREATED_AT = null;
 
     protected $connection = "mongodb";
     protected $table = self::COLLECTION_NAME;
@@ -19,8 +20,15 @@ class ValuationScenario extends Model
         "user_id",
         "title",
         "potential",
+        "actual",
         "valuated",
         "expected_date",
         "note",
+    ];
+
+    protected $casts = [
+        "actual" => "double",
+        "potential" => "double",
+        "valuated" => "double",
     ];
 }

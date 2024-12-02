@@ -25,6 +25,7 @@ class AddValuationScenarioRequest extends FormRequest
             "title" => "required|string",
             "potential" => "required|numeric",
             "valuated" => "required|numeric",
+            "actual" => "nullable|numeric",
             "expected_date" => "nullable",
             "note" => "required|string",
         ];
