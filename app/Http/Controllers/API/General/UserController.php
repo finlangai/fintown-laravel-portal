@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\API\General;
 
 use App\Actions\ChangeUserAvatar;
+use App\Actions\ProcessUserSubscriptionData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\General\UpdateUserRequest;
 use App\Http\Requests\API\General\ChangeAvatarRequest;
+use App\Models\SQL\Subcription\UserSubscription;
 use App\Models\SQL\User\User;
 use App\Utils\ApiResponse;
 use App\Utils\Util;
@@ -54,5 +56,21 @@ class UserController extends Controller
             "message" => "Cập nhật ảnh đại diện thành công",
             "newAvatar" => $newAvatarUrl,
         ]);
+    }
+
+    public function subscriptionLogs(ProcessUserSubscriptionData $action)
+    {
+        $userId = auth("api")->id();
+        try {
+            $subscriptions = UserSubscription::where("user_id", $userId)
+                ->with("program")
+                ->get();
+        } catch (\Throwable $th) {
+            return ApiResponse::success("Không tìm thấy người dùng.");
+        }
+
+        $result = $action->handle($subscriptions);
+
+        return ApiResponse::success($result);
     }
 }
