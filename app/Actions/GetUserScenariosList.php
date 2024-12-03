@@ -4,6 +4,7 @@ namespace App\Actions;
 
 use App\Models\Mongo\Formular;
 use App\Models\Mongo\General\ValuationScenario;
+use App\Utils\Util;
 use Lorisleiva\Actions\Concerns\AsAction;
 use MongoDB\Laravel\Eloquent\Builder;
 
@@ -28,7 +29,9 @@ class GetUserScenariosList
             unset($item["type_id"]);
         });
 
-        return $scenarios;
+        $result = Util::CamelizeArray($scenarios->toArray());
+
+        return $result;
     }
 
     private function processTimeFilter(Builder $query)

@@ -9,6 +9,7 @@ use App\Http\Requests\API\UpdateValuationScenarioRequest;
 use App\Models\Mongo\Formular;
 use App\Models\Mongo\General\ValuationScenario;
 use App\Utils\ApiResponse;
+use App\Utils\Util;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -38,13 +39,23 @@ class ScenariosController extends Controller
         return ApiResponse::created(["message" => "Tạo kịch bản thành công."]);
     }
 
-    public function show($_, $__, ValuationScenario $scenario)
+    public function show($_, $__, string $scenarioId)
     {
+        try {
+            $scenario = ValuationScenario::findOrFail($scenarioId);
+        } catch (\Throwable $th) {
+            return ApiResponse::notFound("Không tìm thấy kịch bản.");
+        }
+
         $scenario = $scenario->toArray();
-        $scenario["saveAt"] = Carbon::parse($scenario["updated_at"])->timestamp;
+        $scenario["saveAt"] = Carbon::parse($scenario["updated_at"])->format(
+            "d/m/Y"
+        );
         unset($scenario["type_id"]);
         unset($scenario["updated_at"]);
-        return ApiResponse::success($scenario);
+
+        $result = Util::CamelizeArray($scenario);
+        return ApiResponse::success($result);
     }
 
     public function update(

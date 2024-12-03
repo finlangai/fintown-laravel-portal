@@ -7,6 +7,7 @@ use App\Enums\TransactionStatus;
 use App\Models\SQL\Payment\Transaction;
 use App\Services\Payments\MomoService;
 use App\Services\Payments\VnPayService;
+use Carbon\Carbon;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class VerifySubscriptionTransaction
@@ -30,14 +31,18 @@ class VerifySubscriptionTransaction
         // normalize bill data
         $bill = $paymentProviderService::normalizeBill($bill);
 
+        $transactionStatus = $sucess
+            ? TransactionStatus::FULFILLED
+            : TransactionStatus::DECLINED;
+
         if (!$sucess) {
             $bill["failed"] = true;
-            return $bill;
         }
 
         try {
-            Transaction::find($bill["id"])->update([
-                "status" => TransactionStatus::FULFILLED,
+            Transaction::findOrFail($bill["id"])->update([
+                "status" => $transactionStatus,
+                "completion_time" => Carbon::now(),
             ]);
         } catch (\Throwable $th) {
             //throw $th;

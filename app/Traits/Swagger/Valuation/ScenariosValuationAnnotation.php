@@ -54,7 +54,8 @@ trait ScenariosValuationAnnotation
      *                 @OA\Property(property="expected_date", type="string", example="brooo"),
      *                 @OA\Property(property="note", type="string", example="Kinh khủng vậy sao"),
      *                 @OA\Property(property="id", type="string", example="674d78b49cf422f67b0fc6d8"),
-     *                 @OA\Property(property="saveAt", type="string", example="02/10/2024")
+     *                 @OA\Property(property="saveAt", type="string", example="02/10/2024"),
+     *                 @OA\Property(property="createdAt", type="string", example="2024-12-03T03:37:08.624000Z")
      *             )
      *         )
      *     ),
