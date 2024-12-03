@@ -12,14 +12,18 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web;
+use App\Models\Mongo\Company\Stash;
 use Inertia\Inertia;
 
 Route::get("/dashboard", function () {
     /** @var \App\Models\User|null $user */
     $user = Auth::user();
     $isSuperAdmin = $user && $user->hasRole("super-admin");
+    $Stash = Stash::all();
+    // dd($Stash);
     return Inertia::render("Dashboard", [
         "isSuperAdmin" => $isSuperAdmin,
+        "Stash" => $Stash
     ]);
 })
     ->middleware(["auth", "verified"])

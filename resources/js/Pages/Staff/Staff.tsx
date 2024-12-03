@@ -108,7 +108,7 @@ export default function Staff() {
                   <TableCaption className="font-semibold text-gray-700 text-lg">
                     Danh sách nhân viên
                   </TableCaption>
-                  <TableHeader>
+                  <TableHeader> 
                     <TableRow className="bg-gray-200">
                       <TableHead className="py-3 w-[100px] text-gray-600 text-left">
                         STT

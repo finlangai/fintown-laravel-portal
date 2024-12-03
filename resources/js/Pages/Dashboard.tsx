@@ -21,6 +21,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import VN30RevenueProfitChart from "./Dashboad/revenue";
 
 // Sample data - replace with your actual data
 const financialData = [
@@ -39,7 +40,7 @@ const subscriptionTypeData = [
 
 const COLORS = ["#334155", "#94A3B8"];
 
-export default function Dashboard() {
+export default function Dashboard({ Stash } : any) {
   const totalRevenue = 425000;
   const totalProfit = 171000;
   const paidSubscriptions = 1500;
@@ -57,7 +58,6 @@ export default function Dashboard() {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
     const x = cx + radius * Math.cos(-midAngle * RADIAN);
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
     return (
       <text
         x={x}
@@ -70,7 +70,6 @@ export default function Dashboard() {
       </text>
     );
   };
-
   return (
     <Authenticated header={true} className="flex flex-col gap-6 px-12 pt-10">
       <TypographyH1>Tổng quan</TypographyH1>
@@ -214,6 +213,8 @@ export default function Dashboard() {
           </CardContent>
         </Card>
       </div>
+     <VN30RevenueProfitChart Stash={Stash}/>
+     
     </Authenticated>
   );
 }
