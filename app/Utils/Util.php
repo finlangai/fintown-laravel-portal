@@ -39,6 +39,38 @@ class Util
     }
 
     /**
+     * Turn all keys in an array into snake case
+     *
+     * @param array $source
+     * @return array
+     */
+    public static function SnakeizeArray(array $source): array
+    {
+        $arr = [];
+        foreach ($source as $key => $value) {
+            $key = self::Snakeize($key);
+
+            if (is_array($value)) {
+                $value = self::SnakeizeArray($value);
+            }
+
+            $arr[$key] = $value;
+        }
+        return $arr;
+    }
+
+    /**
+     * Convert a camel case string to snake case
+     *
+     * @param string $input
+     * @return string
+     */
+    public static function Snakeize(string $input): string
+    {
+        return strtolower(preg_replace("/[A-Z]/", '_$0', $input));
+    }
+
+    /**
      * Get the path on the bucket for resources on firebase storage
      *
      * @param string $url

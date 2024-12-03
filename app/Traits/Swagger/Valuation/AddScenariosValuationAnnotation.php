@@ -35,7 +35,8 @@ trait AddScenariosValuationAnnotation
      *             @OA\Property(property="potential", type="integer", example=11),
      *             @OA\Property(property="valuated", type="number", format="float", example=58203),
      *             @OA\Property(property="actual", type="number", format="float", example=60000),
-     *             @OA\Property(property="note", type="string", example="Cả người ngoài hành tinh lẫn ma quỷ đều có thật sao?")
+     *             @OA\Property(property="note", type="string", example="Cả người ngoài hành tinh lẫn ma quỷ đều có thật sao?"),
+     *             @OA\Property(property="expectedDate", type="string", example="03/12/2024")
      *         )
      *     ),
      *     @OA\Response(

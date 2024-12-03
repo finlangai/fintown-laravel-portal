@@ -30,11 +30,12 @@ class ScenariosController extends Controller
         Formular $formularInfo,
         string $symbol
     ) {
+        $validated = $request->validated();
         ValuationScenario::create([
             "symbol" => $symbol,
             "user_id" => auth("api")->id(),
             "type_id" => $formularInfo->id,
-            ...$request->validated(),
+            ...Util::SnakeizeArray($validated),
         ]);
         return ApiResponse::created(["message" => "Tạo kịch bản thành công."]);
     }
