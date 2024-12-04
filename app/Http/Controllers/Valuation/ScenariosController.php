@@ -50,11 +50,15 @@ class ScenariosController extends Controller
 
         $scenario = $scenario->toArray();
 
-        // QUARTER TIMESTAMP
+        // QUARTERLY TIMESTAMP
         $createdAtCarbon = Carbon::parse($scenario["updated_at"]);
         $createdAtQuarter = $createdAtCarbon->quarter;
         $createdAtYear = $createdAtCarbon->year;
-        $scenario["saveAt"] = "Q$createdAtQuarter/$createdAtYear";
+        $scenario["createdAt"] = "Q$createdAtQuarter/$createdAtYear";
+
+        $scenario["saveAt"] = Carbon::parse($scenario["updated_at"])->format(
+            "d/m/Y"
+        );
 
         unset($scenario["type_id"]);
         unset($scenario["updated_at"]);
