@@ -47,7 +47,7 @@ trait ShowScenariosValuationAnnotation
      *             @OA\Property(property="note", type="string", example="Cả người ngoài hành tinh lẫn ma quỷ đều có thật sao?"),
      *             @OA\Property(property="id", type="string", example="6734bf885fb113a3c906fc15"),
      *             @OA\Property(property="saveAt", type="integer", example=1731510152),
-     *             @OA\Property(property="createdAt", type="string", example="2024-12-03T03:37:08.624000Z")
+     *             @OA\Property(property="createdAt", type="string", example="Q4/2024")
      *         )
      *     ),
      *     @OA\Response(response=401, description="Unauthorized"),

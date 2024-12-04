@@ -49,11 +49,16 @@ class ScenariosController extends Controller
         }
 
         $scenario = $scenario->toArray();
-        $scenario["saveAt"] = Carbon::parse($scenario["updated_at"])->format(
-            "d/m/Y"
-        );
+
+        // QUARTER TIMESTAMP
+        $createdAtCarbon = Carbon::parse($scenario["updated_at"]);
+        $createdAtQuarter = $createdAtCarbon->quarter;
+        $createdAtYear = $createdAtCarbon->year;
+        $scenario["saveAt"] = "Q$createdAtQuarter/$createdAtYear";
+
         unset($scenario["type_id"]);
         unset($scenario["updated_at"]);
+        unset($scenario["created_at"]);
 
         $result = Util::CamelizeArray($scenario);
         return ApiResponse::success($result);

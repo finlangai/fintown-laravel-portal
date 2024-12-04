@@ -26,6 +26,7 @@ class GetUserScenariosList
         $scenarios->map(function ($item) {
             $item["saveAt"] = $item["updated_at"]->format("d/m/Y");
             unset($item["updated_at"]);
+            unset($item["created_at"]);
             unset($item["type_id"]);
         });
 
