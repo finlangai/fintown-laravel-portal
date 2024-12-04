@@ -51,8 +51,10 @@ class DiscountedCashFlowParams
 
         // wacc
         $r = $stash["wacc"];
+        $year = $stash["latest_year"];
+        $quarter = $stash["latest_quarter"];
 
-        return compact("r", "fcf_forecasts");
+        return compact("r", "year", "quarter", "fcf_forecasts");
     }
 
     public static function calculateGrowthRate(Collection $records)
