@@ -1,4 +1,6 @@
 import forms from "@tailwindcss/forms";
+import tailwindcssAnimate from 'tailwindcss-animate'; 
+import tailwindScrollbar from 'tailwind-scrollbar';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -90,7 +92,9 @@ export default {
 
   plugins: [
     forms,
-    require("tailwindcss-animate"),
-    require("tailwind-scrollbar"),
+    tailwindcssAnimate,
+    tailwindScrollbar
+    // require("tailwindcss-animate"),
+    // require("tailwind-scrollbar"),
   ],
 };
