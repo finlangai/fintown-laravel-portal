@@ -7,7 +7,7 @@ use Carbon\Carbon;
 class Notification
 {
     public static function send(
-        string $uuid,
+        string $id,
         string $title,
         string $content,
         string $thumbnail,
@@ -27,13 +27,15 @@ class Notification
 
         // Publish a message with a specific event name
         $eventName = "new-notification";
+        $isReaded = "false";
         $messageData = compact(
-            "uuid",
+            "id",
             "title",
             "content",
             "thumbnail",
             "hyperlink",
-            "createdAt"
+            "createdAt",
+            "isReaded"
         );
 
         $channel->publish($eventName, $messageData);
