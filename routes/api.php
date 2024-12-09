@@ -17,6 +17,7 @@ Route::middleware([])->group(function () {
 
             require __DIR__ . "/api/user.php";
             require __DIR__ . "/api/watchlist.php";
+            require __DIR__ . "/api/notification.php";
         });
     });
 
