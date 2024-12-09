@@ -7,6 +7,7 @@ use Carbon\Carbon;
 class Notification
 {
     public static function send(
+        string $uuid,
         string $title,
         string $content,
         string $thumbnail,
@@ -27,6 +28,7 @@ class Notification
         // Publish a message with a specific event name
         $eventName = "new-notification";
         $messageData = compact(
+            "uuid",
             "title",
             "content",
             "thumbnail",

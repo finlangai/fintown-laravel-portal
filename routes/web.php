@@ -50,7 +50,7 @@ Route::get("broadcast/trigger", function () {
     $symbol = $company->symbol;
     $logo = $company->logo;
 
-    SystemNotification::create([
+    $notification = SystemNotification::create([
         "title" => $symbol,
         "content" => "Đã có kết quả dự báo mới",
         "thumbnail" => $logo,
@@ -58,6 +58,7 @@ Route::get("broadcast/trigger", function () {
     ]);
 
     Notification::send(
+        $notification->id,
         $symbol,
         "Đã có kết quả dự báo mới",
         $logo,
