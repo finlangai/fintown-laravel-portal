@@ -1,0 +1,46 @@
+/* Ẩn ban đầu */
+.expandable-row {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: opacity 0.5s ease;
+}
+
+/* Khi mở rộng, tăng max-height và opacity */
+.expandable-row.open {
+  max-height: 1000px; /* Đảm bảo đủ không gian cho nội dung */
+  opacity: 1;
+  animation: expandAnimation 0.5s ease-out; /* Áp dụng animation */
+}
+
+/* Keyframes để tạo hiệu ứng mở rộng */
+@keyframes expandAnimation {
+  0% {
+    max-height: 0;
+    opacity: 0;
+  }
+  100% {
+    max-height: 1000px; /* Tùy chỉnh max-height để phù hợp với chiều cao thực tế */
+    opacity: 1;
+  }
+}
+
+/* Hiệu ứng thu gọn khi ẩn */
+@keyframes collapseAnimation {
+  0% {
+    max-height: 1000px;
+    opacity: 1;
+  }
+  100% {
+    max-height: 0;
+    opacity: 0;
+  }
+}
+
+.text-gradient {
+  font-size: 13px; /* Chỉnh kích thước văn bản */
+  background: linear-gradient(to right, #0051ff, #e10303); /* Đặt gradient từ trái sang phải */
+  -webkit-background-clip: text; /* Cắt nền chỉ cho text */
+  color: transparent; /* Ẩn màu chữ mặc định, chỉ hiển thị gradient */
+  font-weight: bold;
+}

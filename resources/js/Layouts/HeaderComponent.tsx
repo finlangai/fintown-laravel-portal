@@ -8,6 +8,7 @@ import DashboardLi from "./Partials/Doashboad";
 import FinancialLi from "./Partials/Financial";
 import StaffLi from "./Partials/Staff";
 import SystemMenuItems from "./Partials/SystemMenuItems";
+import Recipe from "./Partials/recipe";
 interface HeaderComponentProps {
   isExpanded: boolean;
   handleSetIsExpanded: (value: boolean) => void;
@@ -84,6 +85,7 @@ export default function HeaderComponent({
               <CompanyLi isExpanded={isExpanded} />
               <FinancialLi isExpanded={isExpanded} />
               {/* <IndexFinancial isExpanded={isExpanded} /> */}
+              <Recipe isExpanded={isExpanded}/>
               <AssessmentMenuItems isExpanded={isExpanded} />
               <SystemMenuItems isExpanded={isExpanded} />
             </>

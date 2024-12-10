@@ -15,10 +15,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/Components/UI/tabs";
 
 export default function DetailsSymbol({ selectedStock }: any) {
   if (!selectedStock) {
-    return null; // Không hiển thị nếu không có dữ liệu cổ phiếu được chọn
+    return null; 
   }
 
-  // Hàm định dạng số thành tiền tệ
   const formatCurrency = (value: number): string => {
     const isNegative = value < 0;
     const absoluteValue = Math.abs(value);
@@ -188,7 +187,7 @@ export default function DetailsSymbol({ selectedStock }: any) {
       <tbody>
         {["daily", "weekly", "monthly", "yearly"].map((period) => {
           const change = selectedStock.delta[period].change;
-          const percent = selectedStock.delta[period].percent.toFixed(2); // Làm tròn số đến 2 chữ số thập phân
+          const percent = selectedStock.delta[period].percent.toFixed(2); 
           const isNegative = percent < 0;
           return (
             <tr key={period}>
@@ -196,7 +195,7 @@ export default function DetailsSymbol({ selectedStock }: any) {
                 <strong>Biến Động Hàng {period.charAt(0).toUpperCase() + period.slice(1)}</strong>
               </td>
               <td className={`px-4 py-2 ${isNegative ? "text-red-500" : "text-green-500"}`}>
-                {change} ({percent}%) {/* Số thập phân đã được làm tròn */}
+                {change} ({percent}%)
               </td>
             </tr>
           );

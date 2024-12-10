@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StaffListController;
 use App\Http\Controllers\StaffWebController;
+use App\Http\Controllers\TechnicalIndicatorController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -57,6 +58,26 @@ Route::middleware("auth")->group(function () {
 
     // users và các trang liên quan đến users
         
+
+
+
+
+    // CRUD công thức chỉ số kĩ thuật
+    Route::get("/Recipe/Technical-indicators", [TechnicalIndicatorController::class, "index"])->name(
+        "Technical-indicators.index"
+    );
+    Route::post("/update/order", [TechnicalIndicatorController::class, "editOrder"])->name(
+        "editOrder"
+    );
+    Route::post("/updateName/Recipe", [TechnicalIndicatorController::class, "editNameRecipe"])->name(
+        "editNameRecipe"
+    );
+    Route::post("/update/metadata", [TechnicalIndicatorController::class, "metadata"])->name(
+        "is_percentage"
+    );
+    Route::post("/updateRecipe/orverview", [TechnicalIndicatorController::class, "updateRecipeOverview"])->name(
+        "updateRecipeOrverview"
+    );
 
 
 
