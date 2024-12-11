@@ -52,7 +52,7 @@ const SystemMenuItems = ({ isExpanded }: SystemMenuItemsProps) => {
 
                 {/* Công thức */}
                 <li className="mt-5 hover:underline">
-                  <Link href={route("system.formulars.index")}>
+                  <Link href={route("formulars.technical-indicators.index")}>
                     <div className="flex justify-start items-center">
                       <SquareRadical className="size-6" />
                       {isExpanded && (
@@ -63,6 +63,7 @@ const SystemMenuItems = ({ isExpanded }: SystemMenuItemsProps) => {
                     </div>
                   </Link>
                 </li>
+
                 {/* Criterias */}
                 <li className="mt-5 hover:underline">
                   <Link href={route("system.criterias.index")}>
