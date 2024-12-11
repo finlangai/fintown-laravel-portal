@@ -15,7 +15,6 @@ use Spatie\Permission\Traits\HasRoles;
 class StaffWebController extends Controller
 {
     use Notifiable, HasRoles;
-
     public function index()
     {
         $staffList = Staff::with("roles.permissions")
