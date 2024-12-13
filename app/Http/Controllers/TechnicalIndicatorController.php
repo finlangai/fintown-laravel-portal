@@ -51,7 +51,7 @@ class TechnicalIndicatorController extends Controller
         }
 
         return redirect()
-            ->route("Technical-indicators.index")
+            ->route("formulars.technical-indicators.index")
             ->with("success", "Thay đổi dữ liệu hiển thị thành công!");
     }
     public function editNameRecipe(Request $request)
@@ -101,7 +101,7 @@ class TechnicalIndicatorController extends Controller
         }
 
         return redirect()
-            ->route("Technical-indicators.index")
+            ->route("formulars.technical-indicators.index")
             ->with("success", "Cập nhập tên công thức thành công!");
     }
     public function metadata(Request $request)
@@ -139,11 +139,11 @@ class TechnicalIndicatorController extends Controller
             $technicalIndicator->update(["metadata" => $metadata]);
 
             return redirect()
-                ->route("Technical-indicators.index")
+                ->route("formulars.technical-indicators.index")
                 ->with("success", "Cập nhật các trường thành công!");
         } else {
             return redirect()
-                ->route("Technical-indicators.index")
+                ->route("formulars.technical-indicators.index")
                 ->with(
                     "error",
                     "Không tìm thấy công thức với order: " . $order
@@ -170,7 +170,7 @@ class TechnicalIndicatorController extends Controller
             ]);
 
             return redirect()
-                ->route("Technical-indicators.index")
+                ->route("formulars.technical-indicators.index")
                 ->with("success", "Cập nhập thành công!");
         } else {
             return response()->json(
