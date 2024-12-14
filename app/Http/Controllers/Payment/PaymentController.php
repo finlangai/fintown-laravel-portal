@@ -15,9 +15,11 @@ use App\Http\Requests\Payment\PaymentEntryRequest;
 use App\Models\SQL\Payment\PaymentMethod;
 use App\Models\SQL\Payment\Transaction;
 use App\Models\SQL\Subcription\Program;
+use App\Models\SQL\Subcription\PromotionCode;
 use App\Traits\Swagger\Payment\CheckPromotionCodeAnnotation;
 use App\Traits\Swagger\Payment\InitiateSubscriptionRegistrationAnnotation;
 use App\Utils\ApiResponse;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -34,6 +36,18 @@ class PaymentController extends Controller
             $program = Program::findOrFail(strtoupper($programId));
         } catch (\Throwable $th) {
             return ApiResponse::notFound("Không tìm thấy gói đăng ký.");
+        }
+
+        if ($promotionCode = $request->input("promotionCode")) {
+            // checking the promotion on the server
+            $checkPromotionResult = (new CheckPromotionCode())->handle([
+                "code" => $promotionCode,
+                "programId" => $programId,
+            ]);
+
+            // === THE PROMOTION IS VALID FROM HERE
+            // change the discount of the subscriptions
+            $program->discount = $checkPromotionResult["discountPercent"];
         }
 
         // CHECKING PAYMENT METHOD
