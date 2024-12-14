@@ -5,21 +5,32 @@ namespace App\Models\SQL\Subcription;
 use App\Models\SQL\User\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use MongoDB\Laravel\Relations\BelongsTo;
-use MongoDB\Laravel\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PromotionCode extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        "partner_id",
+        "program_id",
+        "code",
+        "use_limit",
+        "discount",
+        "commission_rate",
+        "start_date",
+        "expired_date",
+    ];
+
     public function partner(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'partner_id');
+        return $this->belongsTo(User::class, "partner_id");
     }
 
     public function program(): BelongsTo
     {
-        return $this->belongsTo(Program::class, 'program_id');
+        return $this->belongsTo(Program::class, "program_id");
     }
 
     /**
@@ -29,6 +40,6 @@ class PromotionCode extends Model
      */
     public function histories(): HasMany
     {
-        return $this->hasMany(CommissionHistory::class, 'promotion_id');
+        return $this->hasMany(CommissionHistory::class, "promotion_id");
     }
 }

@@ -142,7 +142,6 @@ export default function UserPage(props: UserPageProps) {
             {/* START = USERS TABLE BODY */}
             {props.paginating.data.map((user) => {
               const { id, fullname, email, phone, roles } = user;
-              console.log(roles);
 
               return (
                 <TableRow key={id} className="text-slate-700">
@@ -157,7 +156,7 @@ export default function UserPage(props: UserPageProps) {
                     <DropdownMenu>
                       <DropdownMenuTrigger>
                         {/* === ACTION TRIGGER */}
-                        <EllipsisVertical className="rounded-full hover:bg-text-active hover:stroke-white py-1 transition-all duration-200 ease-out size-7" />
+                        <EllipsisVertical className="py-1 rounded-full hover:bg-text-active transition-all duration-200 ease-out hover:stroke-white size-7" />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent>
                         {/* === EIDT USER INFO ACTION */}

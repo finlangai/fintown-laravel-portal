@@ -13,7 +13,7 @@ type DialogWrapperProps = {
   trigger: ReactNode;
   children?: ReactNode;
   footer?: ReactNode;
-  title: ReactNode;
+  title?: ReactNode;
   description?: string;
   noPropogation?: boolean;
 } & classNameInterface;

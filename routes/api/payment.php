@@ -8,4 +8,9 @@ Route::prefix("payment")->group(function () {
         PaymentController::class,
         "initiateSubscriptionRegistration",
     ]);
+
+    Route::post("check-promotion", [
+        PaymentController::class,
+        "checkPromotionCode",
+    ]);
 });

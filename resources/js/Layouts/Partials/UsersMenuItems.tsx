@@ -8,7 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@radix-ui/react-accordion";
-import { BookUser, CircleDollarSign, Users } from "lucide-react";
+import { BookUser, ScanQrCode, Users } from "lucide-react";
 import { useState } from "react";
 
 const UsersMenuItems = () => {
@@ -52,10 +52,10 @@ const UsersMenuItems = () => {
 
                   {/* === */}
                   <MenuItem
-                    url={route("system.formulars.index")}
-                    label="Quản lý gói đăng ký"
+                    url={route("users.promotion.index")}
+                    label="Mã giới thiệu"
                   >
-                    <CircleDollarSign className="size-6" />
+                    <ScanQrCode className="size-6" />
                   </MenuItem>
                 </ul>
               </AccordionContent>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Payment;
 
+use App\Actions\CheckPromotionCode;
 use App\Actions\Payment\CreateSubscription;
 use App\Actions\Payment\HandleFailedTransaction;
 use App\Actions\Payment\MakePaymentUrl;
@@ -9,6 +10,7 @@ use App\Actions\Payment\VerifySubscriptionTransaction;
 use App\Enums\PaymentMethods;
 use App\Enums\PaymentOutcome;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\CheckPromotionCodeRequest;
 use App\Http\Requests\Payment\PaymentEntryRequest;
 use App\Models\SQL\Payment\PaymentMethod;
 use App\Models\SQL\Payment\Transaction;
@@ -59,9 +61,14 @@ class PaymentController extends Controller
     }
 
     use CheckPromotionCodeAnnotation;
-    public function checkPromotionCode()
-    {
-        //
+    public function checkPromotionCode(
+        CheckPromotionCodeRequest $request,
+        CheckPromotionCode $action
+    ) {
+        $validated = $request->validate();
+        $result = $action->handle($validated);
+
+        return ApiResponse::success($result);
     }
 
     public function verify(

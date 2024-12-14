@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\User\PromotionController;
 use App\Http\Controllers\Web\User\UserController;
 use App\Http\Controllers\Web\User\UserRolesController;
 use Illuminate\Support\Facades\Route;
@@ -14,11 +15,16 @@ Route::resource("users", UserController::class)->only(
 Route::prefix("users")
     ->name("users.")
     ->group(function () {
+        // === PARTNER PROMOTION CODE
+        Route::resource("promotion", PromotionController::class);
+
+        // CHANGE PASSWORD
         Route::patch("change-password/{user}", [
             UserController::class,
             "updatePassword",
         ])->name("update.password");
 
+        // CANCEL SUBSCRIPTION
         Route::patch("cancel-subscription/{subscriptionId}", [
             UserController::class,
             "cancelSubscription",
