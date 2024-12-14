@@ -65,7 +65,7 @@ class PaymentController extends Controller
         CheckPromotionCodeRequest $request,
         CheckPromotionCode $action
     ) {
-        $validated = $request->validate();
+        $validated = $request->validated();
         $result = $action->handle($validated);
 
         return ApiResponse::success($result);
