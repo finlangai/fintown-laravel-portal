@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\General\FaqController;
+use App\Http\Controllers\API\General\MemberController;
 use App\Http\Controllers\API\General\PricingController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,7 @@ Route::middleware([])->group(function () {
     Route::prefix("general")->group(function () {
         require __DIR__ . "/api/pricing.php";
         Route::get("faq", FaqController::class);
+        Route::get("members", MemberController::class);
 
         Route::middleware(["auth:api"])->group(function () {
             require __DIR__ . "/api/payment.php";

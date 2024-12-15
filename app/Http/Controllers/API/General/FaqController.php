@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\General;
 
 use App\Http\Controllers\Controller;
-use App\Models\Mongo\Faq;
+use App\Models\Mongo\Other\Faq;
 use App\Utils\ApiResponse;
 use Illuminate\Http\Request;
 
