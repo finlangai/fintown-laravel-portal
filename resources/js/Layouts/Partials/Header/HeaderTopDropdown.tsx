@@ -1,3 +1,4 @@
+import Dropdown from "@/Components/Dropdown";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,7 +7,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/Components/UI/dropdown-menu";
-import Dropdown from "@/Components/Dropdown";
 import { ChevronDown, Settings, User } from "lucide-react";
 
 const HeaderTopDropdown = ({ user }: any) => {
@@ -18,7 +18,7 @@ const HeaderTopDropdown = ({ user }: any) => {
             <strong className="text-lg text-slate-700">
               {user.fullname ?? "My Account"}
             </strong>
-            <span className="text-slate-400 text-xs">Super Admin</span>
+            <span className="text-slate-400 text-xs">{user.roles[0].name}</span>
           </div>
           <ChevronDown className="transition-transform duration-300 ease-out size-7 stroke-slate-500" />
         </DropdownMenuLabel>

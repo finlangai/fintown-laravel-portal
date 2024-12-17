@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
+
 class PermissionsSeeder extends Seeder
 {
     /**
@@ -16,6 +15,7 @@ class PermissionsSeeder extends Seeder
         // WEB GUARD PERMISSION
         $prefixes = [
             "user",
+            "staff",
             "role",
             "bill",
             "company",
@@ -26,20 +26,20 @@ class PermissionsSeeder extends Seeder
             "formular",
             "criteria",
             "backjob",
-        ];
+         ];
         // base permission
-        $permissions = [];
+        $permissions = [  ];
         foreach ($prefixes as $prefix) {
-            $permissions[] = "$prefix-read";
-            $permissions[] = "$prefix-write";
-            $permissions[] = "$prefix-create";
-            $permissions[] = "$prefix-delete";
+            $permissions[  ] = "$prefix-read";
+            $permissions[  ] = "$prefix-write";
+            $permissions[  ] = "$prefix-create";
+            $permissions[  ] = "$prefix-delete";
         }
         foreach ($permissions as $permission) {
             Permission::firstOrCreate([
-                "name" => $permission,
+                "name"       => $permission,
                 "guard_name" => "web",
-            ]);
+             ]);
         }
 
         // API GUARD PERMISSION
@@ -56,23 +56,23 @@ class PermissionsSeeder extends Seeder
             "valuation",
             "scenario",
             "comparison",
-        ];
-        $userWrite = ["account", "watchlist", "scenario"];
+         ];
+        $userWrite = [ "account", "watchlist", "scenario" ];
 
-        $userPermissions = [];
+        $userPermissions = [  ];
         foreach ($userRead as $value) {
-            $userPermissions[] = "$value-read";
+            $userPermissions[  ] = "$value-read";
         }
 
         foreach ($userWrite as $value) {
-            $userPermissions[] = "$value-write";
+            $userPermissions[  ] = "$value-write";
         }
 
         foreach ($userPermissions as $permission) {
             Permission::firstOrCreate([
-                "name" => $permission,
+                "name"       => $permission,
                 "guard_name" => "api",
-            ]);
+             ]);
         }
     }
 }

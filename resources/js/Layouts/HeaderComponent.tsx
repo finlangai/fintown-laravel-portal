@@ -1,5 +1,6 @@
 import { useSideMenu } from "@/Contexts/SideMenuContext";
 import { cn } from "@/Lib/utils";
+import { PageProps } from "@/Types";
 import { Link, usePage } from "@inertiajs/react";
 import { ChevronsLeft, ChevronsRight, CirclePower } from "lucide-react";
 import AssessmentMenuItems from "./Partials/AssessmentMenuItems";
@@ -10,6 +11,14 @@ import SubscriptionMenuItems from "./Partials/SubscriptionMenuItems";
 import SystemMenuItems from "./Partials/SystemMenuItems";
 import UsersMenuItems from "./Partials/UsersMenuItems";
 interface HeaderComponentProps {}
+
+type HeaderComponentPageProps = {
+  userPermissionAndRoles: {
+    isSuperAdmin: boolean;
+    permissions: string[];
+    roles: string[];
+  };
+} & PageProps;
 
 export default function HeaderComponent({}: HeaderComponentProps) {
   const activeNavLink = {
@@ -77,20 +86,26 @@ export default function HeaderComponent({}: HeaderComponentProps) {
                 <DashboardLi isExpanded={isMenuExpanded} />
 
                 {/* Mọi quyền cho super admin */}
-                {superAdmin && (
-                  <>
-                    {/* <BillLi isExpanded={isMenuExpanded} /> */}
-                    {/* <Postforecast isExpanded={isMenuExpanded} /> */}
-                    <UsersMenuItems />
-                    <CompanyLi isExpanded={isMenuExpanded} />
-                    {/* <FinancialLi isExpanded={isMenuExpanded} /> */}
-                    {/* <IndexFinancial isExpanded={isMenuExpanded} /> */}
-                    <SubscriptionMenuItems isExpanded={isMenuExpanded} />
-                    <AssessmentMenuItems isExpanded={isMenuExpanded} />
-                    <InternalMenuItem isExpanded={isMenuExpanded} />
-                    <SystemMenuItems isExpanded={isMenuExpanded} />
-                  </>
+                {/* <BillLi isExpanded={isMenuExpanded} /> */}
+                {/* <Postforecast isExpanded={isMenuExpanded} /> */}
+                {hasPermission("user-read") && <UsersMenuItems />}
+                {hasPermission("company-read") && (
+                  <CompanyLi isExpanded={isMenuExpanded} />
                 )}
+
+                {/* <FinancialLi isExpanded={isMenuExpanded} /> */}
+                {/* <IndexFinancial isExpanded={isMenuExpanded} /> */}
+                {hasPermission("subscription_program-read") && (
+                  <SubscriptionMenuItems isExpanded={isMenuExpanded} />
+                )}
+                {hasPermission("assessment-read") && (
+                  <AssessmentMenuItems isExpanded={isMenuExpanded} />
+                )}
+                {hasPermission("staff-read") && (
+                  <InternalMenuItem isExpanded={isMenuExpanded} />
+                )}
+
+                {superAdmin && <SystemMenuItems isExpanded={isMenuExpanded} />}
               </ul>
             </div>
 
