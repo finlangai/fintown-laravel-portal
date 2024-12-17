@@ -10,7 +10,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@radix-ui/react-hover-card";
-import { BookOpenText, ChartSpline, Clipboard, FilePen } from "lucide-react";
+import { ChartSpline, Clipboard } from "lucide-react";
 interface FinancialLiProps {
   isExpanded: boolean;
 }
@@ -45,27 +45,6 @@ const FinancialLi = ({ isExpanded }: FinancialLiProps) => {
                       </div>
                     </Link>
                   </li>
-
-                  <li className="mt-5 hover:underline">
-                    <Link href="/edit-financial">
-                      <div className="flex justify-start items-center">
-                        <FilePen className="size-5" />
-                        <span className="ml-2 text-xs whitespace-nowrap">
-                          Chỉnh sửa hồ sơ
-                        </span>
-                      </div>
-                    </Link>
-                  </li>
-                  <li className="mt-5 hover:underline">
-                    <Link href="/financial-year">
-                      <div className="flex justify-start items-center">
-                        <BookOpenText className="size-5" />
-                        <span className="ml-2 text-xs whitespace-nowrap">
-                          Báo cáo tài chính theo năm
-                        </span>
-                      </div>
-                    </Link>
-                  </li>
                 </ul>
               </AccordionContent>
             </AccordionItem>
@@ -95,31 +74,6 @@ const FinancialLi = ({ isExpanded }: FinancialLiProps) => {
                       </HoverCardContent>
                     </HoverCard>
                   </li>
-                  <li className="mt-5">
-                    <HoverCard>
-                      <HoverCardTrigger>
-                        <Link href="/add-staff">
-                          <FilePen className="size-5" />
-                        </Link>
-                      </HoverCardTrigger>
-                      <HoverCardContent side="right" align="start">
-                        Chỉnh sửa hồ sơ
-                      </HoverCardContent>
-                    </HoverCard>
-                  </li>
-                  <li className="mt-5">
-                    <HoverCard>
-                      <HoverCardTrigger>
-                        <Link href="/add-staff">
-                          <BookOpenText className="size-5" />
-                        </Link>
-                      </HoverCardTrigger>
-                      <HoverCardContent side="right" align="start">
-                        Báo cáo tài chính theo năm
-                      </HoverCardContent>
-                    </HoverCard>
-                  </li>
-                  <li></li>
                 </ul>
               </AccordionContent>
             </AccordionItem>

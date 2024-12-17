@@ -6,6 +6,7 @@ import { ChevronsLeft, ChevronsRight, CirclePower } from "lucide-react";
 import AssessmentMenuItems from "./Partials/AssessmentMenuItems";
 import CompanyLi from "./Partials/Company";
 import DashboardLi from "./Partials/Doashboad";
+import FinancialLi from "./Partials/Financial";
 import InternalMenuItem from "./Partials/InternalMenuItem";
 import SubscriptionMenuItems from "./Partials/SubscriptionMenuItems";
 import SystemMenuItems from "./Partials/SystemMenuItems";
@@ -93,7 +94,10 @@ export default function HeaderComponent({}: HeaderComponentProps) {
                   <CompanyLi isExpanded={isMenuExpanded} />
                 )}
 
-                {/* <FinancialLi isExpanded={isMenuExpanded} /> */}
+                {hasPermission("financial-read") && (
+                  <FinancialLi isExpanded={isMenuExpanded} />
+                )}
+
                 {/* <IndexFinancial isExpanded={isMenuExpanded} /> */}
                 {hasPermission("subscription_program-read") && (
                   <SubscriptionMenuItems isExpanded={isMenuExpanded} />
